@@ -1,0 +1,230 @@
+<export><workspace name="Workspace"><query name="Load data" focus="true" active="true" mode="javascript">declareUpdate()
+
+var data = [
+  {
+    "id": 0,
+    "guid": "08484ad6-3738-4c92-87b0-c1c45049f718",
+    "isActive": true,
+    "balance": "$1,194.33",
+    "picture": "http://placehold.it/32x32",
+    "age": 38,
+    "eyeColor": "blue",
+    "name": "Sandoval Cummings",
+    "gender": "male",
+    "company": "APPLIDEC",
+    "email": "sandovalcummings@applidec.com",
+    "phone": "+1 (860) 580-2176",
+    "address": "969 Clifford Place, Kanauga, New Mexico, 1085",
+    "about": "Cillum reprehenderit officia adipisicing do consequat nisi proident aliqua ipsum commodo minim cupidatat. Ipsum cupidatat deserunt do exercitation. Voluptate ipsum quis laborum quis et nisi irure culpa anim est ex laboris et eiusmod. Esse anim pariatur incididunt ullamco mollit minim dolore nisi.\r\n",
+    "registered": "2014-02-25T10:58:58 +08:00",
+    "latitude": -40.15927,
+    "longitude": -147.294329,
+    "tags": [
+      "laborum",
+      "ullamco",
+      "ut",
+      "tempor",
+      "incididunt",
+      "excepteur",
+      "ea"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Willis Sloan"
+      },
+      {
+        "id": 1,
+        "name": "Hensley Mccarty"
+      },
+      {
+        "id": 2,
+        "name": "Lily Bright"
+      }
+    ],
+    "greeting": "Hello, Sandoval Cummings! You have 5 unread messages.",
+    "favoriteFruit": "apple"
+  },
+  {
+    "id": 1,
+    "guid": "6a9c7f7c-4eb2-401b-a77b-5d48fc4516ec",
+    "isActive": false,
+    "balance": "$1,638.17",
+    "picture": "http://placehold.it/32x32",
+    "age": 36,
+    "eyeColor": "brown",
+    "name": "Hester Rivers",
+    "gender": "female",
+    "company": "NETUR",
+    "email": "hesterrivers@netur.com",
+    "phone": "+1 (988) 502-2707",
+    "address": "206 Tiffany Place, Tonopah, Massachusetts, 3473",
+    "about": "Eiusmod voluptate cupidatat incididunt reprehenderit et consequat eiusmod. Et mollit consequat nisi eiusmod incididunt sunt cillum aliquip labore proident exercitation esse aliquip. Magna pariatur dolor est qui. Non eiusmod consectetur mollit elit elit commodo in ea. Cupidatat in do nulla est eu dolore pariatur tempor consequat laborum tempor et. Sint anim incididunt velit ut tempor eu voluptate sit Lorem duis incididunt sint ut. Officia nisi id pariatur aliqua ipsum velit ullamco qui anim.\r\n",
+    "registered": "2014-01-02T13:20:24 +08:00",
+    "latitude": -78.902303,
+    "longitude": 128.436496,
+    "tags": [
+      "eiusmod",
+      "labore",
+      "non",
+      "elit",
+      "enim",
+      "labore",
+      "ea"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Vicky Graves"
+      },
+      {
+        "id": 1,
+        "name": "Carrillo Goodman"
+      },
+      {
+        "id": 2,
+        "name": "Salas Stuart"
+      }
+    ],
+    "greeting": "Hello, Hester Rivers! You have 2 unread messages.",
+    "favoriteFruit": "strawberry"
+  },
+  {
+    "id": 2,
+    "guid": "fcf4ac76-65b5-4fc5-9d83-c4faefc12c0a",
+    "isActive": false,
+    "balance": "$2,449.76",
+    "picture": "http://placehold.it/32x32",
+    "age": 40,
+    "eyeColor": "green",
+    "name": "Christy Spencer",
+    "gender": "female",
+    "company": "CONFERIA",
+    "email": "christyspencer@conferia.com",
+    "phone": "+1 (965) 526-3094",
+    "address": "768 Sumpter Street, Omar, Kansas, 9029",
+    "about": "Deserunt ullamco veniam nisi consequat. Laborum sit laboris consectetur mollit sunt sit minim sint minim labore. Qui aliquip sint tempor nulla ipsum adipisicing. Cillum ea anim consectetur quis voluptate duis Lorem id ipsum nulla veniam aute ipsum. Nisi sit nulla ipsum tempor ex laborum sint non ex incididunt. Eiusmod quis et occaecat excepteur ipsum nostrud. Quis ullamco minim elit esse aliqua.\r\n",
+    "registered": "2014-01-15T17:39:11 +08:00",
+    "latitude": 56.934683,
+    "longitude": -74.073636,
+    "tags": [
+      "laborum",
+      "ad",
+      "eu",
+      "nostrud",
+      "deserunt",
+      "tempor",
+      "voluptate"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Serrano Golden"
+      },
+      {
+        "id": 1,
+        "name": "Elsie Chaney"
+      },
+      {
+        "id": 2,
+        "name": "Isabelle Sellers"
+      }
+    ],
+    "greeting": "Hello, Christy Spencer! You have 4 unread messages.",
+    "favoriteFruit": "banana"
+  },
+  {
+    "id": 3,
+    "guid": "0196d199-6d5b-4955-ba74-7b46aa295fc0",
+    "isActive": false,
+    "balance": "$3,146.17",
+    "picture": "http://placehold.it/32x32",
+    "age": 29,
+    "eyeColor": "green",
+    "name": "Mari Suarez",
+    "gender": "female",
+    "company": "CANOPOLY",
+    "email": "marisuarez@canopoly.com",
+    "phone": "+1 (855) 567-3680",
+    "address": "641 Catherine Street, Gardiner, Wisconsin, 4987",
+    "about": "Excepteur ea do laborum laborum ex sunt non sunt. Cupidatat et mollit deserunt duis id. Laborum minim laboris in ipsum consectetur labore deserunt. Sit incididunt ullamco occaecat amet non adipisicing laborum ad.\r\n",
+    "registered": "2014-06-04T10:28:46 +07:00",
+    "latitude": -53.505913,
+    "longitude": 134.799724,
+    "tags": [
+      "cupidatat",
+      "laborum",
+      "ea",
+      "quis",
+      "eu",
+      "consequat",
+      "aute"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Arnold Randall"
+      },
+      {
+        "id": 1,
+        "name": "Enid Battle"
+      },
+      {
+        "id": 2,
+        "name": "Rosemarie Hayes"
+      }
+    ],
+    "greeting": "Hello, Mari Suarez! You have 10 unread messages.",
+    "favoriteFruit": "banana"
+  },
+  {
+    "id": 4,
+    "guid": "1ee50031-d9e4-402f-8f55-063e2fe2131c",
+    "isActive": true,
+    "balance": "$3,452.62",
+    "picture": "http://placehold.it/32x32",
+    "age": 22,
+    "eyeColor": "brown",
+    "name": "Deborah Hendricks",
+    "gender": "female",
+    "company": "TROLLERY",
+    "email": "deborahhendricks@trollery.com",
+    "phone": "+1 (847) 486-2772",
+    "address": "917 Nelson Street, Bloomington, Missouri, 8567",
+    "about": "Pariatur aliquip eu ea mollit veniam non reprehenderit aliquip. Nostrud veniam eiusmod commodo et in sint. Tempor Lorem amet qui nulla voluptate deserunt cupidatat. In do proident est culpa culpa dolor exercitation sunt sint amet eu Lorem sunt.\r\n",
+    "registered": "2014-01-02T02:22:27 +08:00",
+    "latitude": 1.555981,
+    "longitude": 117.770876,
+    "tags": [
+      "mollit",
+      "cupidatat",
+      "Lorem",
+      "et",
+      "veniam",
+      "minim",
+      "ipsum"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Spencer Parker"
+      },
+      {
+        "id": 1,
+        "name": "Erickson Benjamin"
+      },
+      {
+        "id": 2,
+        "name": "Joni Nieves"
+      }
+    ],
+    "greeting": "Hello, Deborah Hendricks! You have 3 unread messages.",
+    "favoriteFruit": "banana"
+  }
+]
+  
+
+for(var i = 0; i &lt; data.length; i++) {
+  xdmp.documentInsert("/" + data[i].id + ".json", data[i])
+}
+</query></workspace></export>
