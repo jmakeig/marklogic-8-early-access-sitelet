@@ -1,230 +1,387 @@
-<export><workspace name="Workspace"><query name="Load data" focus="true" active="true" mode="javascript">declareUpdate()
+<export><workspace name="JavaScript Quick Start"><query name="Load data" focus="false" active="true" mode="javascript">/*
+ * Insert some JSON generated from &lt;http://www.json-generator.com&gt; and &lt;http://hipsum.co&gt;, natch.
+ */
 
+// Tell the transaction manager that we intend to update the database.
+declareUpdate()
+
+// Wrapper for xdmp.documentInsert built-in to construct the URI from the guid field and
+function insertData(data) { 
+  if(!data) return
+  for(var i = 0; i &lt; data.length; i++) {
+    xdmp.documentInsert(
+      "/" + data[i].guid + ".json", 
+      data[i], 
+      null, //xdmp.defaultPermissions(), 
+      ["fake data"]
+    )
+  } 
+}
+  
 var data = [
   {
     "id": 0,
-    "guid": "08484ad6-3738-4c92-87b0-c1c45049f718",
+    "guid": "6e1c7304-09a1-4436-ba77-ae1e3b8856f7",
     "isActive": true,
-    "balance": "$1,194.33",
+    "balance": "$2,774.31",
     "picture": "http://placehold.it/32x32",
-    "age": 38,
+    "age": 29,
     "eyeColor": "blue",
-    "name": "Sandoval Cummings",
-    "gender": "male",
-    "company": "APPLIDEC",
-    "email": "sandovalcummings@applidec.com",
-    "phone": "+1 (860) 580-2176",
-    "address": "969 Clifford Place, Kanauga, New Mexico, 1085",
-    "about": "Cillum reprehenderit officia adipisicing do consequat nisi proident aliqua ipsum commodo minim cupidatat. Ipsum cupidatat deserunt do exercitation. Voluptate ipsum quis laborum quis et nisi irure culpa anim est ex laboris et eiusmod. Esse anim pariatur incididunt ullamco mollit minim dolore nisi.\r\n",
-    "registered": "2014-02-25T10:58:58 +08:00",
-    "latitude": -40.15927,
-    "longitude": -147.294329,
-    "tags": [
-      "laborum",
-      "ullamco",
-      "ut",
-      "tempor",
-      "incididunt",
-      "excepteur",
-      "ea"
-    ],
-    "friends": [
-      {
-        "id": 0,
-        "name": "Willis Sloan"
-      },
-      {
-        "id": 1,
-        "name": "Hensley Mccarty"
-      },
-      {
-        "id": 2,
-        "name": "Lily Bright"
-      }
-    ],
-    "greeting": "Hello, Sandoval Cummings! You have 5 unread messages.",
-    "favoriteFruit": "apple"
-  },
-  {
-    "id": 1,
-    "guid": "6a9c7f7c-4eb2-401b-a77b-5d48fc4516ec",
-    "isActive": false,
-    "balance": "$1,638.17",
-    "picture": "http://placehold.it/32x32",
-    "age": 36,
-    "eyeColor": "brown",
-    "name": "Hester Rivers",
+    "name": "Shauna Weber",
     "gender": "female",
-    "company": "NETUR",
-    "email": "hesterrivers@netur.com",
-    "phone": "+1 (988) 502-2707",
-    "address": "206 Tiffany Place, Tonopah, Massachusetts, 3473",
-    "about": "Eiusmod voluptate cupidatat incididunt reprehenderit et consequat eiusmod. Et mollit consequat nisi eiusmod incididunt sunt cillum aliquip labore proident exercitation esse aliquip. Magna pariatur dolor est qui. Non eiusmod consectetur mollit elit elit commodo in ea. Cupidatat in do nulla est eu dolore pariatur tempor consequat laborum tempor et. Sint anim incididunt velit ut tempor eu voluptate sit Lorem duis incididunt sint ut. Officia nisi id pariatur aliqua ipsum velit ullamco qui anim.\r\n",
-    "registered": "2014-01-02T13:20:24 +08:00",
-    "latitude": -78.902303,
-    "longitude": 128.436496,
-    "tags": [
-      "eiusmod",
-      "labore",
-      "non",
-      "elit",
-      "enim",
-      "labore",
-      "ea"
-    ],
+    "company": "IPLAX",
+    "email": "shaunaweber@iplax.com",
+    "phone": "+1 (950) 427-2202",
+    "address": "760 Forest Place, Glenshaw, Michigan, 1175",
+    "about": "Kitsch fingerstache XOXO, Carles chambray 90's meh cray disrupt Tumblr. Biodiesel craft beer sartorial meh put a bird on it, literally keytar blog vegan paleo. Chambray messenger bag +1 hoodie, try-hard actually banjo bespoke distillery pour-over Godard Thundercats organic. Kitsch wayfarers Pinterest American Apparel. Hella Shoreditch blog, shabby chic iPhone tousled paleo before they sold out keffiyeh Portland Marfa twee dreamcatcher. 8-bit Vice post-ironic plaid. Cornhole Schlitz blog direct trade lomo Pinterest.",
+    "registered": "2014-01-31T19:57:33+08:00",
+    "latitude": 15.561833,
+    "longitude": 140.543694,
+    "tags": [],
     "friends": [
       {
         "id": 0,
-        "name": "Vicky Graves"
+        "name": "Trevino Torres"
       },
       {
         "id": 1,
-        "name": "Carrillo Goodman"
+        "name": "Kellie Holden"
       },
       {
         "id": 2,
-        "name": "Salas Stuart"
+        "name": "Hubbard Hopkins"
       }
     ],
-    "greeting": "Hello, Hester Rivers! You have 2 unread messages.",
     "favoriteFruit": "strawberry"
   },
   {
+    "id": 1,
+    "guid": "34a23649-ec61-478f-90ab-5f01a55120ce",
+    "isActive": false,
+    "balance": "$1,787.45",
+    "picture": "http://placehold.it/32x32",
+    "age": 38,
+    "eyeColor": "green",
+    "name": "Peters Barnett",
+    "gender": "male",
+    "company": "ENDICIL",
+    "email": "petersbarnett@endicil.com",
+    "phone": "+1 (952) 600-2252",
+    "address": "749 Green Street, Tyro, Illinois, 2856",
+    "about": "Letterpress Echo Park fashion axe occupy whatever before they sold out, Pinterest pickled cliche. Ethnic stumptown food truck wolf, ethical Helvetica Marfa hashtag. Echo Park photo booth banh mi ennui, organic VHS 8-bit fixie. Skateboard irony dreamcatcher mlkshk iPhone cliche. Flannel ennui YOLO artisan tofu. Hashtag irony Shoreditch letterpress, selvage scenester YOLO. Locavore fap bicycle rights, drinking vinegar Tonx bespoke paleo 3 wolf moon readymade direct trade ugh wolf asymmetrical beard plaid.",
+    "registered": "2014-06-13T23:15:33+07:00",
+    "latitude": 15.27027,
+    "longitude": -107.313581,
+    "tags": [
+      "ex",
+      "ex",
+      "ut",
+      "exercitation",
+      "Lorem",
+      "magna",
+      "non",
+      "aute",
+      "nisi"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Mcmahon Navarro"
+      },
+      {
+        "id": 1,
+        "name": "Milagros Simpson"
+      },
+      {
+        "id": 2,
+        "name": "Terri Gallegos"
+      }
+    ],
+    "favoriteFruit": "apple"
+  },
+  {
     "id": 2,
-    "guid": "fcf4ac76-65b5-4fc5-9d83-c4faefc12c0a",
+    "guid": "978c3f49-92fa-4f52-b8bd-76159a2c15b4",
     "isActive": false,
-    "balance": "$2,449.76",
-    "picture": "http://placehold.it/32x32",
-    "age": 40,
-    "eyeColor": "green",
-    "name": "Christy Spencer",
-    "gender": "female",
-    "company": "CONFERIA",
-    "email": "christyspencer@conferia.com",
-    "phone": "+1 (965) 526-3094",
-    "address": "768 Sumpter Street, Omar, Kansas, 9029",
-    "about": "Deserunt ullamco veniam nisi consequat. Laborum sit laboris consectetur mollit sunt sit minim sint minim labore. Qui aliquip sint tempor nulla ipsum adipisicing. Cillum ea anim consectetur quis voluptate duis Lorem id ipsum nulla veniam aute ipsum. Nisi sit nulla ipsum tempor ex laborum sint non ex incididunt. Eiusmod quis et occaecat excepteur ipsum nostrud. Quis ullamco minim elit esse aliqua.\r\n",
-    "registered": "2014-01-15T17:39:11 +08:00",
-    "latitude": 56.934683,
-    "longitude": -74.073636,
-    "tags": [
-      "laborum",
-      "ad",
-      "eu",
-      "nostrud",
-      "deserunt",
-      "tempor",
-      "voluptate"
-    ],
-    "friends": [
-      {
-        "id": 0,
-        "name": "Serrano Golden"
-      },
-      {
-        "id": 1,
-        "name": "Elsie Chaney"
-      },
-      {
-        "id": 2,
-        "name": "Isabelle Sellers"
-      }
-    ],
-    "greeting": "Hello, Christy Spencer! You have 4 unread messages.",
-    "favoriteFruit": "banana"
-  },
-  {
-    "id": 3,
-    "guid": "0196d199-6d5b-4955-ba74-7b46aa295fc0",
-    "isActive": false,
-    "balance": "$3,146.17",
-    "picture": "http://placehold.it/32x32",
-    "age": 29,
-    "eyeColor": "green",
-    "name": "Mari Suarez",
-    "gender": "female",
-    "company": "CANOPOLY",
-    "email": "marisuarez@canopoly.com",
-    "phone": "+1 (855) 567-3680",
-    "address": "641 Catherine Street, Gardiner, Wisconsin, 4987",
-    "about": "Excepteur ea do laborum laborum ex sunt non sunt. Cupidatat et mollit deserunt duis id. Laborum minim laboris in ipsum consectetur labore deserunt. Sit incididunt ullamco occaecat amet non adipisicing laborum ad.\r\n",
-    "registered": "2014-06-04T10:28:46 +07:00",
-    "latitude": -53.505913,
-    "longitude": 134.799724,
-    "tags": [
-      "cupidatat",
-      "laborum",
-      "ea",
-      "quis",
-      "eu",
-      "consequat",
-      "aute"
-    ],
-    "friends": [
-      {
-        "id": 0,
-        "name": "Arnold Randall"
-      },
-      {
-        "id": 1,
-        "name": "Enid Battle"
-      },
-      {
-        "id": 2,
-        "name": "Rosemarie Hayes"
-      }
-    ],
-    "greeting": "Hello, Mari Suarez! You have 10 unread messages.",
-    "favoriteFruit": "banana"
-  },
-  {
-    "id": 4,
-    "guid": "1ee50031-d9e4-402f-8f55-063e2fe2131c",
-    "isActive": true,
-    "balance": "$3,452.62",
+    "balance": "$3,416.58",
     "picture": "http://placehold.it/32x32",
     "age": 22,
     "eyeColor": "brown",
-    "name": "Deborah Hendricks",
-    "gender": "female",
-    "company": "TROLLERY",
-    "email": "deborahhendricks@trollery.com",
-    "phone": "+1 (847) 486-2772",
-    "address": "917 Nelson Street, Bloomington, Missouri, 8567",
-    "about": "Pariatur aliquip eu ea mollit veniam non reprehenderit aliquip. Nostrud veniam eiusmod commodo et in sint. Tempor Lorem amet qui nulla voluptate deserunt cupidatat. In do proident est culpa culpa dolor exercitation sunt sint amet eu Lorem sunt.\r\n",
-    "registered": "2014-01-02T02:22:27 +08:00",
-    "latitude": 1.555981,
-    "longitude": 117.770876,
+    "name": "Mosley Nunez",
+    "gender": "male",
+    "company": "VIRVA",
+    "email": "mosleynunez@virva.com",
+    "phone": "+1 (919) 457-3044",
+    "address": "760 Beverly Road, Elliston, New York, 4057",
+    "about": "Kale chips raw denim ethical selfies kitsch drinking vinegar. Before they sold out wayfarers High Life, fingerstache photo booth slow-carb iPhone pork belly keffiyeh actually fashion axe kale chips pug PBR&amp;B. Banjo sriracha ugh post-ironic stumptown Etsy. Locavore gastropub Etsy banjo food truck, skateboard artisan Truffaut you probably haven't heard of them cray roof party slow-carb quinoa vegan. Drinking vinegar lo-fi jean shorts, tofu stumptown butcher cardigan Shoreditch flexitarian cliche biodiesel irony trust fund skateboard salvia. Helvetica Cosby sweater stumptown, pug cray tousled ennui Godard lo-fi Carles. Keffiyeh letterpress Wes Anderson ethical, umami post-ironic sustainable Tumblr Tonx pour-over.",
+    "registered": "2014-02-16T09:24:18+08:00",
+    "latitude": 22.386006,
+    "longitude": -119.347983,
     "tags": [
-      "mollit",
-      "cupidatat",
-      "Lorem",
-      "et",
-      "veniam",
-      "minim",
-      "ipsum"
+      "eiusmod",
+      "ullamco"
     ],
     "friends": [
       {
         "id": 0,
-        "name": "Spencer Parker"
+        "name": "Kidd Alvarez"
       },
       {
         "id": 1,
-        "name": "Erickson Benjamin"
+        "name": "Harrell Fisher"
       },
       {
         "id": 2,
-        "name": "Joni Nieves"
+        "name": "Chan Richard"
       }
     ],
-    "greeting": "Hello, Deborah Hendricks! You have 3 unread messages.",
-    "favoriteFruit": "banana"
+    "favoriteFruit": "strawberry"
+  },
+  {
+    "id": 3,
+    "guid": "986af6e1-e0f1-450f-b1f0-2eff54357840",
+    "isActive": true,
+    "balance": "$2,061.82",
+    "picture": "http://placehold.it/32x32",
+    "age": 38,
+    "eyeColor": "blue",
+    "name": "Rosalind Christian",
+    "gender": "female",
+    "company": "UPDAT",
+    "email": "rosalindchristian@updat.com",
+    "phone": "+1 (817) 544-2451",
+    "address": "901 Etna Street, Weeksville, Florida, 5402",
+    "about": "Skateboard pop-up kogi, ethnic Vice disrupt Truffaut twee fashion axe forage occupy biodiesel. Bespoke umami yr, flannel kogi XOXO bitters butcher ugh DIY lomo. Flexitarian distillery flannel, mustache butcher raw denim crucifix sartorial PBR&amp;B. Ennui beard freegan, Blue Bottle cornhole gluten-free yr sriracha 90's tofu stumptown crucifix Williamsburg keytar fingerstache. Odd Future selfies Shoreditch Echo Park deep v, lo-fi put a bird on it cray master cleanse Intelligentsia drinking vinegar. Ethical flannel craft beer meggings forage, paleo High Life viral Blue Bottle food truck fashion axe twee fingerstache Bushwick. Scenester Thundercats lo-fi Odd Future, wolf kale chips fashion axe mixtape slow-carb quinoa.",
+    "registered": "2014-04-16T07:14:06+07:00",
+    "latitude": 75.484745,
+    "longitude": 156.240181,
+    "tags": [
+      "eu",
+      "labore",
+      "duis",
+      "velit"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Bridgette Wade"
+      },
+      {
+        "id": 1,
+        "name": "Margo Rodriquez"
+      },
+      {
+        "id": 2,
+        "name": "Wilson Cooper"
+      }
+    ],
+    "favoriteFruit": "apple"
+  },
+  {
+    "id": 4,
+    "guid": "dd95907c-3b29-4e2c-9a4c-baf61bd96c9d",
+    "isActive": false,
+    "balance": "$3,385.27",
+    "picture": "http://placehold.it/32x32",
+    "age": 38,
+    "eyeColor": "blue",
+    "name": "Adrian Dodson",
+    "gender": "female",
+    "company": "ZENSUS",
+    "email": "adriandodson@zensus.com",
+    "phone": "+1 (949) 471-2658",
+    "address": "289 Grant Avenue, Courtland, Alaska, 8847",
+    "about": "Tote bag pug whatever trust fund, yr fashion axe American Apparel selfies flannel Portland gentrify synth twee. Tousled tofu biodiesel tattooed polaroid. Chia direct trade drinking vinegar, Helvetica ethical bitters banjo polaroid quinoa. Wes Anderson ugh 3 wolf moon +1 single-origin coffee, authentic plaid Tonx you probably haven't heard of them quinoa dreamcatcher fingerstache literally meggings. Vice aesthetic authentic, fashion axe stumptown Carles selfies organic you probably haven't heard of them street art Thundercats. Before they sold out Vice yr post-ironic Marfa cliche. Blue Bottle Portland bespoke slow-carb cliche.",
+    "registered": "2014-06-16T16:13:14+07:00",
+    "latitude": -19.360066,
+    "longitude": -97.042726,
+    "tags": [
+      "aliquip"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Tate Hopper"
+      },
+      {
+        "id": 1,
+        "name": "Berger Ayala"
+      },
+      {
+        "id": 2,
+        "name": "Nola Erickson"
+      }
+    ],
+    "favoriteFruit": "strawberry"
   }
 ]
-  
+    
+insertData(data)
+</query><query name="Search" focus="false" active="true" mode="javascript">/*
+ * List the active users by most tags.
+ */
 
-for(var i = 0; i &lt; data.length; i++) {
-  xdmp.documentInsert("/" + data[i].id + ".json", data[i])
+var query = cts.andQuery([
+  cts.orQuery([
+    cts.jsonPropertyValueQuery("isActive", true),
+    cts.jsonPropertyWordQuery("about", "ironic")
+  ]),
+  cts.collectionQuery("fake data")
+])
+var itr = fn.subsequence(cts.search(query), 1, 10) // Use subsequence for efficient pagination (limit/skip)
+
+// Array to accumulate results
+var results = []
+map(itr, function(item) { // Project out of the returned documents
+  var obj = {};
+  ["guid", "name", "isActive", "about"].forEach(function(field) {
+    obj[field] = item[field]
+  })
+  // Get the count of the tags rather than the list.
+  xdmp.log(item.tags)
+  obj.tagCount = item.tags.valueOf.length; // .valueOf returns 
+  results.push(obj)
+})
+
+// Order descending by number of tags
+results.sort(function(a, b) {
+  if(a.tagCount &lt; b.tagCount) return 1
+  if(a.tagCount &gt; b.tagCount) return -1
+  return 0
+})
+  
+// Utility function to loop through an interator
+function map(itr, f) {   
+  while(true) {
+   var item = itr.next()
+   if(item.done) break;
+   f(item.value.root) // .valueOf converts a JSON node to a JavaScript object
+  }
 }
+
+
+
+
+
+
+
+
+</query><query name="Clear database" focus="false" active="true" mode="javascript">/*
+ * Loops through all of the URIs in a database and deletes them individually in a single transaction.
+ * This is an illustration of how to loop through iterators. Use xdmp.directorDelete or 
+ * xdmp.collectionDelete for removing documents from a large database more efficiently.
+ */
+
+// Tell the transaction manager that we're about to make an update
+declareUpdate()
+// Get an iterator for all of the URIs in the database.
+var uris = cts.uris()
+while(uris.count &gt; 0) {
+  // Delete each URI and move to the next one. 
+  xdmp.documentDelete(uris.next().value)    
+}
+// Make sure the database is actually empty. This needs to happen in an isolated transaction.
+//xdmp.eval('cts.uris().count === 0', null, {isolation: "different-transaction"})</query><query name="Update" focus="false" active="true" mode="javascript">declareUpdate()
+  
+var itr = fn.collection()
+  
+map(itr, function(item) {
+  item.balance = parseFloat(item.balance.replace(/[$,]/g, ""))
+  
+})
+  
+// Utility function to loop through an interator
+function map(itr, f) {   
+  while(true) {
+   var item = itr.next()
+   if(item.done) break;
+   f(item.value.root.valueOf)
+  }
+}
+</query><query name="XPath" focus="false" active="true" mode="javascript">//xdmp.xqueryEval("xdmp:estimate(collection())", null, {isolation: "different-transaction"})
+
+// XPath evaluated against XML or JSON
+xdmp.xqueryEval("/balance")</query><query name="ObjItr" focus="false" active="true" mode="javascript">//var item = fn.collection().toArray()[0].root
+//var uri = xdmp.nodeUri(item)
+
+//parseFloat(item.balance.replace(/$,/g, ""))
+
+function ObjItr(itr) {
+  this.itr = itr 
+}
+ObjItr.prototype = {
+  next: function() {
+    return this.itr.next().value.root.valueOf
+  },
+  forEach: function(f) {
+    while(true) {
+     var item = this.itr.next()
+     if(item.done) break;
+     f(item.value.root.valueOf)
+    }
+  }
+}
+  
+function search(query /* orderBy, start, size */) {
+  return new ObjItr(cts.search(query))
+}
+
+
+// Calculate the total balance for the matching users with a balance of more than $2,500.00.
+var a = []
+var query = cts.andQuery(null)
+search(query).forEach(function(item) {
+  var value = parseFloat(item.balance.replace(/[\$,]/g, ""))
+  if(value &gt; 2500.00)
+    a.push(value)
+})
+a.reduce(function(a, b) {
+  return a + b
+}, 0.0).toFixed(2)</query><query name="OOP" focus="false" active="true" mode="javascript">/*
+ * OOP approach.
+ */
+declareUpdate()
+Person = function(fname, lname) {
+  if(fname) this.fname = fname
+  if(lname) this.lname = lname
+}
+Person.prototype = {
+  greet: function() { return "Hi, I'm " + this.fname + " " + this.lname + "." },
+  toJSON: function() {
+    return { fname: this.fname, lname: this.lname } 
+  }
+}
+Person.fromJSON = function(json) {
+  var p = new Person(json.fname, json.lname)
+  return p
+}
+  
+var sam = new Person("Sam", "Simon")
+xdmp.documentInsert("/sam", sam.toJSON())
+
+
+// Get the data out of the database as JSON and re-hydrate the Object
+// This will only return the second time you run this due to transaction isolation.
+var s = Person.fromJSON(fn.doc("/sam").next().value.root)
+s instanceof Person &amp;&amp; s.fname === "Sam"
+</query><query name="XMLBuilder" focus="false" active="true" mode="javascript">// query</query><query name="Eval from XQuery" focus="false" active="true" mode="xquery">(:
+ : Evaluate a string of JavaScript from XQuery.
+ :)
+xdmp:javascript-eval(
+  "var start; var a = []; for(var i = start; i &lt; 100; i++) {a.push(i); } a;", 
+  ("start", 15) (: Initilize an external variables :)
+)</query><query name="Import XQuery" focus="true" active="true" mode="javascript">/*
+ * Create a dateTime range index on the "registered" property.
+ */
+
+// Using CommonJS syntax, import an XQuyer library module. Imported functions are available in 
+// their lowerCamelCase form, i.e. my:do-something(…) in XQuery would be called as 
+// m.doSomething(…) in JavaScript.
+var admin = require("/MarkLogic/admin.xqy")
+var config = admin.getConfiguration()
+admin.saveConfiguration(
+  admin.databaseAddRangeElementIndex(config, xdmp.database(), 
+    admin.databaseRangeElementIndex("dateTime", null, "registered", null, true, "ignore")
+  )
+)
 </query></workspace></export>
