@@ -12,7 +12,7 @@ function insertData(data) {
     xdmp.documentInsert(
       "/" + data[i].guid + ".json", 
       data[i], 
-      null, //xdmp.defaultPermissions(), 
+      xdmp.defaultPermissions(), 
       ["fake data"]
     )
   } 

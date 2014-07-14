@@ -20,7 +20,7 @@ map(itr, function(item) { // Project out of the returned documents
   })
   // Get the count of the tags rather than the list.
   xdmp.log(item.tags)
-  obj.tagCount = item.tags.valueOf.length; // .valueOf returns 
+  obj.tagCount = item.tags.valueOf().length; // .valueOf returns 
   results.push(obj)
 })
 
