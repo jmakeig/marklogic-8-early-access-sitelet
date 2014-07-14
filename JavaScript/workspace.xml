@@ -217,56 +217,7 @@ var data = [
 ]
     
 insertData(data)
-</query><query name="Search" focus="false" active="true" mode="javascript">/*
- * List the active users by most tags.
- */
-
-var query = cts.andQuery([
-  cts.orQuery([
-    cts.jsonPropertyValueQuery("isActive", true),
-    cts.jsonPropertyWordQuery("about", "ironic")
-  ]),
-  cts.collectionQuery("fake data")
-])
-var itr = fn.subsequence(cts.search(query), 1, 10) // Use subsequence for efficient pagination (limit/skip)
-
-// Array to accumulate results
-var results = []
-map(itr, function(item) { // Project out of the returned documents
-  var obj = {};
-  ["guid", "name", "isActive", "about"].forEach(function(field) {
-    obj[field] = item[field]
-  })
-  // Get the count of the tags rather than the list.
-  xdmp.log(item.tags)
-  obj.tagCount = item.tags.valueOf.length; // .valueOf returns 
-  results.push(obj)
-})
-
-// Order descending by number of tags
-results.sort(function(a, b) {
-  if(a.tagCount &lt; b.tagCount) return 1
-  if(a.tagCount &gt; b.tagCount) return -1
-  return 0
-})
-  
-// Utility function to loop through an interator
-function map(itr, f) {   
-  while(true) {
-   var item = itr.next()
-   if(item.done) break;
-   f(item.value.root) // .valueOf converts a JSON node to a JavaScript object
-  }
-}
-
-
-
-
-
-
-
-
-</query><query name="Clear database" focus="false" active="true" mode="javascript">/*
+</query><query name="Search" focus="false" active="false" mode="javascript"></query><query name="Clear database" focus="false" active="false" mode="javascript">/*
  * Loops through all of the URIs in a database and deletes them individually in a single transaction.
  * This is an illustration of how to loop through iterators. Use xdmp.directorDelete or 
  * xdmp.collectionDelete for removing documents from a large database more efficiently.
@@ -281,13 +232,38 @@ while(uris.count &gt; 0) {
   xdmp.documentDelete(uris.next().value)    
 }
 // Make sure the database is actually empty. This needs to happen in an isolated transaction.
-//xdmp.eval('cts.uris().count === 0', null, {isolation: "different-transaction"})</query><query name="Update" focus="false" active="true" mode="javascript">declareUpdate()
-  
-var itr = fn.collection()
-  
+//xdmp.eval('cts.uris().count === 0', null, {isolation: "different-transaction"})</query><query name="Update: Document" focus="false" active="true" mode="javascript">/* 
+ * Update the string balance amount to refelect the 
+ */
+
+// Tell the transaction manager that we're about to make an update
+declareUpdate()
+
+// Get an interator for the entire collection of documents that we'll be updating.
+var itr = fn.collection("fake data")
+
+// For each item in the collection, update the balance field from a string
+//   balance: "$1,234.56" 
+// to a Number representing the value and a unit of measure 
+//   balance: { value: 1234.56, unit: "USD" }
 map(itr, function(item) {
-  item.balance = parseFloat(item.balance.replace(/[$,]/g, ""))
+  if(!item.balance || item.balance.value) return
   
+ 
+      
+  // Turn the JSON node from the database into a JavaScript object so we can update it.
+  // JSON nodes are immutable.
+  var obj = item.valueOf()
+  obj.balance = { 
+    value: parseFloat(obj.balance.replace(/[$,]/g, "")),
+    unit: "USD"
+  }
+  
+  // Get the existing metadata on the document 
+  var uri = xdmp.nodeUri(item)
+  var collections = xdmp.documentGetCollections(uri)
+  // Re-insert with the same URI
+  xdmp.documentInsert(uri, obj, xdmp.defaultPermissions(), collections)
 })
   
 // Utility function to loop through an interator
@@ -295,93 +271,47 @@ function map(itr, f) {
   while(true) {
    var item = itr.next()
    if(item.done) break;
-   f(item.value.root.valueOf)
+   f(item.value.root)
   }
 }
-</query><query name="XPath" focus="false" active="true" mode="javascript">//xdmp.xqueryEval("xdmp:estimate(collection())", null, {isolation: "different-transaction"})
+</query><query name="XPath" focus="false" active="false" mode="javascript"></query><query name="OOP" focus="false" active="false" mode="javascript"></query><query name="XMLBuilder" focus="false" active="false" mode="javascript"></query><query name="Eval from XQuery" focus="false" active="false" mode="xquery"></query><query name="Import XQuery" focus="false" active="false" mode="javascript"></query><query name="Update: Node replace" focus="true" active="true" mode="javascript">/* 
+ * For each document in the "fake data" collection, update the string balance property 
+ * separate the numeric value and its unit of measure. 
+ */
 
-// XPath evaluated against XML or JSON
-xdmp.xqueryEval("/balance")</query><query name="ObjItr" focus="false" active="true" mode="javascript">//var item = fn.collection().toArray()[0].root
-//var uri = xdmp.nodeUri(item)
+// Tell the transaction manager that we're about to make an update
+declareUpdate()
 
-//parseFloat(item.balance.replace(/$,/g, ""))
+// Get an interator for the entire collection of documents that we'll be updating.
+var itr = fn.collection("fake data")
 
-function ObjItr(itr) {
-  this.itr = itr 
-}
-ObjItr.prototype = {
-  next: function() {
-    return this.itr.next().value.root.valueOf
-  },
-  forEach: function(f) {
-    while(true) {
-     var item = this.itr.next()
-     if(item.done) break;
-     f(item.value.root.valueOf)
-    }
-  }
-}
+// For each item in the collection, update the balance field from a string
+//   balance: "$1,234.56" 
+// to a Number representing the value and a unit of measure 
+//   balance: { value: 1234.56, unit: "USD" }
+map(itr, function(item) {
+  if(!item.balance || item.balance.value) return
   
-function search(query /* orderBy, start, size */) {
-  return new ObjItr(cts.search(query))
-}
-
-
-// Calculate the total balance for the matching users with a balance of more than $2,500.00.
-var a = []
-var query = cts.andQuery(null)
-search(query).forEach(function(item) {
-  var value = parseFloat(item.balance.replace(/[\$,]/g, ""))
-  if(value &gt; 2500.00)
-    a.push(value)
+  // Get the JavaScript string primitive representing the current balance
+  var currentBalance = item.balance.valueOf()
+    
+  // Create a new JavaScript object to hold the number value and string unit properties
+  var obj = { 
+    value: parseFloat(currentBalance.replace(/[$,]/g, "")),
+    unit: "USD"
+  }
+  // Replace the existing balance property with the synthesized object. 
+  // The JavaScript object is implicitly converted to a JSON node. This is
+  // the equivalent of calling xdmp.toJson(obj).root
+  xdmp.nodeReplace(item.balance, obj)    
 })
-a.reduce(function(a, b) {
-  return a + b
-}, 0.0).toFixed(2)</query><query name="OOP" focus="false" active="false" mode="javascript"></query><query name="XMLBuilder" focus="true" active="true" mode="javascript">/*
- * XMLBuilder is a JavaScript API for building XML structures. 
- */
-
-var x = new XMLBuilder()
-x.startDocument()
-  x.addComment("This document happened to be generated by Server-side JavaScript on " + (new Date()).toString())
-  x.startElement("ex:article","http://example.com","ex") // Declare namespace and prefix and use it
-    x.addAttribute("is-draft", null,"true")
-    for(var i = 0; i &lt; 10; i++) {
-        x.startElement("ex:p", "", "")
-        x.addText("This is paragraph ") + 
-          x.startElement("em", "", "") // No namespace
-            x.addText(i + 1)
-          x.endElement()
-        x.addText(".")
-      x.endElement()
-    }
-  x.endElement()
-x.endDocument()
-var node = x.toNode()
-node</query><query name="Eval from XQuery" focus="false" active="true" mode="xquery">(:
- : Evaluate a string of JavaScript from XQuery.
- :)
-xdmp:javascript-eval(
-  "var start; var a = []; for(var i = start; i &lt; 100; i++) {a.push(i); } a;", 
-  ("start", 15) (: Initilize an external variables :)
-)</query><query name="Import XQuery" focus="false" active="true" mode="javascript">/*
- * Import an XQuery library module into JavaScript and call its functions. 
- * This particular example uses the Admin API to create a dateTime range index on the "registered" property.
- * Any XQuery library will work, though.
- */
-
-// Using CommonJS syntax, import an XQuery library module. Imported functions are available in 
-// their lowerCamelCase form, i.e. my:do-something(…) in XQuery would be called as 
-// m.doSomething(…) in JavaScript.
-var admin = require("/MarkLogic/admin.xqy")
-var config = admin.getConfiguration()
-try {
-  admin.saveConfiguration(
-    admin.databaseAddRangeElementIndex(config, xdmp.database(), 
-      admin.databaseRangeElementIndex("dateTime", null, "registered", null, true, "ignore")
-    )
-  )
-} catch(err) { 
-  if(err.name != "ADMIN-DUPLICATECONFIGITEM") throw err // Ignore the error if we've already got this index
+  
+// Utility function to loop through an interator
+function map(itr, f) {   
+  while(true) {
+   var item = itr.next()
+   if(item.done) break;
+   f(item.value.root)
+  }
 }
 </query></workspace></export>
