@@ -9,9 +9,14 @@ var query = cts.andQuery([
   ]),
   cts.collectionQuery("fake data")
 ])
-// Retrun 
+// Order by registration date, newest to oldest. Note that the jsonPropertyReference requires a range index on the
+// "registered" property (see "Import XQuery")
 var order = cts.indexOrder(cts.jsonPropertyReference("registered"), ["descending"])
-var itr = fn.subsequence(cts.search(query, ["unfiltered", order]), 1, 3) // Use subsequence for efficient pagination (limit/skip)
+
+var itr = fn.subsequence( // Use subsequence for efficient pagination (limit/skip)
+  cts.search(query, ["unfiltered", order]), // Run the search out of the indexes, using the order specification above
+  1, 3
+)
 
 // Create an empty Array to accumulate the results.
 var results = []
@@ -25,18 +30,18 @@ map(itr, function(item) { // Project out of the returned documents
   results.push(obj)
 })
 
-// Standard JavaScript Array.prototype.sort call to order the result set descending by number of tags. 
+// Standard JavaScript Array.prototype.sort call to order the result set descending by number of tags calculated above.
 results.sort(function(a, b) {
   if(a.tagCount < b.tagCount) return 1
   if(a.tagCount > b.tagCount) return -1
   return 0
 })
-  
+
 // Utility function to loop through an iterator.
-function map(itr, f) {   
+function map(itr, f) {
   while(true) {
    var item = itr.next()
    if(item.done) break;
-   f(item.value.root) // Returns the root node. 
+   f(item.value.root) // Returns the root node.
   }
 }
