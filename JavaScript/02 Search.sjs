@@ -9,18 +9,26 @@ var query = cts.andQuery([
   ]),
   cts.collectionQuery("fake data")
 ])
+
 // Order by registration date, newest to oldest. Note that the jsonPropertyReference requires a range index on the
-// "registered" property (see "Import XQuery")
-var order = cts.indexOrder(cts.jsonPropertyReference("registered"), ["descending"])
+// "registered" property (see "Import XQuery"). If that index doesn't exist, disregard the ordering. Checking for
+// indexes at runtime is not a best practice for production code, but is illustrative here.
+var order
+try {
+  order = cts.indexOrder(cts.jsonPropertyReference("registered"), ["descending"])
+} catch(err) {
+  if("XDMP-ELEMRIDXNOTFOUND" !== err.name) throw err
+  else order = null
+}
 
 var itr = fn.subsequence( // Use subsequence for efficient pagination (limit/skip)
-  cts.search(query, ["unfiltered", order]), // Run the search out of the indexes, using the order specification above
-  1, 3
+  cts.search(query, ["unfiltered", order]) // Run the search out of the indexes, using the order specification above
+  , 1, 3 // Just get the top 3.
 )
 
 // Create an empty Array to accumulate the results.
 var results = []
-map(itr, function(item) { // Project out of the returned documents
+map(itr, function(item) { // Project out of the returned documents.
   var obj = {};
   ["guid", "name", "isActive", "about"].forEach(function(field) {
     obj[field] = item[field]
