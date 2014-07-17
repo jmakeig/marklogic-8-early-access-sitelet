@@ -8,5 +8,5 @@ npm install
 popd
 popd
 echo 'var marklogic = require("marklogic")
-console.dir(marklogic)' > "$1"/_test.js
-node "$1"/_test.js
+console.dir(marklogic)' > "$1"/verify.js
+node "$1"/verify.js
