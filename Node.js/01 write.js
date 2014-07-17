@@ -1,4 +1,4 @@
-var marklogic = require("marklogic/node-client-api")
+var marklogic = require("marklogic")
 var conn =  {
   host:     'jmakeig-centos6-virtualbox.localdomain',
   port:     8000,
