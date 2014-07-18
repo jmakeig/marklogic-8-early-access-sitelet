@@ -22,9 +22,41 @@
   </head>
   <body>
     <h2>Node.js Client API</h2>
-    <p>The Node.js Client API allows developers to quickly and easily access a MarkLogic cluster from their Node applications. The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and manage JSON documents natively, the Node Client API is an ideal tool for full-stack JavaScript development.<p/>
-    <p>The Node Client API encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its APIs are designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node Client API provides an extension mechanism that executes JavaScript on Server where it runs close to the data. </p>
+    <h3>What it is</h3>
+    <p>The Node.js Client API is an open-source JavaScript library that allows developers to quickly, easily, and reliably access MarkLogic from their Node applications. </p>
+    <pre>var marklogic = require('marklogic')
+var q = marklogic.queryBuilder
+var db = marklogic.createDatabaseClient()
+db.query(
+  q.where(
+    q.collection('countries'),
+    q.value('region', 'Africa'),
+    q.or(
+      q.word('background',   'France'),
+      q.word('Legal system', 'French')
+      )
+    )
+  ).stream().
+    on('data', function(document) {
+      console.log(document.content);
+    }).
+    on('error', function(error) {
+      console.log(error)
+    })</pre>
+    <h3>Why it matters</h3>
+    <p>For developers using (or looking to use) Node.js in their application stack, the MarkLogic Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
+    <p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and manage JSON documents natively, the Node Client API is an ideal tool for full-stack JavaScript development.</p>
+    <p>It’s written in JavaScript specifically for Node. The Node Client API encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its APIs are designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node Client API provides an extension mechanism that executes JavaScript on Server where it runs close to the data. </p>
     <p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. Users are encouraged to provide feedback through issue reports or pull requests. </p>
+    <h3>Where to focus</h3>
+    <ul>
+      <li>Query: Support for query by example, a Google-like string grammar, and structured query builder</li>
+      <li>Document management: Read, write, remove, check documents. Support for Node Streams in and out.</li>
+      <li>Partial updates: Patch XML and JSON documents to avoid moving entire documents between the server and client</li>
+      <li>Transactions: Multi-statement ACID transactions with explicit commit and rollback.</li>
+      <li>Optimistic locking: Notification of conflicting writes</li>
+      <li>Configuration management: Manage inbound/outbound transforms, properties, and extension libraries</li>
+    </ul>
     <h3>Getting Started</h3>
       <ol>
         <li>Make sure you have a recent version of <a href="http://nodejs.org/download/">Node.js</a> (at least v0.10.22), <a href="https://www.npmjs.org">npm</a> (at least 1.4), and <a href="http://git-scm.com/downloads">git</a> (at least 1.8) installed. To verify on Linux or OS X, use <code>node --version</code>, <code>npm --version</code> and <code>git --version</code>. If your system can’t find any or all of those tools, make sure your <code>$PATH</code> variable includes points to each of those binaries.</li>
@@ -48,14 +80,6 @@ console.dir(marklogic)</pre> and run <pre>node verify.js</pre> If everything wor
      </li>
       </ol>
     <p>T</p>
-    <h3>Where to Focus</h3>
-      <ul>
-        <li>Query: Support for query by example, a Google-like string grammar, and structured query builder</li>
-        <li>Document management: Read, write, remove, check documents. Support for Node Streams in and out.</li>
-        <li>Partial updates: Patch XML and JSON documents to avoid moving entire documents between the server and client</li>
-        <li>Transactions: Multi-statement ACID transactions with explicit commit and rollback.</li>
-        <li>Optimistic locking: Notification of conflicting writes</li>
-        <li>Configuration management: Manage inbound/outbound transforms, properties, and extension libraries</li>
-      </ul>
+    
   </body>
 </html>
