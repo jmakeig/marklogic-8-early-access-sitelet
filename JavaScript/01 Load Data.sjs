@@ -1,5 +1,5 @@
 /*
- * Insert some JSON generated from <http://www.json-generator.com> and <http://hipsum.co>, natch.
+ * Insert some JSON generated from http://www.json-generator.com and http://hipsum.co, natch.
  */
 
 // Tell the transaction manager that we intend to update the database.

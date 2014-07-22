@@ -5,7 +5,7 @@
 	<title>Server-Side JavaScript</title>
 	<style type="text/css">
       body {
-        margin: 0 1em;
+        margin: 0 2em;
         font-family: "Helvetica Neue", Helvetica, sans-serif;
         font-size: 14pt;
         line-height: 1;
@@ -13,18 +13,50 @@
       p, li, pre {
         line-height: 1.44;
       }
-      code, pre {
+      code, pre, textarea.pre {
         font-family: Inconsolata, Consolas, Monaco, monospace;
         font-size: 1.1rem;
       }
-      pre {
+      pre, textarea.pre {
         margin: 0.5rem 1rem;
+        padding: 0.5rem;
+        border: solid 1px #ccc;
       }
+      /*
+      .sidebar {
+        width: 25%;
+        float: right;
+        margin: 2rem;
+        font-size: 85%;
+        background: #ddd;
+      }
+      */
     </style>
 </head>
 <body>
 <h2>Server-Side JavaScript</h2>
-<p>asdfa fasdf afasdfas dfasdfasdf </p>
+<h3>What it is</h3>
+
+<h3>Why it matters</h3>
+<p>Server-side JavaScript allows developers to access the powerful query and data manipulation capabilities of MarkLogic in a language and with tools that they're already familiar with. Combined with JSON as a native data format, MarkLogic provides an ideal platform for building JSON-based services with JavaScript.</p>
+<p>JavaScript has emerged as the language of the web. The move toward advanced applications in the browser and multi-disciplinary “devops” have pushed JavaScript and JSON to the command line, onto devices, down into middleware (à la Node.js) and now into the database itself. JavaScript has familiar C-like syntax with flexible typing, advanced OOP, and functional programming capabilities. </p>
+<p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
+<p>With Server-side JavaScript you'll:</p>
+  <ul>
+    <li><strong>More easily get developers new to MarkLogic productive:</strong> Intuitive APIs and familiar syntax make working with MarkLogic more attractive.</li>
+    <li><strong>Better integrate with existing skills and tools in your organization:</strong> Staff projects with resources you already have and attract and retain developers with an environment that will help them succeed.</li>
+    <li>Access all of MarkLogic's proven capabilities through a pure JSON/JavaScript lens without having to compromise on performance, reliability, or security.</li>
+    <li><strong>Better leverage your existing MarkLogic investment:</strong> Manage JSON, XML, and RDF data with JavaScript. Call XQuery existing library modules as if they were native JavaScript. Evaluate XPath (on both XML and JSON) from JavaScript. Issue SPARQL and SQL queries from JavaScript. Invoke and eval JavaScript from XQuery.</li>
+  </ul>
+<h3>Deeper dive</h3>
+<div class="sidebar">
+  <h4>Before you begin</h4>
+  <p>This is the first Early Access release of Server-Side JavaScript. As such, there are still some rough edges and the APIs available today may change before general availability. </p>
+  <ul>
+    <li>Only the Windows and Linux builds can evaluate server-side JavaScript in Early Access 2. OS X and Solaris will be supported in a future Early Access release. If you are running either of those OSes, a local virtual machine or cloud instance of Linux will be your best bet. </li>
+    <li>Importing JavaScript library modules is not supported in Early Access 2. (Importing XQuery library modules into JavaScript has been implemented, though.) The planned implementation will look similar to Node.js's <code>require()</code> or <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-modules">ECMAScript 6’s modules</a>. Your <a href="">feedback</a> on this would be appreciated. </li>
+  </ul>
+</div>
 <pre>`cat "01 Load Data.sjs"`</pre>
 <p>asdfa fasdf afasdfas dfasdfasdf </p>
 <pre>`cat "02 Search.sjs"`</pre>
