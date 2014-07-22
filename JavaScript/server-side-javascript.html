@@ -92,7 +92,7 @@
 <p>XQuery modules can evaluate JavaScript (and SQL and SPARQL). <code>xdmp:javascript-eval()</code> allows access to external variables and does all of the mapping between XQuery and JavaScript data types. </p>
 <pre class="xqy">`cat "11 JavaScript Eval.xqy"`</pre>
 <h4>12. Clear Database</h4>
-<p>TODO</p>
+<p>Most functions that return multiple values from the database return iterators, rather than fully instantiated data structures. Iterators allow the E-node to lazily load data from the caches and/or D-nodes as it’s needed. The iterator interface is designed to implement the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ES6 interface</a>.</p>
 <pre class="sjs">`cat "12 Clear Database.sjs"`</pre>
 </body>
 </html>
