@@ -13,11 +13,12 @@
       p, li, pre {
         line-height: 1.44;
       }
-      code, pre, textarea.pre {
+      code, pre {
         font-family: Inconsolata, Consolas, Monaco, monospace;
         font-size: 1.1rem;
       }
-      pre, textarea.pre {
+      pre {
+        overflow: auto;
         margin: 0.5rem 1rem;
         padding: 0.5rem;
         border: solid 1px #ccc;
@@ -57,8 +58,41 @@
     <li>Importing JavaScript library modules is not supported in Early Access 2. (Importing XQuery library modules into JavaScript has been implemented, though.) The planned implementation will look similar to Node.js's <code>require()</code> or <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-modules">ECMAScript 6’s modules</a>. Your <a href="">feedback</a> on this would be appreciated. </li>
   </ul>
 </div>
-<pre>`cat "01 Load Data.sjs"`</pre>
-<p>asdfa fasdf afasdfas dfasdfasdf </p>
-<pre>`cat "02 Search.sjs"`</pre>
+<h4>1. Load Data</h4>
+<p>Load some JSON documents using the built-in <code>xdmp.documentInsert()</code>. <code>declareUpdate()</code> tells the transaction manager that the current statement intends to change the database. Transactions are scoped to the entire statement. </p>
+<pre class="sjs">`cat "01 Load Data.sjs"`</pre>
+<h4>2. Search</h4>
+<p>Build a query, run a search, and iterate through the results. </p>
+<pre class="sjs">`cat "02 Search.sjs"`</pre>
+<h4>3. Import XQuery</h4>
+<p>JavaScript modules can import XQuery modules and access public functions and variables, just as an importing XQuery file could. XQuery names are automatically converted to <code>lowerCamelCase</code> in JavaScript. </p>
+<pre class="sjs">`cat "03 Import XQuery.sjs"`</pre>
+<h4>4. Update-Document</h4>
+<p>Update complete JSON documents by reading them from the database, converting them to JavaScript objects (<code>.valueOf()</code>), and re-inserting them at their same URIs. It’s important to note that JSON nodes are <em>immutable</em>. That is you cannot directly change a JSON node from the database. You can either convert the JSON node to a JavaScript object or use the node update family of functions (see below). </p>
+<pre class="sjs">`cat "04 Update-Document.sjs"`</pre>
+<h4>5. Update-Node Replace</h4>
+<p>Perform the same update as above, but use node-level updates, as opposed to rewriting complete documents. </p>
+<pre class="sjs">`cat "05 Update-Node Replace.sjs"`</pre>
+<h4>6. XMLBuilder</h4>
+<p>The <code>XMLBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. </p>
+<pre class="sjs">`cat "06 XMLBuilder.sjs"`</pre>
+<h4>7. XPath</h4>
+<p>Because JSON nodes in the database are nodes, in the XML Document Model (XDM) sense, you can access them with XPath. </p>
+<pre class="sjs">`cat "07 XPath.sjs"`</pre>
+<h4>8. XPath 2</h4>
+<p>From XPath, JSON properties look like un-namespaced XML elements. MarkLogic also extends the XDM with <code>object-node()</code> and <code>array-node()</code> types. </p>
+<pre class="sjs">`cat "08 XPath 2.sjs"`</pre>
+<h4>9. OOP</h4>
+<p>JavaScript supports functional, prototypical, and object-oriented programming styles. Any of these can be used as appropriate in MarkLogic. </p>
+<pre class="sjs">`cat "09 OOP.sjs"`</pre>
+<h4>1.0 Values</h4>
+<p>MarkLogic supports the ability to create range indexes on JSON nodes. Server-side JavaScript (or XQuery) can access these using the built-in lexicon functions. </p>
+<pre class="sjs">`cat "10 Values.sjs"`</pre>
+<h4>11. JavaScript Eval</h4>
+<p>XQuery modules can evaluate JavaScript (and SQL and SPARQL). <code>xdmp:javascript-eval()</code> allows access to external variables and does all of the mapping between XQuery and JavaScript data types. </p>
+<pre class="xqy">`cat "11 JavaScript Eval.xqy"`</pre>
+<h4>12. Clear Database</h4>
+<p>TODO</p>
+<pre class="sjs">`cat "12 Clear Database.sjs"`</pre>
 </body>
 </html>
