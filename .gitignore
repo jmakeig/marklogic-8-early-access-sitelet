@@ -1,3 +1,5 @@
 *.tar.gz
 Node.js/node_modules/
 Node.js/_test.js
+# Use generate.sh to build this
+JavaScript/javascript-ea.html
