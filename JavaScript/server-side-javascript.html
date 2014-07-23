@@ -60,24 +60,11 @@
 <p>The following provides some examples of Server-Side JavaScript. You can also <a href="javascript-workspace.xml">download a Query Console workspace</a> to prepopulate these into your own Early Access environment.</p>
 <h4>Important concepts</h4>
 <h5>Iterators</h5>
-<p>Most of the functions that return multiple values (e.g. <code>fn.collection</code> or <code>cts.search()</code>) return an <em>iterator</em>, rather than a full instantiation of the data. This allows the evaluation environment to lazily load data from the cache and/or D-node as it’s needed rather than up front. Our iterator interface is designed to  </p>
-<pre>
-while(true) {          // Loop until break
- var item = itr.next() // Advance the iterator
- if(item.done) break;  // If we're at the end, exit the loop
- item.value            // Otherwise, get the value of the the iterator, likely a JSONNode instance
-}</pre>
+<p>Most of the functions that return multiple values (e.g. <code>fn.collection()</code> or <code>cts.search()</code>) return an <em>iterator</em>, rather than a full instantiation of the data. This allows the evaluation environment to lazily load data from the cache and/or D-node as it’s needed rather than up front. The iterator interface is designed to implement the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ES6 interface</a> for forward compatibility. </p>
+<pre>`cat "iterators.sjs"`</pre>
 <h5>JSON Nodes vs. JavaScript Objects</h5>
 <p>When working with Server-Side JavaScript, it’s important to distinguish between instances of <strong>JSON nodes</strong> and <strong>JavaScript objects</strong>. JSON nodes are what are persisted in the database. They map one-to-one with the JSON data model and are immutable. JavaScript objects, on the other hand, exist only in memory in an E-node. They are mutable and represent the JavaScript data model, including things like functions, references to other objects, <code>undefined</code>, and <code>NaN</code>, that can’t be represented in JSON. </p>
-<pre>
-var json = xdmp.toJson({ name: "A string" }) // Creates an in-memory JSON node, the same as you'd get from the database
-json.root.name                             // Returns a text node containing "A string". 
-typeof (json.root.name + "!")                // Automatically casts the text node to a string. Returns "string".
-json.root.name = "Stuff"                     // Throws a JS-NOUPDATEALLOWED error: JSON nodes are immutable
-var obj = json.valueOf()                   // Returns a JavaScript object copy of the JSON node
-obj.name = "New stuff"                       // Updates the name property
-xdmp.toJson(obj)                           // Converts the object back to a JSON node. Conversion is implicit in functions like xdmp.documentInsert().
-</pre>
+<pre>`cat "nodes vs objects.sjs"`</pre>
 <h4>1. Load Data</h4>
 <p>Load some JSON documents using the built-in <code>xdmp.documentInsert()</code>. <code>declareUpdate()</code> tells the transaction manager that the current statement intends to change the database. Transactions are scoped to the entire statement. </p>
 <pre class="sjs">`cat "01 Load Data.sjs"`</pre>
