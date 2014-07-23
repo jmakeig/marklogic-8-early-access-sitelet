@@ -28,12 +28,12 @@
 <body>
 <h2>Server-Side JavaScript</h2>
 <h3>What it is</h3>
-<p>Server-side JavaScript allows developers to access the powerful query and data manipulation capabilities of MarkLogic in a language and with tools that they're already familiar with. Combined with JSON as a native data format, MarkLogic provides an ideal platform for building JSON-based services with JavaScript.</p>
+<p>Server-Side JavaScript allows developers to access the powerful query and data manipulation capabilities of MarkLogic in a language and with tools that they're already familiar with. Combined with JSON as a native data format, MarkLogic provides an ideal platform for building JSON-based services with JavaScript.</p>
 
 <h3>Why it matters</h3>
 <p>JavaScript has emerged as the language of the web. The move toward advanced applications in the browser and multi-disciplinary “devops” have pushed JavaScript and JSON to the command line, onto devices, down into middleware (Node.js) and now into the database itself. JavaScript has familiar C-like syntax with flexible typing, advanced OOP, and functional programming capabilities. </p>
-<p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
-<p>With Server-side JavaScript you'll:</p>
+<p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-Side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
+<p>With Server-Side JavaScript you'll:</p>
   <ul>
     <li><strong>More easily get developers new to MarkLogic productive:</strong> Intuitive APIs and familiar syntax make working with MarkLogic more attractive.</li>
     <li><strong>Better integrate with existing skills and tools in your organization:</strong> Staff projects with resources you already have and attract and retain developers with an environment that will help them succeed.</li>
@@ -92,8 +92,8 @@
 <h4>9. OOP</h4>
 <p>JavaScript supports functional, prototypical, and object-oriented programming styles. Any of these can be used as appropriate in MarkLogic. </p>
 <pre class="sjs">`cat "09 OOP.sjs"`</pre>
-<h4>1.0 Values</h4>
-<p>MarkLogic supports the ability to create range indexes on JSON nodes. Server-side JavaScript (or XQuery) can access these using the built-in lexicon functions. </p>
+<h4>10. Values</h4>
+<p>MarkLogic supports the ability to create range indexes on JSON nodes. Server-Side JavaScript (or XQuery) can access these using the built-in lexicon functions. </p>
 <pre class="sjs">`cat "10 Values.sjs"`</pre>
 <h4>11. JavaScript Eval</h4>
 <p>XQuery modules can evaluate JavaScript (and SQL and SPARQL). <code>xdmp:javascript-eval()</code> allows access to external variables and does all of the mapping between XQuery and JavaScript data types. </p>
