@@ -99,7 +99,7 @@
 <p>XQuery modules can evaluate JavaScript (and SQL and SPARQL). <code>xdmp:javascript-eval()</code> allows access to external variables and does all of the mapping between XQuery and JavaScript data types. </p>
 <pre class="xqy">`cat "11 JavaScript Eval.xqy"`</pre>
 <h4>12. HTTP Module</h4>
-<p>Use JavaScript to build HTTP services in an HTTP app server. </p>
+<p>Use JavaScript to build HTTP services in an HTTP app server. Save the following into an .<code>sjs</code> file at the root of an HTTP app server. Use your favorite HTTP client to issue a <code>GET</code> request to <code>http://yourhost:9999/search.sjs?q=American</code>, substituting the hostname, port number, file name, and query string value. If you have data in your database from the earlier examples you should see two results with the result count in the <code>X-Result-Count</code> HTTP response header. </p>
 <pre class="sjs">`cat "12 HTTP Module.sjs"`</pre>
 <h4>13. XCC Ad Hoc Queries</h4>
 <p>XCC can evaluate ad hoc queries by setting the <code>queryLanguage</code> on the <code>Request</code> options to <code>\"JavaScript\"</code>. </p>
