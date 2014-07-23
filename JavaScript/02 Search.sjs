@@ -45,7 +45,7 @@ results.sort(function(a, b) {
   return 0
 })
 
-// Utility function to loop through an iterator.
+// Utility function to loop through an iterator and get a document root.
 function map(itr, f) {
   while(true) {
    var item = itr.next()
