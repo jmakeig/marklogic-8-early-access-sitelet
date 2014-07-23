@@ -1,0 +1,6 @@
+…snip…
+options = new RequestOptions();
+options.setQueryLanguage(“JavaScript”);
+request.setQuery(query, options);
+return session.submitRequest(request);
+…snip…
