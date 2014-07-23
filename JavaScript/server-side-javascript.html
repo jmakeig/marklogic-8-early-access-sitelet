@@ -23,41 +23,61 @@
         padding: 0.5rem;
         border: solid 1px #ccc;
       }
-      /*
-      .sidebar {
-        width: 25%;
-        float: right;
-        margin: 2rem;
-        font-size: 85%;
-        background: #ddd;
-      }
-      */
     </style>
 </head>
 <body>
 <h2>Server-Side JavaScript</h2>
 <h3>What it is</h3>
+<p>Server-side JavaScript allows developers to access the powerful query and data manipulation capabilities of MarkLogic in a language and with tools that they're already familiar with. Combined with JSON as a native data format, MarkLogic provides an ideal platform for building JSON-based services with JavaScript.</p>
 
 <h3>Why it matters</h3>
-<p>Server-side JavaScript allows developers to access the powerful query and data manipulation capabilities of MarkLogic in a language and with tools that they're already familiar with. Combined with JSON as a native data format, MarkLogic provides an ideal platform for building JSON-based services with JavaScript.</p>
-<p>JavaScript has emerged as the language of the web. The move toward advanced applications in the browser and multi-disciplinary “devops” have pushed JavaScript and JSON to the command line, onto devices, down into middleware (à la Node.js) and now into the database itself. JavaScript has familiar C-like syntax with flexible typing, advanced OOP, and functional programming capabilities. </p>
+<p>JavaScript has emerged as the language of the web. The move toward advanced applications in the browser and multi-disciplinary “devops” have pushed JavaScript and JSON to the command line, onto devices, down into middleware (Node.js) and now into the database itself. JavaScript has familiar C-like syntax with flexible typing, advanced OOP, and functional programming capabilities. </p>
 <p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
 <p>With Server-side JavaScript you'll:</p>
   <ul>
     <li><strong>More easily get developers new to MarkLogic productive:</strong> Intuitive APIs and familiar syntax make working with MarkLogic more attractive.</li>
     <li><strong>Better integrate with existing skills and tools in your organization:</strong> Staff projects with resources you already have and attract and retain developers with an environment that will help them succeed.</li>
-    <li>Access all of MarkLogic's proven capabilities through a pure JSON/JavaScript lens without having to compromise on performance, reliability, or security.</li>
-    <li><strong>Better leverage your existing MarkLogic investment:</strong> Manage JSON, XML, and RDF data with JavaScript. Call XQuery existing library modules as if they were native JavaScript. Evaluate XPath (on both XML and JSON) from JavaScript. Issue SPARQL and SQL queries from JavaScript. Invoke and eval JavaScript from XQuery.</li>
+    <li><strong>Access all of MarkLogic's proven capabilities</strong> through a pure JSON/JavaScript lens without having to compromise on performance, reliability, or security.</li>
+    <li><strong>Better leverage your existing MarkLogic investment:</strong> Manage JSON, XML, and RDF data with JavaScript. Call existing XQuery library modules as if they were native JavaScript. Evaluate XPath (on both XML and JSON) from JavaScript. Issue SPARQL and SQL queries from JavaScript. Invoke and eval JavaScript from XQuery.</li>
   </ul>
+
+<h3>Where to focus</h3>
+<ul>
+  <li>Early Access 2 includes Server-Side JavaScript for Linux and Windows <em>only</em>. Solaris and OS X will be supported in a future Early Access release. If you are running either of those OSes, a local virtual machine or cloud instance of Linux will be your best bet.</li>
+  <li>Run Server-Side JavaScript (defaults to the <code>.sjs</code> extension) modules from an HTTP app server. Importing <em>JavaScript</em> library modules is not supported in Early Access 2. (Importing XQuery library modules into JavaScript has been implemented, though.) The planned implementation will look similar to Node.js's <code>require()</code> or <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-modules">ECMAScript 6’s modules</a>. Your <a href="">feedback</a> on this would be appreciated. </li>
+  <li>Evaluate JavaScript from XQuery using <code>xdmp:javascript-eval</code>. </li>
+  <li>Evaluate ad hoc JavaScript from XCC. Invoke will be supported in a future Early Access release. </li>
+  <li>Invoke builtins with camel case, including pre-defined namespaces. Special forms, such as <code>cts:estimate</code>, <code>xdmp:exists</code>, <code>xdmp:plan</code> are scheduled for a future Early Access release. </li>
+  <li>Initial JavaScript input in Query Console that complements the existing JSON output. </li>
+  <li>Import XQuery library modules into JavaScript using <code>require()</code>. Public functions and global variables are available to the importing JavaScript. Names are automatically converted to <code>lowerCamelCase</code>. </li>
+  <li>JavaScript modules declare the intent to update data in the database using the function <code>declareUpdate</code>. Updates are collected throughout a request and either applied fully at the end or rolled back completely. </li>
+  <li>Most APIs that return multiple items return an iterator. (See “Iterators” below.) </li>
+  <li>JavaScript objects can work directly with JSON node instances. (See “JSON Nodes vs. JavaScript Objects” below.)</li>
+  <li>The XMLBuilder API provides a lightweight interface for building XML documents in JavaScript. </li>
+</ul>
+
 <h3>Deeper dive</h3>
-<div class="sidebar">
-  <h4>Before you begin</h4>
-  <p>This is the first Early Access release of Server-Side JavaScript. As such, there are still some rough edges and the APIs available today may change before general availability. </p>
-  <ul>
-    <li>Only the Windows and Linux builds can evaluate server-side JavaScript in Early Access 2. OS X and Solaris will be supported in a future Early Access release. If you are running either of those OSes, a local virtual machine or cloud instance of Linux will be your best bet. </li>
-    <li>Importing JavaScript library modules is not supported in Early Access 2. (Importing XQuery library modules into JavaScript has been implemented, though.) The planned implementation will look similar to Node.js's <code>require()</code> or <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-modules">ECMAScript 6’s modules</a>. Your <a href="">feedback</a> on this would be appreciated. </li>
-  </ul>
-</div>
+<p>The following provides some examples of Server-Side JavaScript. You can also <a href="javascript-workspace.xml">download a Query Console workspace</a> to prepopulate these into your own Early Access environment.</p>
+<h4>Important concepts</h4>
+<h5>Iterators</h5>
+<p>Most of the functions that return multiple values (e.g. <code>fn.collection</code> or <code>cts.search()</code>) return an <em>iterator</em>, rather than a full instantiation of the data. This allows the evaluation environment to lazily load data from the cache and/or D-node as it’s needed rather than up front. Our iterator interface is designed to  </p>
+<pre>
+while(true) {          // Loop until break
+ var item = itr.next() // Advance the iterator
+ if(item.done) break;  // If we're at the end, exit the loop
+ item.value            // Otherwise, get the value of the the iterator, likely a JSONNode instance
+}</pre>
+<h5>JSON Nodes vs. JavaScript Objects</h5>
+<p>When working with Server-Side JavaScript, it’s important to distinguish between instances of <strong>JSON nodes</strong> and <strong>JavaScript objects</strong>. JSON nodes are what are persisted in the database. They map one-to-one with the JSON data model and are immutable. JavaScript objects, on the other hand, exist only in memory in an E-node. They are mutable and represent the JavaScript data model, including things like functions, references to other objects, <code>undefined</code>, and <code>NaN</code>, that can’t be represented in JSON. </p>
+<pre>
+var json = xdmp.toJson({ name: "A string" }) // Creates an in-memory JSON node, the same as you'd get from the database
+json.root.name                             // Returns a text node containing "A string". 
+typeof (json.root.name + "!")                // Automatically casts the text node to a string. Returns "string".
+json.root.name = "Stuff"                     // Throws a JS-NOUPDATEALLOWED error: JSON nodes are immutable
+var obj = json.valueOf()                   // Returns a JavaScript object copy of the JSON node
+obj.name = "New stuff"                       // Updates the name property
+xdmp.toJson(obj)                           // Converts the object back to a JSON node. Conversion is implicit in functions like xdmp.documentInsert().
+</pre>
 <h4>1. Load Data</h4>
 <p>Load some JSON documents using the built-in <code>xdmp.documentInsert()</code>. <code>declareUpdate()</code> tells the transaction manager that the current statement intends to change the database. Transactions are scoped to the entire statement. </p>
 <pre class="sjs">`cat "01 Load Data.sjs"`</pre>
@@ -67,10 +87,10 @@
 <h4>3. Import XQuery</h4>
 <p>JavaScript modules can import XQuery modules and access public functions and variables, just as an importing XQuery file could. XQuery names are automatically converted to <code>lowerCamelCase</code> in JavaScript. </p>
 <pre class="sjs">`cat "03 Import XQuery.sjs"`</pre>
-<h4>4. Update-Document</h4>
-<p>Update complete JSON documents by reading them from the database, converting them to JavaScript objects (<code>.valueOf()</code>), and re-inserting them at their same URIs. It’s important to note that JSON nodes are <em>immutable</em>. That is you cannot directly change a JSON node from the database. You can either convert the JSON node to a JavaScript object or use the node update family of functions (see below). </p>
+<h4>4. Update: Whole Document</h4>
+<p>Update complete JSON documents by reading them from the database, converting them to JavaScript objects (Using <code>.valueOf()</code>), and re-inserting them at their same URIs. It’s important to note that JSON nodes are <em>immutable</em>. That is you cannot directly change a JSON node from the database. You can either convert the JSON node to a JavaScript object or use the node update family of functions (see below). </p>
 <pre class="sjs">`cat "04 Update-Document.sjs"`</pre>
-<h4>5. Update-Node Replace</h4>
+<h4>5. Update: Node Replace</h4>
 <p>Perform the same update as above, but use node-level updates, as opposed to rewriting complete documents. </p>
 <pre class="sjs">`cat "05 Update-Node Replace.sjs"`</pre>
 <h4>6. XMLBuilder</h4>
@@ -91,8 +111,11 @@
 <h4>11. JavaScript Eval</h4>
 <p>XQuery modules can evaluate JavaScript (and SQL and SPARQL). <code>xdmp:javascript-eval()</code> allows access to external variables and does all of the mapping between XQuery and JavaScript data types. </p>
 <pre class="xqy">`cat "11 JavaScript Eval.xqy"`</pre>
-<h4>12. Clear Database</h4>
-<p>Most functions that return multiple values from the database return iterators, rather than fully instantiated data structures. Iterators allow the E-node to lazily load data from the caches and/or D-nodes as it’s needed. The iterator interface is designed to implement the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ES6 interface</a>.</p>
-<pre class="sjs">`cat "12 Clear Database.sjs"`</pre>
+<h4>12. HTTP Module</h4>
+<p>Use JavaScript to build HTTP services in an HTTP app server. </p>
+<pre class="sjs">`cat "12 HTTP Module.sjs"`</pre>
+<h4>13. XCC Ad Hoc Queries</h4>
+<p>XCC can evaluate ad hoc queries by setting the <code>queryLanguage</code> on the <code>Request</code> options to <code>\"JavaScript\"</code>. </p>
+<pre class="sjs">`cat "13 XCC Ad Hoc.java"`</pre>
 </body>
 </html>
