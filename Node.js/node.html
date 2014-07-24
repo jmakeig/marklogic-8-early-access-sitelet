@@ -13,8 +13,8 @@
   p, li, pre {
     line-height: 1.44;
   }
-  code, pre {
-    font-family: Inconsolata, Consolas, Monaco, monospace;
+  code, pre { /*, .CodeMirror */
+    font-family: Inconsolata, Consolas, Monaco, monospace !important;
     font-size: 1.1rem;
   }
   pre {
@@ -23,55 +23,40 @@
     padding: 0.5rem;
     border: solid 1px #ccc;
   }
+/*
+  .CodeMirror {
+    border: 1px solid #ccc;
+    height: auto;
+  }
+  .CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+*/
 </style>
+<!--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.css" />-->
 </head>
 <body>
 <h2>Node.js Client API</h2>
 <h3>What it is</h3>
 <p>The Node.js Client API is an open-source JavaScript library that allows developers to quickly, easily, and reliably access MarkLogic from their Node applications. </p>
-<pre>var marklogic = require('marklogic')
-var q = marklogic.queryBuilder
-var db = marklogic.createDatabaseClient()
-db.query(
-q.where(
-q.collection('countries'),
-q.value('region', 'Africa'),
-q.or(
-  q.word('background',   'France'),
-  q.word('Legal system', 'French')
-  )
-)
-).stream().
-on('data', function(document) {
-  console.log(document.content);
-}).
-on('error', function(error) {
-  console.log(error)
-})</pre>
+<pre class="javascript">`cat "00 teaser.js"`</pre>
+<p>…and that’s it. MarkLogic Early Access 2 includes a built-in database (<code>Documents</code>) and introduces a <a href="LINKME">default REST server</a> (port <code>8000</code>) that allow you to get started without any additional configuration.</p>
 <h3>Why it matters</h3>
 <p>For developers using—or looking to use—<a href="http://nodejs.org">Node.js</a> in their application stack, the MarkLogic Node.js Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
 <p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node Client API is an ideal tool for full-stack JavaScript development.</p>
 <p>The Node Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. </p>
 <p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. Users are encouraged to provide feedback through <a href="https://github.com/marklogic/node-client-api/issues">issue reports</a> or pull requests. </p>
 <h3>Where to focus</h3>
-<!--
-- Open development
-- Query queryBuilder, including QBE and string parsing
-- Read, write, remove, check documents
-- Patch for XML and JSON
-- Transactions
-- Transform, properties, extension libraries CRUD
-- Optimistic locking
-- jsDocs
--->
 <ul>
-  <li><strong>Query:</strong> Support for query by example, a Google-like string grammar, and structured query builder</li>
+  <li><strong>Query:</strong> Support for <a href="http://docs-ea.marklogic.com/jsdoc/queryBuilder.html#byExample">query by example</a>, a Google-like string grammar, and <a href="http://docs-ea.marklogic.com/jsdoc/queryBuilder.html">structured query builder</a></li>
   <li><strong>Document management:</strong> Read, write, remove, check documents. Support for Node Streams in and out.</li>
-  <li><strong>Partial updates:</strong> Patch XML and JSON documents to avoid moving entire documents between the server and client</li>
-  <li><strong>Transactions:</strong> Multi-statement ACID transactions with explicit commit and rollback.</li>
+  <li><strong>Partial updates:</strong> <a href="http://docs-ea.marklogic.com/jsdoc/patchBuilder.html">Patch XML and JSON documents </a>to avoid moving entire documents between the server and client</li>
+  <li><strong>Transactions:</strong> Multi-statement ACID <a href="http://docs-ea.marklogic.com/jsdoc/transactions.html">transactions</a> with explicit commit and rollback.</li>
   <li><strong>Optimistic locking:</strong> Notification of conflicting writes</li>
-  <li><strong>Configuration management:</strong> Manage inbound/outbound transforms, properties, and extension libraries</li>
+  <li><strong>Configuration management:</strong> Manage <a href="http://docs-ea.marklogic.com/jsdoc/config.transforms.html">inbound/outbound transforms</a>, <a href="http://docs-ea.marklogic.com/jsdoc/config.serverprops.html">properties</a>, and <a href="http://docs-ea.marklogic.com/jsdoc/config.extlibs.html">extension libraries</a></li>
 </ul>
+<p>For more information, the <a href="http://docs-ea.marklogic.com/jsdoc/index.html">Early Access API documentation</a> is available online and documented source code is freely available <a href="https://github.com/marklogic/node-client-api">on GitHub</a>. </p>
 <h3>Deeper dive</h3>
 <h4>System requirements and installation</h4>
   <ol>
@@ -97,6 +82,39 @@ queryBuilder:
  …</pre>
  </li>
   </ol>
-<p>T</p>
+<h4>Important Concepts</h4>
+<h5>Promises</h5>
+<p></p>
+<h5>Streams vs. Results</h5>
+<p>Most operations support both a <code>.stream()</code> and a <code>.result()</code></p>
+<h4>1. Load Data</h4>
+<p>Create a database </p>
+<pre class="javascript">`cat "01 write.js"`</pre>
+<h4>1. Query by Example</h4>
+<p></p>
+<pre class="javascript">`cat "02 query-by-example.js"`</pre>
+<h4>1. Query Builder</h4>
+<p>The <code>queryBuilder</code> provides a interface for constructing sophisticated queries. </p>
+<pre class="javascript">`cat "03 queryBuilder.js"`</pre>
+<!-- CodeMirror
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/mode/javascript/javascript.js"></script>
+<script type="text/javascript">
+(function() {
+  var pres = document.querySelectorAll(\"pre.javascript\")
+  for(var i = 0; i < pres.length; i++) {
+    var pre = pres[i]
+    CodeMirror(function(el) {
+      pre.parentNode.replaceChild(el, pre);
+    }, {
+        value: pre.textContent,
+        mode: \"javascript\",
+        lineNumbers: false,
+        readOnly: true
+    })
+  }
+})()
+</script>
+-->
 </body>
 </html>
