@@ -3,3 +3,5 @@ Node.js/node_modules/
 Node.js/_test.js
 # Use generate.sh to build this
 JavaScript/javascript-ea.html
+
+Node.js/_node-ea.html
