@@ -7,11 +7,9 @@ db.read("/6e1c7304-09a1-4436-ba77-ae1e3b8856f7.json", "/dd95907c-3b29-4e2c-9a4c-
     console.log('read:\n'+
       documents.
       map(function(document){
-        return '    '+document.content.name+' at '+document.uri;
-        }).
-      join('\n')
-      );
-      exutil.succeeded();
-    }, function(error) {
-      exutil.failed(error);
-    });
+        return '    ' + document.content.name + ' at ' + document.uri
+      }).join('\n')
+    )
+  }, function(error) {
+    console.dir(error)
+  });
