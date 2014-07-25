@@ -1,14 +1,8 @@
 var marklogic = require("marklogic")
-var conn =  {
-  host: "jmakeig-centos6-virtualbox.localdomain",
-  port: 8000,
-  user: "admin",
-  password: "********",
-  authType: "DIGEST"
-}
-var db = marklogic.createDatabaseClient(conn
-db.read('/countries/ml.json', '/countries/uv.json')
-  // or use stream() to process results as they arrive
+var conn = require("./env.js").connection
+
+var db = marklogic.createDatabaseClient(conn)
+db.read("/6e1c7304-09a1-4436-ba77-ae1e3b8856f7.json", "/dd95907c-3b29-4e2c-9a4c-baf61bd96c9d.json")
   .result(function(documents) {
     console.log('read:\n'+
       documents.

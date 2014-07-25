@@ -197,13 +197,8 @@ var data = [
 ]
 
 var marklogic = require("marklogic")
-var conn =  {
-  host: "jmakeig-centos6-virtualbox.localdomain",
-  port: 8000,
-  user: "admin",
-  password: "********",
-  authType: "DIGEST"
-}
+var conn = require("./env.js").connection
+
 var db = marklogic.createDatabaseClient(conn)
 
 db.write(
