@@ -83,18 +83,26 @@ queryBuilder:
  </li>
   </ol>
 <h4>Important Concepts</h4>
-<h5>Promises</h5>
-<p></p>
-<h5>Streams vs. Results</h5>
-<p>Most operations support both a <code>.stream()</code> and a <code>.result()</code></p>
+<p>Most requests in the MarkLogic Node.js API return a selector object. A selector object gives you a several ways to work with the response from the server:</p>
+<ul>
+  <li>You can pass success and failure callbacks to the <code>result()</code> method to process the response in isolation.</li>
+  <li>You can call the <code>result()</code> method to return a Promises object and chain subsequent actions with <code>then()</code> calls. Use this when you need to chain a series of requests.</li>
+  <li>You can call the <code>stream()</code> method to return a Readable stream in object mode and use the <code>on()</code> method on the stream to register listeners for the <code>data</code>, <code>end</code>, and <code>error</code> events. Use this when you need to process a bulk response as soon as documents become available.</li>
+  <li>You can call the <code>stream()</code> method to return a Readable stream in object mode and call the <code>pipe()</code> method on the stream with a Writable stream. Use this when you need to provide the response to a Writable stream.</li>
+</ul>
+<p>To understand these alternatives, you must understand the role of <a href="https://github.com/petkaantonov/bluebird">Promises</a> and <a href="http://nodejs.org/api/stream.html">Streams</a> in the Node.js ecosystem.</p>
+<p><em>Promises</em> provide a way to chain a series of callbacks. The next callback is called only after the previous callback finishes successfully. The Promise manages transferring the output from previous callback as the input for the next callback. When any success callback fails, the promise calls the first error handler in the chain. </p>
+<p>A  Promise has a disadvantage for bulk read.  The documents are passed to the result callback only after all documents are available.  To improve throughput and process each document as soon as it becomes available, you can instead use a Stream. You can register listeners for the <code>data</code>, <code>error</code>, and <code>end</code> events on the stream. The stream operates on object mode, which means that the data listener receives the document descriptor with the complete information for one document. After executing the <code>data</code> listener for the last document, the stream executes the <code>end</code> listener.</p>
+<p>A stream can also be piped to a Writable stream that is ready to operate in object mode, in particular, consuming document descriptors. Streams provide an optimal mechanism to transfer data from source to sink.</p>
+<p>In addition to the object-mode streams returned by the <code>stream()</code> method of the selector object, the MarkLogic Node.js API provides a <code>createReadableStream()</code> function for efficient retrieval of a large document, especially a large binary. The Readable stream uses a Node.js <a href="http://nodejs.org/api/buffer.html">Buffer</a> to pass data to the data listener or pipe. Each Buffer contains a chunk of bytes. Typically, an application pipes the <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable">Readable</a> stream to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">Writable</a> stream (such as a file system <code>WriteStream</code>) that provides a sink to reassemble the chunks of the binary. Memory utilitization is optimized because only a small portion of the document is in memory at any one time.</p>
 <h4>1. Load Data</h4>
 <p>Create a database </p>
 <pre class="javascript">`cat "01 write.js"`</pre>
 <h4>1. Query by Example</h4>
-<p></p>
+<p>Query by Example is the quickest and easiest way to get started with the Node.js Client. You give it a document that matches your criteria and QBE will find documents that match. The API extends this technique with specific operators to do inequality or text matching, among other options.</p>
 <pre class="javascript">`cat "02 query-by-example.js"`</pre>
 <h4>1. Query Builder</h4>
-<p>The <code>queryBuilder</code> provides a interface for constructing sophisticated queries. </p>
+<p>The <code>queryBuilder</code> API provides a finer grained interface for constructing queries. It allows you to mix and match query types and nested Boolean expressions, for maximum precision and flexibility. </p>
 <pre class="javascript">`cat "03 queryBuilder.js"`</pre>
 <!-- CodeMirror
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.js"></script>
