@@ -7,3 +7,5 @@ if [ -z "$1" ]
 fi
 # <http://stackoverflow.com/questions/415677/how-to-replace-placeholders-in-a-text-file>
 eval "echo \"$(< $1)\"" >&1
+
+# ./generate.sh node.html > _node-ea.html; open _node-ea.html 
