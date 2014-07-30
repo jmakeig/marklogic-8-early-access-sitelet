@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8" />
 <head>
-<title>Node.js Client API</title>
+<title>MarkLogic Node.js Client API</title>
 <style type="text/css">
   body {
     margin: 0 2em;
@@ -23,6 +23,14 @@
     padding: 0.5rem;
     border: solid 1px #ccc;
   }
+  .note {
+    font-size: 85%; 
+    padding: 1em; 
+    margin-left: 2em;
+    margin-right: 4em;
+    background: #eee;
+    color: #444;
+  }
 /*
   .CodeMirror {
     border: 1px solid #ccc;
@@ -37,16 +45,17 @@
 <!--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.css" />-->
 </head>
 <body>
-<h2>Node.js Client API</h2>
+<h2>MarkLogic Node.js Client API</h2>
 <h3>What it is</h3>
-<p>The Node.js Client API is an open-source JavaScript library that allows developers to quickly, easily, and reliably access MarkLogic from their Node applications. </p>
+<p>The MarkLogic Node.js Client API is an open-source JavaScript library that allows developers to quickly, easily, and reliably access MarkLogic from their Node applications. </p>
+<p>Here’s a quick example to demonstrate how a Node application would build a query and process the results.
 <pre class="javascript">`cat "00 teaser.js"`</pre>
-<p>…and that’s it. MarkLogic Early Access 2 includes a built-in database (<code>Documents</code>) and introduces a <a href="LINKME">default REST server</a> (port <code>8000</code>) that allow you to get started without any additional configuration.</p>
+<p>…and that’s it. MarkLogic Early Access 2 allows you to get started with even less up-front configuration. It includes a built-in database (<code>Documents</code>) and introduces a <a href="LINKME">default REST server</a> (port <code>8000</code>), through which the Node.js and Java Client APIs communicate. </p>
 <h3>Why it matters</h3>
-<p>For developers using—or looking to use—<a href="http://nodejs.org">Node.js</a> in their application stack, the MarkLogic Node.js Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
-<p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node Client API is an ideal tool for full-stack JavaScript development.</p>
-<p>The Node Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. (<em>Note that this capability is not yet available in EA2.</em>) </p>
-<p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. Users are encouraged to provide feedback through <a href="https://github.com/marklogic/node-client-api/issues">issue reports</a> or pull requests. </p>
+<p>For developers using—or looking to use—<a href="http://nodejs.org">Node.js</a> in their application stack, the Node.js Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
+<p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node.js Client API is an ideal tool for full-stack JavaScript development.</p>
+<p>The Node.js Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node.js Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. (<em>Note that this capability is not yet available in EA2.</em>) </p>
+<p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. The best way to get involved is to <a href="https://github.com/marklogic/node-client-api/issues">log issues</a> for bugs or new features. </p>
 <h3>Where to focus</h3>
 <ul>
   <li><strong>Query:</strong> Support for <a href="http://docs-ea.marklogic.com/jsdoc/queryBuilder.html#byExample">query by example</a>, a Google-like string grammar, and <a href="http://docs-ea.marklogic.com/jsdoc/queryBuilder.html">structured query builder</a>. </li>
@@ -61,16 +70,16 @@
 <h4>System requirements and installation</h4>
   <ol>
     <li>Make sure you have a recent version of <a href="http://nodejs.org/download/">Node.js</a> (at least v0.10.22), <a href="https://www.npmjs.org">npm</a> (at least 1.4), and <a href="http://git-scm.com/downloads">git</a> (at least 1.8) installed. To verify on Linux or OS X, use <code>node --version</code>, <code>npm --version</code> and <code>git --version</code>. If your system can’t find any or all of those tools, make sure your <code>&#36;PATH</code> variable points to each of those binaries.</li>
-    <li>To start with new Node.js project to evaluate the MarkLogic Client API, first create a new directory for your project, for example <code>myproject</code>. If you’re adding the MarkLogic Client API to an existing project, proceed using that project’s directory.
-      <p><em>Normally for a new project you’d create <code>package.json</code> in your <code>myproject</code> directory, declare all of your dependencies there and have npm download the entire graph (e.g. with <code>npm install --save</code>). However, Early Access builds of the MarkLogic Client API aren’t in public npm repository (<em>yet</em>), so you’ll have to manually install a local copy from <a href="https://github.com/marklogic/node-client-api">GitHub</a>.</em></p>
+    <li>To start with a new Node.js project, create a new directory for your project, for example <code>myproject</code>. If you’re adding the Node.js Client API to an existing project, proceed using that project’s directory.
+      <p class="note">Normally for a new project you’d create <code>package.json</code> in your <code>myproject</code> directory, declare all of your dependencies there and have npm download the entire graph (e.g. with <code>npm install --save</code>). However, Early Access builds of the Node.js Client API aren’t in the public npm repository (<em>yet</em>), so you’ll have to manually install a local copy from <a href="https://github.com/marklogic/node-client-api">GitHub</a>.</p>
     </li>
-    <li>In your project folder, if you don't already have one, create a <code>node_modules</code> folder. This is where all of the local project dependencies will be downloaded. </li>
+    <li>If you don’t already have a <code>node_modules</code> folder, create one. This is where all of the local project dependencies will be downloaded. </li>
     <li>Within the <code>node_modules</code> directory, install the API directly from Github.
       <pre>npm install git+ssh://git@github.com:marklogic/node-client-api.git#b1_0_0-ea2</pre>
       <!-- Or npm install git+ssh://git@github.com:marklogic/node-client-api.git#develop until this tag exists -->
       This will create a <code>marklogic</code> directory, clone the code from GitHub, and download all of the dependencies from npm.
     </li>
-    <li>Now, confirm that everything worked. From your top-level project directory, <code>myproject</code>, create a file called <code>verify.js</code> with the contents <pre>var marklogic = require("marklogic")
+    <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>var marklogic = require("marklogic")
 console.dir(marklogic)</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
 <pre>
 { createDatabaseClient: [Function: MarkLogicClientFactory],
@@ -84,7 +93,8 @@ queryBuilder:
  </li>
   </ol>
 <h4>Important Concepts</h4>
-<p>Most requests in the MarkLogic Node.js API return a selector object. A selector object gives you a several ways to work with the response from the server:</p>
+<!--<h5>Promises and Streams</h5>-->
+<p>Most requests in the Node.js Client API return a selector object. A selector object gives you a several ways to work with the response from the server:</p>
 <ul>
   <li>You can pass success and failure callbacks to the <code>result()</code> method to process the response in isolation.</li>
   <li>You can call the <code>result()</code> method to return a Promises object and chain subsequent actions with <code>then()</code> calls. Use this when you need to chain a series of requests.</li>
@@ -92,18 +102,20 @@ queryBuilder:
   <li>You can call the <code>stream()</code> method to return a Readable stream in object mode and call the <code>pipe()</code> method on the stream with a Writable stream. Use this when you need to provide the response to a Writable stream.</li>
 </ul>
 <p>To understand these alternatives, you must understand the role of <a href="https://github.com/petkaantonov/bluebird">Promises</a> and <a href="http://nodejs.org/api/stream.html">Streams</a> in the Node.js ecosystem.</p>
-<p><em>Promises</em> provide a way to chain a series of callbacks. The next callback is called only after the previous callback finishes successfully. The Promise manages transferring the output from previous callback as the input for the next callback. When any success callback fails, the promise calls the first error handler in the chain. </p>
-<p>A  Promise has a disadvantage for bulk read.  The documents are passed to the result callback only after all documents are available.  To improve throughput and process each document as soon as it becomes available, you can instead use a Stream. You can register listeners for the <code>data</code>, <code>error</code>, and <code>end</code> events on the stream. The stream operates on object mode, which means that the data listener receives the document descriptor with the complete information for one document. After executing the <code>data</code> listener for the last document, the stream executes the <code>end</code> listener.</p>
-<p>A stream can also be piped to a Writable stream that is ready to operate in object mode, in particular, consuming document descriptors. Streams provide an optimal mechanism to transfer data from source to sink.</p>
-<p>In addition to the object-mode streams returned by the <code>stream()</code> method of the selector object, the MarkLogic Node.js API provides a <code>createReadableStream()</code> function for efficient retrieval of a large document, especially a large binary. The Readable stream uses a Node.js <a href="http://nodejs.org/api/buffer.html">Buffer</a> to pass data to the data listener or pipe. Each Buffer contains a chunk of bytes. Typically, an application pipes the <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable">Readable</a> stream to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">Writable</a> stream (such as a file system <code>WriteStream</code>) that provides a sink to reassemble the chunks of the binary. Memory utilitization is optimized because only a small portion of the document is in memory at any one time.</p>
+<p><em>Promises</em> provide a way to chain a series of callbacks. The next callback is called only after the previous callback finishes successfully. The promise manages transferring the output from previous callback as the input for the next callback. When any <code>success</code> callback fails, the promise calls the first error handler in the chain. </p>
+<p>A promise is a poor choice for bulk read because the documents are passed to the result callback only after all documents are available.  To improve throughput and process each document as soon as it becomes available, use a stream (<a href="http://nodejs.org/api/stream.html#stream_class_stream_readable"><code>stream.Readable</code></a>). You can register listeners for the <code>data</code>, <code>error</code>, and <code>end</code> events on the stream. The stream operates in <a href="http://nodejs.org/api/stream.html#stream_object_mode">object mode</a>, which means that the data listener receives the document descriptor with the complete information for one document. After executing the <code>data</code> listener for the last document, the stream executes the <code>end</code> listener.</p>
+<p>A stream can also be piped to a writable stream (<a href="http://nodejs.org/api/stream.html#stream_class_stream_writable"><code>steam.Writable</code></a>) that is ready to operate in object mode, in particular, consuming document descriptors. Streams provide an optimal mechanism to transfer data from source to sink.</p>
+<p>In addition to the object-mode streams returned by the <code>stream()</code> method of the selector object, the Node.js Client API provides a <code>createReadableStream()</code> function for efficient retrieval of a large document, especially a large binary. The Readable stream uses a Node.js <a href="http://nodejs.org/api/buffer.html">Buffer</a> to pass data to the data listener or pipe. Each Buffer contains a chunk of bytes. Typically, an application pipes the <a href="http://nodejs.org/api/stream.html#stream_class_stream_readable">Readable</a> stream to a <a href="http://nodejs.org/api/stream.html#stream_class_stream_writable">Writable</a> stream (such as a file system <code>WriteStream</code>) that provides a sink to reassemble the chunks of the binary. Memory utilitization is optimized because only a small portion of the document is in memory at any one time.</p>
+<!--<h5>Error Handling</h5>
+<p>TODO</p>-->
 <h4>0. Configuration</h4>
-<p>The examples below reuse the database connection configuration in a module called <code>env.js</code> located in the same directory as the examples.</p>
+<p>The examples below reuse the database connection configuration required from a module called <code>env.js</code> located in the same directory as the examples.</p>
 <pre class="javascript">`cat "env.example.js"`</pre>
 <h4>1. Load Data</h4>
-<p>Create a database </p>
+<p>The following example writes five JSON documents to the collection <code>fake data</code>, using each document’s <code>guid</code> property as its unique identifier (URI) in the database. This example constructs the JSON inline, but could have easily read it from another source, such as the file system, an HTTP request, or any other readable stream. </p>
 <pre class="javascript">`cat "01 write.js"`</pre>
 <h4>2. Query by Example</h4>
-<p>Query by Example is the quickest and easiest way to get started with queries in the Node.js Client. You give it an example document with the characteristics you’d like to filter on and <acronym title="Query by Example">QBE</acronym> will find documents that match. The API extends this technique with specific operators to do inequality or text matching, among others.</p>
+<p>Query by Example is the quickest and easiest way to get started with queries in the Node.js Client. You give it an example document with the characteristics you’d like to filter on, and <acronym title="Query by Example">QBE</acronym> will find documents that match. In addition, the API provides operators to extend this to inequality or text matching, among others.</p>
 <pre class="javascript">`cat "02 query-by-example.js"`</pre>
 <h4>3. Query Builder</h4>
 <p>The <code>queryBuilder</code> API provides a finer grained interface for constructing queries. It allows you to mix and match query types and nested Boolean expressions, for maximum precision and flexibility. </p>
@@ -112,13 +124,13 @@ queryBuilder:
 <p>String query allows your application to specify a query in a Google-like grammar. This is useful for taking user input from a UI, for example. The <code>parseBindings</code> map keywords in the query grammar to specific types of queries. </p>
 <pre class="javascript">`cat "04 string query.js"`</pre>
 <h4>5. Bulk Read</h4>
-<p>Read one or more documents by their uniquely identifying <acronym title="Uniform Resource Identifier">URI<acronym>s.</p>
+<p>The read API efficiently retrieves one or many documents by their uniquely identifying <acronym title="Uniform Resource Identifier">URI<acronym>s.</p>
 <pre class="javascript">`cat "05 read.js"`</pre>
 <h4>6. Patch</h4>
-<p>Patch allows you to update part of a document without having to rewrite the whole thing. This example demonstrates how to process documents in Node and then apply the changes to the Server as a patch. </p>
+<p>“Patching” is a technique to update part of a document without having to rewrite the whole thing, for example to update a single field. This example demonstrates how to process documents in Node and then apply the changes to the Server as a patch using the <code>patchBuilder</code> interface. </p>
 <pre class="javascript">`cat "06 patch.js"`</pre>
 <h4>7. Remove</h4>
-<p><code>remove()</code> and <code>removeAll()</code> delete documents in the database. </p>
+<p><code>remove()</code> and <code>removeAll()</code> delete documents in the database. The following example deletes everything in the collection <code>fake data</code>. </p>
 <pre class="javascript">`cat "07 remove.js"`</pre>
 <!-- CodeMirror
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.js"></script>
