@@ -5,6 +5,14 @@ if [ -z "$1" ]
     echo "Usage: $0 input.html > output.html"
     exit 1
 fi
+
+
+#ARGH! How do I do this without a temp file?
+TMP=./~tmp
+sed -E -e 's/\"/\\\"/g' -e 's/\{\{(.+)\}\}/\`cat \"\1\"\`/g' $1 > $TMP 
 # <http://stackoverflow.com/questions/415677/how-to-replace-placeholders-in-a-text-file>
-# Watch out: Need to escape quotes and $ because they're evaluated
-eval "echo \"$(< $1)\"" >&1
+eval "echo \"$(< $TMP)\"" >&1 # Evaluate the temp file as if it were a script and write it to stdout
+rm $TMP
+
+  
+# ./generate.sh node.html > _node-ea.html; open _node-ea.html 
