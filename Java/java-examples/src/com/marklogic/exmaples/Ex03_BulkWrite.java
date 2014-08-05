@@ -11,7 +11,6 @@ import com.marklogic.client.document.DocumentWriteSet;
 import com.marklogic.client.document.GenericDocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JacksonHandle;
-import com.marklogic.client.io.marker.DocumentMetadataWriteHandle;
 
 public class Ex03_BulkWrite {
 
@@ -29,7 +28,7 @@ public class Ex03_BulkWrite {
         // Create a new collection to manage bulk writes.
         DocumentWriteSet writeSet = docMgr.newWriteSet();
 
-        // Set thte default metadata (e.g. collections, permissions, quality)
+        // Set the default metadata (e.g. collections, permissions, quality)
         // that will apply to the entire set.
         DocumentMetadataHandle meta = new DocumentMetadataHandle();
         meta.withCollections("dummy batched data");
