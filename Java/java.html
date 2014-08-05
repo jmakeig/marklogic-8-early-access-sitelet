@@ -41,19 +41,17 @@
 <h3>What it is</h3>
 <h3>Why it matters</h3>
 <h3>Where to focus</h3>
-<ul>
-  <li><strong></strong></li>
-</ul>
+<ol>
+  <li><strong>Native JSON</strong>: <code>JacksonHandle</code> for I/O on native JSON documents in and out of the database, including in-memory “DOM”-like trees and streaming access</strong></li>
+  <li><strong>POJO façade</strong>: Automatically marshall and unmarshall POJOs from JSON documents in the database. Query by POJO field names and typed values.</li>
+  <li><strong>Bulk write</strong>: More efficiently store multiple documents and/or metadata in a single request.</li>
+  <li><strong>Bulk read</strong>: More efficiently get multiple documents and/or metadata in a single request.</li>
+  <li><strong>Open development</strong>: Development, tests, docs, and issue tracking on GitHub under the permissive, Apache 2.0 license.</li>
+</ol>
 <p>For more information, the <a href="http://docs-ea.marklogic.com/jsdoc/index.html">Early Access API documentation</a> is available online and the commented source code is freely available <a href="https://github.com/marklogic/node-client-api">on GitHub</a>. </p>
 <h3>Deeper dive</h3>
 <h4>System requirements and installation</h4>
-  <ol>
-    <li><strong>Native JSON</strong>: <code>JacksonHandle</code> for I/O on native JSON documents in and out of the database, including in-memory “DOM”-like trees and streaming access</strong></li>
-    <li><strong>POJO façade</strong>: Automatically marshall and unmarshall POJOs from JSON documents in the database. Query by POJO field names and typed values.</li>
-    <li><strong>Bulk write</strong>: More efficiently store multiple documents and/or metadata in a single request.</li>
-    <li><strong>Bulk read</strong>: More efficiently get multiple documents and/or metadata in a single request.</li>
-    <li><strong>Open development</strong>: Development, tests, docs, and issue tracking on GitHub under the permissive, Apache 2.0 license.</li>
-  </ol>
+  
 <h4>Important Concepts</h4>
 <p></p>
 <h4>0. Configuration</h4>
@@ -65,8 +63,11 @@
 <h4>2. POJO Query</h4>
 <p>The <code>PojoRepository</code> provides a means for writing, reading, and querying typed POJOs. It does not re-hydrate an entire object graph or cache results, but is an easy way to work with simple POJOs, complementary to the other JSON or XML document I/O capabilities.</p>
 <pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex02_POJOQuery.java}}</pre>
-<h4>2. Bulk Writes</h4>
+<h4>3. Bulk Writes</h4>
 <p></p>
 <pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex03_BulkWrite.java}}</pre>
+<h4>4. Bulk Writes</h4>
+<p></p>
+<pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex04_BulkRead.java}}</pre>
 </body>
 </html>
