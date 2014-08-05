@@ -14,7 +14,16 @@ public final class User {
     private Boolean active;
     private Double balance;
     private Integer age;
-    private Set<User> friends;
+    private String gender;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     private Set<Tag> tags;
 
     public User() {
@@ -42,7 +51,7 @@ public final class User {
     public Boolean isActive() {
         return active;
     }
-    
+
     public void setActive(Boolean active) {
         this.active = active;
     }
@@ -72,14 +81,6 @@ public final class User {
         this.about = about;
     }
 
-    public Set<User> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Set<User> friends) {
-        this.friends = friends;
-    }
-
     public Integer getAge() {
         return age;
     }
@@ -99,7 +100,7 @@ public final class User {
     @Override
     public String toString() {
         return "User [guid=" + guid + ", name=" + name + ", about=" + about + ", address=" + address + ", active="
-                + active + ", balance=" + balance + ", age=" + age + ", friends=" + friends + ", tags=" + tags + "]";
+            + active + ", balance=" + balance + ", age=" + age + ", gender=" + gender + ", tags=" + tags + "]";
     }
 
 }
