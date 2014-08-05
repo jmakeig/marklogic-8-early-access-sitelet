@@ -23,15 +23,13 @@ public class Ex02_POJOQuery {
         PojoRepository<User, String> userRepo = client.newPojoRepository(User.class, String.class);
         PojoQueryBuilder<User> q = userRepo.getQueryBuilder();
         QueryDefinition query = q.or(
-            q.word("about", "ennui"),
+            q.word("about", "pickled cliche"),
             q.value("gender", "female")
             );
 
         PojoPage<User> page = userRepo.search(query, 1L);
-        if (page.getTotalSize() > 0) {
-            System.out.println(page.iterator().next().toString());
-        } else {
-            System.out.println("No results");
+        for (User user : page) {
+            System.out.println(user.toString());
         }
     }
 }
