@@ -42,7 +42,7 @@ public final class User {
     public Boolean isActive() {
         return active;
     }
-
+    
     public void setActive(Boolean active) {
         this.active = active;
     }
@@ -94,6 +94,12 @@ public final class User {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public String toString() {
+        return "User [guid=" + guid + ", name=" + name + ", about=" + about + ", address=" + address + ", active="
+                + active + ", balance=" + balance + ", age=" + age + ", friends=" + friends + ", tags=" + tags + "]";
     }
 
 }
