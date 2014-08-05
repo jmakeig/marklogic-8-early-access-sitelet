@@ -1,16 +1,17 @@
 package com.marklogic.exmaples;
 
-import java.util.ArrayList;
-
 import com.acme.Tag;
 import com.acme.User;
 import com.marklogic.client.DatabaseClient;
-import com.marklogic.client.DatabaseClientFactory;
 import com.marklogic.client.pojo.PojoRepository;
 
 public class Ex01_POJO {
 
     public static void main(String[] args) {
+        // A little phony here. A real app probably wouldn't
+        // generate these inline.
+
+        // Create com.acme.User instances.
         User shauna = new User();
         shauna.setName("Shauna Weber");
         shauna.setAddress("760 Forest Place, Glenshaw, Michigan, 1175");
@@ -38,15 +39,13 @@ public class Ex01_POJO {
         peters.getTags().add(new Tag("nisi"));
         peters.setGUID("34a23649-ec61-478f-90ab-5f01a55120ce");
 
-        DatabaseClient client = DatabaseClientFactory.newClient(
-                "jmakeig-centos6-virtualbox.localdomain",
-                8000,
-                "admin",
-                "********",
-                DatabaseClientFactory.Authentication.DIGEST);
-
+        DatabaseClient client = Configuration.exampleClient();
+        // Create a repository specific to User classes.
+        // The repository takes care of all of the serialization/deserialization
+        // between POJOs and documents in the database.
         PojoRepository<User, String> userRepo = client.newPojoRepository(User.class, String.class);
-        userRepo.write(shauna);
-        userRepo.write(peters);
+        userRepo.write(shauna, "fake data");
+        userRepo.write(peters, "fake data");
+
     }
 }
