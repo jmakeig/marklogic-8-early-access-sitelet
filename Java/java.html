@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8" />
 <head>
-<title>Node.js Client API</title>
+<title>Java Client API</title>
 <style type="text/css">
   body {
     margin: 0 2em;
@@ -39,35 +39,58 @@
 <body>
 <h2>Java Client API</h2>
 <h3>What it is</h3>
+<p>The MarkLogic Java Client API is an open-source library that allows developers to quickly, easily, and reliably access MarkLogic from their Java applications.</p>
 <h3>Why it matters</h3>
+<p>The Java Client API provides out-of-the-box data management, query, aggregation, and alerting for MarkLogic. It encapsulates performance and scalability best practices into a comprehensive API that is familiar and natural to an enterprise Java developer. The API gives hooks for tapping int Java’s rich I/O ecosystem to efficiently work with native JSON and XML in MarkLogic, or POJOs in Java. For applications that require the extra performance benefits of running server-side code, the Java Client API provides an RMI-like extensibility mechanism and APIs to manage server-side libraries from Java. This hook allows developers to package JavaScript (<em>soon</em>) or XQuery code that runs in the database, close to the data, as native</p>
 <h3>Where to focus</h3>
+<p>Early Access 2 adds several important capabilities to the existing Java Client API:</p>
 <ol>
-  <li><strong>Native JSON</strong>: <code>JacksonHandle</code> for I/O on native JSON documents in and out of the database, including in-memory “DOM”-like trees and streaming access</strong></li>
+  <li><strong>Native JSON</strong>: Manage and query native JSON documents in MarkLogic using the popular <a href="http://jackson.codehaus.org">Jackson processor</a>. Choose between in-memory “DOM”-like trees, streaming, and automatic mapping to and from POJOs.</strong></li>
   <li><strong>POJO façade</strong>: Automatically marshall and unmarshall POJOs from JSON documents in the database. Query by POJO field names and typed values.</li>
-  <li><strong>Bulk write</strong>: More efficiently store multiple documents and/or metadata in a single request.</li>
+  <li><strong>Bulk write</strong>: More efficiently persist multiple documents and/or metadata in a single request.</li>
   <li><strong>Bulk read</strong>: More efficiently get multiple documents and/or metadata in a single request.</li>
-  <li><strong>Open development</strong>: Development, tests, docs, and issue tracking on GitHub under the permissive, Apache 2.0 license.</li>
+  <li><strong>Open development</strong>: Development, tests, docs, and issue tracking on <a href="https://github.com/marklogic/java-client-api">GitHub</a> under the permissive <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>.</li>
 </ol>
 <p>For more information, the <a href="http://docs-ea.marklogic.com/jsdoc/index.html">Early Access API documentation</a> is available online and the commented source code is freely available <a href="https://github.com/marklogic/node-client-api">on GitHub</a>. </p>
 <h3>Deeper dive</h3>
 <h4>System requirements and installation</h4>
-  
-<h4>Important Concepts</h4>
-<p></p>
+<p>The generally available 3.0 release of the Java Client API will be hosted from the Maven Central repository. This will allow Maven and Gradle to easily access the built JAR and all of its dependencies. However, Early Access builds will only be available from an external repository hosted as part of the GitHub project. To use this repository from your Maven project, add the repository to your project’s <code>pom.xml</code>.</p>
+<pre>
+&lt;repository>
+  &lt;id>MarkLogic-releases&lt;/id>
+  &lt;name>MarkLogic Releases&lt;/name>
+  &lt;url>http://developer.marklogic.com/maven2&lt;/url>
+&lt;/repository>
+</pre>
+<p>Add the Early Access artifact to the project’s dependencies. </p>
+<pre>
+&lt;dependency>
+  &lt;groupId>com.marklogic&lt;/groupId>
+  &lt;artifactId>client-api-java&lt;/artifactId>
+  &lt;version>3.0.0-ea2&lt;/version>
+&lt;/dependency>
+</pre>
+<p>You can also download the source code yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings.
+<!--<h4>Important Concepts</h4>
+<p></p>-->
 <h4>0. Configuration</h4>
-<p></p>
+<p>The following examples use a shared <code>DatabaseClient</code> configuration. The Java Client API communicates with MarkLogic over HTTP. <code>DatabaseClient</code> instances are designed to be shared across application threads. In a typical production implementation, you’d likely inject a configured client singleton into data service helper classes using something like <a href="http://projects.spring.io/spring-framework/">Spring</a>. Take a look at the <a href="https://github.com/marklogic/marklogic-samplestack">Samplestack reference architecture</a> for an example.</p>
 <pre class="java">{{Configuration_example.java}}</pre>
 <h4>1. POJO Façade</h4>
-<p></p>
-<pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex01_POJO.java}}</pre>
+<p>The POJO façade allows an application to work with simple Java objects while the Java Client API manages  marshaling and unmarshaling documents from the database and mapping queries to fields. The POJO façade is <em>not</em> a full-featured <acronym title="Object-Relational Mapping">ORM</acronym> (ODM?) system. For example, it won’t automatically fetch related objects or manage circular dependencies and it provides no client-side caching. It’s designed to be a low-overhead way to persist and query simple domain objects. For more complicated scenarios you’re better off working directly with JSON or XML documents and manaully assembling object graphs. </p>
+<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex01_POJO.java}}</pre>
+<pre class="java">{{./java-examples/src/com/acme/User.java}}</pre>
+<pre class="java">{{./java-examples/src/com/acme/Tag.java}}</pre>
 <h4>2. POJO Query</h4>
 <p>The <code>PojoRepository</code> provides a means for writing, reading, and querying typed POJOs. It does not re-hydrate an entire object graph or cache results, but is an easy way to work with simple POJOs, complementary to the other JSON or XML document I/O capabilities.</p>
-<pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex02_POJOQuery.java}}</pre>
+<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex02_POJOQuery.java}}</pre>
 <h4>3. Bulk Writes</h4>
-<p></p>
-<pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex03_BulkWrite.java}}</pre>
-<h4>4. Bulk Writes</h4>
-<p></p>
-<pre class="java">{{./java-examples/src/com/marklogic/exmaples/Ex04_BulkRead.java}}</pre>
+<p>Bulk writes allow an application to gather multiple inserts or updates into a single request, amortizing the connection overhead across many documents. You can accumulate documents in a <code>WriteSet</code> and periodically write them to the database as a single transaction. </p>
+<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex03_BulkWrite.java}}</pre>
+<h4>4. Bulk Read</h4>
+<p>Bulk read allows an application to efficiently read sets of raw documents and/or metadata. Reads can be filtered by a <code>QueryDefinition</code> to provide additional precision. </p>
+<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex04_BulkRead.java}}</pre>
+<!--<h3>What’s next</h3>
+<p></p>-->
 </body>
 </html>
