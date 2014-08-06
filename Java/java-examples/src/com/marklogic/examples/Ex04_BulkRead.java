@@ -17,7 +17,7 @@ public class Ex04_BulkRead {
         StructuredQueryBuilder builder = client.newQueryManager().newStructuredQueryBuilder();
         QueryDefinition query = builder.and(builder.collection("fake data"));
 
-        DocumentPage page = client.newDocumentManager().search(query, 1L);
+        DocumentPage page = client.newDocumentManager().search(query, 1);
 
         // Iterate through the results, which include the raw documents,
         // available with a ReadHandle.

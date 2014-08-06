@@ -23,7 +23,7 @@ public class Ex02_POJOQuery {
             q.value("gender", "female")
             );
 
-        PojoPage<User> page = userRepo.search(query, 1L);
+        PojoPage<User> page = userRepo.search(query, 1);
         for (User user : page) {
             System.out.println(user.toString());
         }
