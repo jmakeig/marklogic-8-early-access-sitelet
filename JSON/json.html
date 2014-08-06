@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8" />
+<head>
+<title>MarkLogic Node.js Client API</title>
+<style type="text/css">
+  body {
+    margin: 0 2em;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14pt;
+    line-height: 1;
+  }
+  p, li, pre {
+    line-height: 1.44;
+  }
+  code, pre { /*, .CodeMirror */
+    font-family: Inconsolata, Consolas, Monaco, monospace !important;
+    font-size: 1.1rem;
+  }
+  pre {
+    overflow: auto;
+    margin: 0.5rem 1rem;
+    padding: 0.5rem;
+    border: solid 1px #ccc;
+  }
+  .note {
+    font-size: 85%; 
+    padding: 1em; 
+    margin-left: 2em;
+    margin-right: 4em;
+    background: #eee;
+    color: #444;
+  }
+/*
+  .CodeMirror {
+    border: 1px solid #ccc;
+    height: auto;
+  }
+  .CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+*/
+</style>
+<!--<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.css" />-->
+</head>
+<body>
+<h2>Native JSON</h2>
+<h3>Where to focus</h3>
+<p>Early Access 2 builds on the initial Native JSON feature set from EA1 (see below) with:</p>
+<ul>
+  <li>JSON serializations of all query types (<code>cts.and-query</code>, <code>cts.property-value-query</code>, etc.), <em>except</em> for geospatial queries, reverse queries and bi-temporal queries. These are scheduled for Early Access 3. Use the serializations to persist queries and re-instantiate them using the <code>cts.query</code> constructor in JavaScript or <code>cts:query</code> in XQuery.
+  </li>
+  <li>The ability to specify permissions and options parameters on most built-ins as JSON, for example <code>xdmp.eval</code> in JavaScript or <code>xdmp:eval</code> in XQuery. </li>
+  <li><code>cts:walk</code> and <code>cts:highlight</code> in XQuery on JSON nodes. <code>cts.walk</code> on JSON nodes in JavaScript it scheduled for Early Access 3.</li>
+  <li>Just like you’d use a <code>cts:element-reference</code> to identify a range index on an XML element in a <code>cts.values</code> call or as part of a <a href="http://docs-ea.marklogic.com/cts.indexOrder"><code>cts.order</code></a> specification, you can now create references to range indexes on JSON properties with <code>cts.jsonPropertyReference</code> in JavaScript or <code>cts:json-property-reference</code> in XQuery.</li>
+</ul>
+<p>Early Access 1 introduced the following JSON capabilities:</p>
+<ul>
+  <li>Full-text indexes, including advanced language stemming, tokenization and de-compounding for JSON strings.</li>
+  <li>Document-level role-based access controls.</li>
+  <li>Multi-statement and multi-document ACID transactions.</li>
+  <li>XPath selection and projection over JSON.</li>
+  <li>New JSON types for XQuery applications.</li>
+  <li>Create update, and delete native JSON documents from XQuery</li>
+  <li>Query JSON properties and values using new and existing built-in functions (for more info see details in deeper dive)</li>
+</ul>
+</body>
+</html>
