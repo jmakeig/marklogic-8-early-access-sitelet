@@ -1,7 +1,5 @@
 package com.acme;
 
-import com.marklogic.client.pojo.annotation.Id;
-
 public class Tag {
     private String label;
     private String description;
@@ -15,7 +13,6 @@ public class Tag {
         this.label = label;
     }
 
-    @Id
     public String getLabel() {
         return label;
     }
