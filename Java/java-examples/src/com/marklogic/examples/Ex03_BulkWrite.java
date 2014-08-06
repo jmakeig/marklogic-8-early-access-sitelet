@@ -1,4 +1,4 @@
-package com.marklogic.exmaples;
+package com.marklogic.examples;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.marklogic.exmaples;
+package com.marklogic.examples;
 
 import com.acme.Tag;
 import com.acme.User;
