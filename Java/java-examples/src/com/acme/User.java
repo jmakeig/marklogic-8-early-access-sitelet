@@ -15,6 +15,21 @@ public final class User {
     private Double balance;
     private Integer age;
     private String gender;
+    private Set<Tag> tags;
+
+    public User() {
+        super();
+        this.tags = new HashSet<Tag>();
+    }
+
+    @Id
+    public String getGUID() {
+        return guid;
+    }
+
+    public void setGUID(String guid) {
+        this.guid = guid;
+    }
 
     public String getGender() {
         return gender;
@@ -22,14 +37,6 @@ public final class User {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    private Set<Tag> tags;
-
-    public User() {
-        super();
-        // this.friends = new HashSet<User>();
-        this.tags = new HashSet<Tag>();
     }
 
     public Double getBalance() {
@@ -54,15 +61,6 @@ public final class User {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    @Id
-    public String getGUID() {
-        return guid;
-    }
-
-    public void setGUID(String guid) {
-        this.guid = guid;
     }
 
     public String getName() {
