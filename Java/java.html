@@ -51,7 +51,7 @@
   <li><strong>Bulk read</strong>: More efficiently get multiple documents and/or metadata in a single request.</li>
   <li><strong>Open development</strong>: Development, tests, docs, and issue tracking on <a href="https://github.com/marklogic/java-client-api">GitHub</a> under the permissive <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>.</li>
 </ol>
-<p>For more information, the <a href="http://docs-ea.marklogic.com/jsdoc/index.html">Early Access API documentation</a> is available online and the commented source code is freely available <a href="https://github.com/marklogic/node-client-api">on GitHub</a>. </p>
+<p>For more information, the <a href="http://docs-ea.marklogic.com/javadoc/client/index.html">Early Access API documentation</a> is available online and the commented source code is freely available <a href="https://github.com/marklogic/node-client-api">on GitHub</a>. </p>
 <h3>Deeper dive</h3>
 <h4>System requirements and installation</h4>
 <p>The generally available 3.0 release of the Java Client API will be hosted from the <a href="http://search.maven.org">Maven Central repository</a>. This will allow <a href="http://maven.apache.org">Maven</a> and <a href="http://www.gradle.org">Gradle</a> to easily access the built JAR and all of its dependencies. However, Early Access builds will only be available from an external repository hosted as branch of the GitHub project. To use this repository from your Maven project, add the repository to your project’s <code>pom.xml</code>.</p>
@@ -70,7 +70,7 @@
   &lt;version>3.0.0-ea2&lt;/version>
 &lt;/dependency>
 </pre>
-<p>You can also <a href="https://github.com/marklogic/java-client-api/tree/b3_0_0-ea2">download the source code</a> yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings for Java projects.
+<p>You can also <a href="https://github.com/marklogic/java-client-api/tree/b3_0_0-ea2">download the source code</a> yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings for Java projects.</p>
 <!--<h4>Important Concepts</h4>
 <p></p>-->
 <h4>0. Configuration</h4>
@@ -79,7 +79,9 @@
 <h4>1. POJO Façade</h4>
 <p>The POJO façade allows an application to work with simple Java objects while the Java Client API manages  marshaling and unmarshaling documents from the database and mapping queries to fields. The POJO façade is <em>not</em> a full-featured <acronym title="Object-Relational Mapping">ORM</acronym> (ODM?) system. For example, it won’t automatically fetch related objects or manage circular dependencies and it provides no client-side caching. It’s designed to be a low-overhead way to persist and query simple domain objects. For more complicated scenarios you’re better off working directly with JSON or XML documents and manually assembling object graphs. </p>
 <pre class="java">{{./java-examples/src/com/marklogic/examples/Ex01_POJO.java}}</pre>
+<h5>User</h5>
 <pre class="java">{{./java-examples/src/com/acme/User.java}}</pre>
+<h5>Tag</h5>
 <pre class="java">{{./java-examples/src/com/acme/Tag.java}}</pre>
 <h4>2. POJO Query</h4>
 <p>The <code>PojoRepository</code> provides a means for writing, reading, and querying typed POJOs. It does not re-hydrate an entire object graph or cache results, but is an easy way to work with simple POJOs, complementary to the other JSON or XML document I/O capabilities.</p>
