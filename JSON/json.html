@@ -49,11 +49,13 @@
 <h3>Where to focus</h3>
 <p>Early Access 2 builds on the initial Native JSON feature set from EA1 (see below) with:</p>
 <ul>
-  <li>JSON serializations of all query types (<code>cts.and-query</code>, <code>cts.property-value-query</code>, etc.), <em>except</em> for geospatial queries, reverse queries and bi-temporal queries. These are scheduled for Early Access 3. Use the serializations to persist queries and re-instantiate them using the <code>cts.query</code> constructor in JavaScript or <code>cts:query</code> in XQuery.
+  <li>JSON serializations of all query types (<a href="http://docs-ea.marklogic.com/cts.andQuery"><code>cts.andQuery</code></a>, <a href="http://docs-ea.marklogic.com/cts.propertyValueQuery"><code>cts.propertyValueQuery</code></a>, etc.), <em>except</em> for geospatial queries, reverse queries, bi-temporal, and similar queries. These are scheduled for Early Access 3. Use the serializations to persist queries and re-instantiate them using the <code>cts.query</code> constructor in JavaScript or <a href="http://docs-ea.marklogic.com/cts:query"><code>cts:query</code></a> in XQuery.
   </li>
-  <li>The ability to specify permissions and options parameters on most built-ins as JSON, for example <code>xdmp.eval</code> in JavaScript or <code>xdmp:eval</code> in XQuery. </li>
+  <li>JavaScript built-in functions that take permissions as input or return permissions as output now use JavaScript objects to represent the permissions, for example <a href="http://docs-ea.marklogic.com/xdmp.documentInsert"><code>xdmp.documentInsert</code></a> or <a href="http://docs-ea.marklogic.com/xdmp.documentGetPermissions"><code>xdmp.documentGetPermissions</code></a>. </li>
+  <li>Options parameters in most JavaScript built-in functions are now specified as JavaScript objects, for example, the third parameter of <a href="http://docs-ea.marklogic.com/xdmp.eval"><code>xdmp.eval</code></a>. </li>
   <li><code>cts:walk</code> and <code>cts:highlight</code> in XQuery on JSON nodes. <code>cts.walk</code> on JSON nodes in JavaScript it scheduled for Early Access 3.</li>
-  <li>Just like you’d use a <code>cts:element-reference</code> to identify a range index on an XML element in a <code>cts.values</code> call or as part of a <a href="http://docs-ea.marklogic.com/cts.indexOrder"><code>cts.order</code></a> specification, you can now create references to range indexes on JSON properties with <code>cts.jsonPropertyReference</code> in JavaScript or <code>cts:json-property-reference</code> in XQuery.</li>
+  <li>Just like you’d use a <code>cts:element-reference</code> to identify a range index on an XML element in a <code>cts.values</code> call or as part of a <a href="http://docs-ea.marklogic.com/cts.indexOrder"><code>cts.indexOrder</code></a> specification, you can now create references to range indexes on JSON properties with <code>cts.jsonPropertyReference</code> in JavaScript or <code>cts:json-property-reference</code> in XQuery.</li>
+  <li><a href="http://docs-ea.marklogic.com/cts.fieldWordQuery">Field word queries</a> now support JSON documents. Field value and field range queries on JSON documents will be supported in Early Access 3.</li>
 </ul>
 <p>Early Access 1 introduced the following JSON capabilities:</p>
 <ul>
