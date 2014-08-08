@@ -1,0 +1,20 @@
+{
+  "name": "marklogic-8-ea-examples",
+  "version": "0.0.0",
+  "description": "",
+  "main": "00 teaser.js",
+  "dependencies": {
+    "faker": "^1.0.1",
+    "marklogic": "^0.0.1",
+    "node-uuid": "^1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "marklogic"
+  ],
+  "author": "Justin Makeig",
+  "license": "Apache-2.0"
+}
