@@ -4,3 +4,6 @@ Node.js/_test.js
 
 # Use generate.sh to build these
 **/_*.html
+
+# Temporary Excel files
+~$*.xlsx
