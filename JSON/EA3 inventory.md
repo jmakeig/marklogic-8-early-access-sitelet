@@ -1,7 +1,9 @@
 ## Big Ticket
-* New query serializations (geo, similar, triple range, current 
+* Support for geo and reverse queries
+* SQL
 * Embedded triples
 * XCC and mlcp
+* Query serializations (geo, similar, triple range, current)
 * API changes to allow builtins to take JavaScript objects as inputs
 
 ## Rough cut
