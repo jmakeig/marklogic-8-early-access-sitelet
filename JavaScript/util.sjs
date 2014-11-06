@@ -1,7 +1,9 @@
 module.exports = {
+  // Export the "private" function with a public name
   parseCurrency: dollarToObject
 }
 
+// "Private" function local to the module
 function dollarToObject(str) {
   if(str && str.match(/^\s*\$/)) {
     return {
