@@ -1,13 +1,15 @@
+# JavaScript
 ## Big Ticket
 * require() (and differences with the Node.js implementation)
 * ES6 iterators and generators
 * Amps
 * Type hierarchies and introspection (instanceof, enumerable properties, functions as functions, etc.)
 * Special forms
-* XCC
+* XCC -> arrays and objects (JSON data types) from JS or XQ
 * Large bucket of JSOBJ and friends
 * Improvements to NodeBuilder
 * DOM xpath
+* Node functions
 
 ## Jane
 * 28476: New special-form built-ins 
