@@ -123,12 +123,17 @@
 <p>The <em>imported</em> library module, <code>util.sjs</code>:</p>
 <pre class="sjs">`cat "util.sjs"`</pre>
 
-<h4>XXX. Import XQuery</h4>
+<h4>5. Import XQuery</h4>
 <p>JavaScript modules can import XQuery modules and access public functions and variables, just as an importing XQuery file could. XQuery names are automatically converted to <code>lowerCamelCase</code> in JavaScript. </p>
-<pre class="sjs">`cat "03 Import XQuery.sjs"`</pre>
+<pre class="sjs">`cat "05 Import XQuery.sjs"`</pre>
 <!--<h4>5. Update: Node Replace</h4>
 <p>Perform the same update as above, but use node-level updates, as opposed to rewriting complete documents. </p>
 <pre class="sjs">`cat "05 Update-Node Replace.sjs"`</pre>-->
+
+<h4>6. Amps</h4>
+<p>An amp, or privilege amplification, allows code to temporarily elevate privileges within a specific context. In JavaScript, an amp requires the combination of configuration and wrapping the exported function you wish to amp in the global <code>module.amp()</code> function. For example, <code>xdmp.eval()</code> requires a privilege (<code>http://marklogic.com/xdmp/privileges/xdmp-eval</code>). Evaluating code from a string could open an application to <a href="http://en.wikipedia.org/wiki/Code_injection">injection attacks</a>. However, it’s useful for an application to be able to do a one-off eval in a specific context without having to grant users blanket privileges to eval anywhere.</p>
+<p></p>
+
 <h4>6. XMLBuilder</h4>
 <p>The <code>XMLBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. </p>
 <pre class="sjs">`cat "06 XMLBuilder.sjs"`</pre>
