@@ -129,17 +129,20 @@
 
 <h4>6. Amps</h4>
 <p>An amp, or privilege <em>amp</em>lification, allows code to temporarily elevate privileges within a specific context. In JavaScript, an amp requires the combination of configuration and wrapping the exported function you wish to amp in the global <code>module.amp()</code> function. For example, <code>xdmp.eval()</code> requires a privilege (<code>http://marklogic.com/xdmp/privileges/xdmp-eval</code>). Evaluating code from a string could open an application to <a href="http://en.wikipedia.org/wiki/Code_injection">injection attacks</a>. However, it’s useful for an application to be able to do a one-off eval in a specific context without having to grant users blanket privileges to eval anywhere.</p>
-<ol>
-  <li>Create a new role <code>caneval</code>. No user will actually have this role. It’s used only for the specific amp.</li> 
-  <li>Add the <code>caneval</code> role to the <code>xdmp:eval</code> execute privilege. This allows anyone with the <code>caneval</code> role to call <code>xdmp.eval</code> in JavaScript or <code>xdmp:eval</code> in XQuery.</li>
-  <li>Create a new amp with the local name <code>version</code> and document URI <code>/amp.js</code> using the <code>Modules</code> database.</li>
-  <li>Create a new <code>noeval</code> user and role.</li>
-  <li>Load <code>amp.js</code> to the URI, <code>/amp.js</code> into the <code>Modules</code> database give execute permissions to the <code>noeval</code> role above.</li>
-</ol>
-<p><em>Exercise for the reader: The expanded REST Management API is great for scripting this type of configuration.</em></p>
 <pre class="sjs">`cat "06 Amp.sjs"`</pre>
-<p></p>
+<p><code>amp.sjs</code> is a library module that exports an amped function, <code>version</code> as <code>evalVersion</code>. Importing modules do not need to be aware that a function is amped, just the name as exported by the library module.</p>
 <pre class="sjs">`cat "amp.sjs"`</pre>
+<p>Amps require wrapping amped functions with <code>module.amp</code> as well as configuration. Library modules that amp functions must be executed from a modules database, not on the filesystem.</p>
+<ol>
+  <li>Create a new role <code>caneval-internal</code>. No user will actually have this role. It’s used only for the specific amp.</li> 
+  <li>Add the <code>caneval-internal</code> role to the <code>xdmp:eval</code> execute privilege. This allows anyone with the <code>caneval-internal</code> role to call <code>xdmp.eval</code> in JavaScript (or <code>xdmp:eval</code> in XQuery).</li>
+  <li>Create a new amp with the local name <code>version</code> and document URI <code>/amp.js</code> using the <code>Modules</code> database.</li>
+  <li>Create a new <code>noeval-user</code> user without any roles, thus no blanket <code>eval</code> privileges.</li>
+  <li>Load the main and library modules to the <code>Modules</code> database. (Note: For security reasons, functions run from filesystem modules cannot be amped, only library modules served out of a modules database.)</li>
+  <li>Outside of this script, you’ll need to create a new HTTP app server the gets its modules from the modules database and get the URL, <code>http://host:port/06%20Amp.sjs</code>. Login as <code>noeval-user</code> to verify that the amp works.</li>
+</ol>
+<pre class="sjs">`cat "amp-prepare.sjs"`</pre>
+<p><em>Exercise for the reader: The expanded REST Management API is great for scripting this type of configuration.</em></p>
 
 <h4>6. XMLBuilder</h4>
 <p>The <code>XMLBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. </p>

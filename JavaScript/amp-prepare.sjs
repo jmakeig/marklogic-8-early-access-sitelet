@@ -1,5 +1,3 @@
-
-
 var sec = require("/MarkLogic/security");
 
 // Create roles
@@ -30,8 +28,7 @@ tx(function() {
   }
 }, "Modules");
 
-// Run a function in a different transaction against
-// a specific database.
+// Run a function in a different transaction against a specific database.
 function tx(f, database) {
   return xdmp.invokeFunction(
     f, 

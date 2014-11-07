@@ -1,5 +1,3 @@
-// amp.sjs
-
 // module.amp takes a function as input and returns a function
 // that has the same signature as the original function.
 module.exports.evalVersion = module.amp(version);
