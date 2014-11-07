@@ -9,10 +9,10 @@
 //   var my = require("path/to/my.xqy")
 //   my.doSomething(…) 
 // in JavaScript.
-var admin = require("/MarkLogic/admin.xqy")
+var admin = require("/MarkLogic/admin.xqy");
 
 // Use the (XQuery) Admin APIs to create some indexes.
-var config = admin.getConfiguration()
+var config = admin.getConfiguration();
 try {
   // Create a dateTime index on the registered property. For the purposes of creating range indexes a JSON property is
   // the same as an XML element (i.e. this will also add XML elements named "registered" in no namespace to this index.)
@@ -20,17 +20,17 @@ try {
   // as ISO8601 dates, e.g. {"registered": "2014-01-31T19:57:33+08:00"}
   config = admin.databaseAddRangeElementIndex(config, xdmp.database(), 
     admin.databaseRangeElementIndex("dateTime", null, "registered", null, true, "ignore")
-  )
+  );
 } catch(err) { 
-  if(err.name != "ADMIN-DUPLICATECONFIGITEM") throw err // Ignore the error if we've already got this index
+  if(err.name != "ADMIN-DUPLICATECONFIGITEM") { throw err; } // Ignore the error if we've already got this index
 }
 try {
   // JSON nodes support full XPath evaluation. Similarly, you can use XPath to specify path indexes on JSON documents.
   config = admin.databaseAddRangePathIndex(config, xdmp.database(), 
     admin.databaseRangePathIndex(xdmp.database(), "double", "balance/value", null, false, "ignore")
-  )
+  );
 } catch(err) { 
-  if(err.name != "ADMIN-DUPLICATECONFIGITEM") throw err 
+  if(err.name != "ADMIN-DUPLICATECONFIGITEM") { throw err; } 
 }
 
-admin.saveConfiguration(config)
+admin.saveConfiguration(config);
