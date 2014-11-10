@@ -161,11 +161,11 @@
 </ol>
 <p>The following scripts the amp configuration and loads the library and main modules to a modules database. You’ll need to create or configure an HTTP app server externally and run this script as an administrator. </p>
 <pre class="sjs">`cat "amp-prepare.sjs"`</pre>
-<p><em>Exercise for the reader: The expanded REST Management API is great for scripting this type of configuration.</em></p>
+<p><em>Exercise for the reader: The expanded REST Management API provides an even better  way to script this type of configuration.</em></p>
 
-<h4 id="NodeBuilder">6. NodeBuilder</h4>
-<p>The <code>XMLBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. </p>
-<pre class="sjs">`cat "06 XMLBuilder.sjs"`</pre>
+<h4 id="NodeBuilder">6. Working with XML</h4>
+<p>Everything’s a <em>node</em> in the database: JSON, XML, binary, and text. JavaScript provides syntax for working with JSON nodes, mapping them to plain old JavaScript objects. No such equivalent is built into the language for XML. The <code>NodeBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. (<code>xdmp.unquote()</code> can parse a string into an <code>XMLNode</code>.) Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. XML nodes support a read-only W3C DOM interface for reading and traversing node structures. Additionally, any XDM function that takes a node as its first parameter in XQuery can also be called as property of an <code>XMLNode</code>.</p>
+<pre class="sjs">`cat "06 NodeBuilder.sjs"`</pre>
 <h4>7. XPath</h4>
 <p>Because JSON nodes in the database are nodes, in the XML Document Model (XDM) sense, you can access them with XPath. </p>
 <pre class="sjs">`cat "07 XPath.sjs"`</pre>
