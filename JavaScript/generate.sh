@@ -14,5 +14,7 @@ sed -E -e 's/\"/\\\"/g' -e 's/\{\{(.+)\}\}/\`cat \"\1\"\`/g' $1 > $TMP
 eval "echo \"$(< $TMP)\"" >&1 # Evaluate the temp file as if it were a script and write it to stdout
 rm $TMP
 
+# Convert angle brackets to entities for display
+# <pre class="sjs">`cat "07 Highlight XML.sjs" | sed -E -e 's/\</\&lt\;/g'`</pre>  
   
 # ./generate.sh node.html > _node-ea.html; open _node-ea.html 

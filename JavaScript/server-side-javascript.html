@@ -32,36 +32,57 @@
 
 <h3>Why it matters</h3>
 <p>JavaScript has emerged as the language of the web. The move toward advanced applications in the browser and multi-disciplinary “devops” have pushed JavaScript and JSON to the command line, onto devices, down into middleware (Node.js) and now into the database itself. JavaScript has familiar C-like syntax with flexible typing, advanced OOP, and functional programming capabilities. </p>
-<p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-Side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
+<p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-Side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="http://nodejs.org">Node.js</a> and <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
 <p>With Server-Side JavaScript you can:</p>
-  <ul>
-    <li>Run code near the data for unparalleled power and efficiency</li>
-    <li>Build applications faster from a growing pool of skills and tools</li>
-    <li>Reduce risk with proven performance and reliability</li>
-    <li>Decrease brittle ETL and lossy conversions with JSON data</li>
-    <li>Pair with <a href="http://nodejs.org">Node.js</a> and/or <a href="https://angularjs.org">Angular.js</a> to enable full-stack JavaScript/JSON development</li>
-    <li>Better leverage your existing MarkLogic investment by combining JSON, XML, and RDF with XQuery and JavaScript in the same managed system</li>
-<!--
-    <li><strong>More easily get developers new to MarkLogic productive:</strong> Intuitive APIs and familiar syntax make working with MarkLogic more attractive.</li>
-    <li><strong>Better integrate with existing skills and tools in your organization:</strong> Staff projects with resources you already have and attract and retain developers with an environment that will help them succeed.</li>
-    <li><strong>Access all of MarkLogic's proven capabilities</strong> through a pure JSON/JavaScript lens without having to compromise on performance, reliability, or security.</li>
-    <li><strong>Better leverage your existing MarkLogic investment:</strong> Manage JSON, XML, and RDF data with JavaScript. Call existing XQuery library modules as if they were native JavaScript. Evaluate XPath (on both XML and JSON) from JavaScript. Issue SPARQL and SQL queries from JavaScript. Invoke and eval JavaScript from XQuery.</li>
--->
-  </ul>
+<ul>
+  <li>Run code near the data for unparalleled power and efficiency</li>
+  <li>Build applications faster from a growing pool of skills and tools</li>
+  <li>Reduce risk with proven performance and reliability</li>
+  <li>Decrease brittle ETL and lossy conversions with JSON data</li>
+  <li>Pair with <a href="http://nodejs.org">Node.js</a> and/or <a href="https://angularjs.org">Angular.js</a> to enable full-stack JavaScript/JSON development</li>
+  <li>Better leverage your existing MarkLogic investment by combining JSON, XML, and RDF with XQuery and JavaScript in the same managed system</li>
+</ul>
 
 <h3>Where to focus</h3>
-<h4>Early Access 3</h4>
+<h4>Early Access 3, November 2014</h4>
 <ul>
   <li><strong>Module imports:</strong> Import library modules written in either Server-Side JavaScript (<code>.sjs</code>) or XQuery.</li>
-  <li><strong>ECMAScript 6 iterators and generators:</strong> Support for next-generation language features, including <code>for…of</code> loops to iterate over <code>ValueIterators</code>.</li>
-  <li>Security amps:</li> The global <code>module.amp</code> function allows library module to selectively increase privileges on individual functions that they export.
-  <li><strong>Type hierarchies and introspection: </strong></li>
-  <li>Special forms</li>
-  <li>XCC</li>
+  <li><strong>ECMAScript 6 iterators and generators:</strong> Support for next-generation language features, including <code>for…of</code> loops to iterate over <code>ValueIterator</code>s.</li>
+  <li><strong>Security amps:</strong> The global <code>module.amp</code> function allows library module to selectively increase privileges on individual functions that they export.</li>
+  <li><strong>Type hierarchies and introspection: </strong>
+    <ul>
+    <li><code>ValueIterator:</code> Implements the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ECMAScript 6 Iterator interface</a> and returns a <code>Value</code> instance from its <code>.value</code> property.</li>
+    <li><code>Value</code>
+      <ul>
+      <li><code>Node:</code> Base type for all document formats
+          <ul>
+          <li><code>Document:</code></li>
+          <li><code>ObjectNode:</code> JSON objects</li>
+          <li><code>ArrayNode:</code> JSON arrays</li>
+          <li><code>XMLNode:</code> Base type for XML
+            <ul>
+            <li><code>XMLDocument:</code> Implements <code>Document</code> as well</li>
+            <li><code>Element:</code> XML elements.</li>
+            <li><code>Attr:</code> XML attributes.</li>
+            <li><code>CharData:</code>: XML text, comment, and processing instruction nodes as well as JSON strings. Use <code>.nodeType</code> or <code>.nodeKind</code> to differentiate specific types.</li>
+            </ul>
+          </ul>
+      </li>
+      </ul>
+    </li>
+    <li><code>NodeBuilder</code>: Utility for constructing <code>Node</code> instances.</li>
+    <li><code>NodeList:</code> DOM class to represent ordered collections of nodes.</li>
+    <li><code>TypeInfo:</code> DOM class that provides access to XML schema information.</li>
+    <li><code>NamedNodeMap:</code> Unordered list of attributes.</li>
+    </ul>
+  </li>
   <li><strong><code>NodeBuilder</code> improvements:</strong> <code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its ability to build any type of Node. It also introduces a chainable interface. </li>
-  <li><strong>XPath evaluation on XML DOM:</strong> </li>
+  <li><strong>Special forms: Early Access 3 introduces the suite of “special forms” for working with XML and JSON. These include, </strong> <code>cts.walk()</code>, <code>cts.highlight()</code>, <code>cts.estimate()</code>, <code>cts.exists()</code>, <code>cts.elementWalk()</code>, <code>xdmp.plan()</code>. </li>
+  <li><strong>DOM:</strong> All <code>Node</code> instances implement the w3c DOM API (core level 3), not including those functions that update in-place, e.g <code>.appendChild()</code>. (All <code>Node</code> instances are immutable.) EA3 extends the standard DOM API with the ability to run XPath expressions on XML or JSON and a host of helper functions, for things like schema validation and other built-in functions that take a <code>Node</code> as the first argument. </li>
+  <li><strong>Functional programming:</strong> <code>xdmp.apply()</code> and <code>xdmp.invokeFunction()</code> allow passing in JavaScript function references. </li>
+  <li><strong>XCC:</strong> Support for result output and external variable input using JSON types. </li>
 </ul>
-<h4>Early Access 2</h4>
+<h4>Early Access 2, August 2014</h4>
 <ul>
   <li>Early Access 2 includes Server-Side JavaScript for Linux and Windows <em>only</em>. Solaris and OS X will be supported in a future Early Access release. If you are running either of those OSes, a local virtual machine or cloud instance of Linux will be your best bet.</li>
   <li>Run Server-Side JavaScript (defaults to the <code>.sjs</code> extension) modules from an HTTP app server. Importing <em>JavaScript</em> library modules is not supported in Early Access 2. (Importing XQuery library modules into JavaScript has been implemented, though.) The planned implementation will look similar to Node.js's <code>require()</code> or <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-modules">ECMAScript 6’s modules</a>. Your <a href="">feedback</a> on this would be appreciated. </li>
@@ -163,15 +184,24 @@
 <pre class="sjs">`cat "amp-prepare.sjs"`</pre>
 <p><em>Exercise for the reader: The expanded REST Management API provides an even better  way to script this type of configuration.</em></p>
 
-<h4 id="NodeBuilder">6. Working with XML</h4>
+<h4 id="XML">6. Working with XML</h4>
 <p>Everything’s a <em>node</em> in the database: JSON, XML, binary, and text. JavaScript provides syntax for working with JSON nodes, mapping them to plain old JavaScript objects. No such equivalent is built into the language for XML. The <code>NodeBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. (<code>xdmp.unquote()</code> can parse a string into an <code>XMLNode</code>.) Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. XML nodes support a read-only W3C DOM interface for reading and traversing node structures. Additionally, any XDM function that takes a node as its first parameter in XQuery can also be called as property of an <code>XMLNode</code>.</p>
 <pre class="sjs">`cat "06 NodeBuilder.sjs"`</pre>
-<h4>7. XPath</h4>
+
+<h4 id="specialforms">7. Special Forms</h4>
+<p><code>cts.highlight</code> is a powerful function—actually “special form” in the LISP sense—that allows you to traverse a document and mark-up matches based on a query. The query can be anything from a simple word query to a sophisticated Boolean query with geospatial, range, and word terms. Highlighting over XML, you can build snippets and highlights, for example, to report as search results.</p>
+<pre class="sjs">`cat "07 Highlight XML.sjs" | sed -E -e 's/\</\&lt\;/g'`</pre>
+<p>Highlighting also supports JSON nodes too. While JSON doesn’t lend itself to inline markup, like XML, <code>cts.highlight()</code> does the hard work of splitting nodes and interleaving highlights.</p>
+<pre class="sjs">`cat "07 Highlight JSON.sjs"`</pre>
+<p>The resulting matches are interspresed within what used to be a single string property, but has been automically converted to an Array of strings the <code>match</code> object that the highlighting logic created.</p>
+<pre class="sjs">`cat "07 Highlight JSON result.json"`</pre>
+
+<h4>8. XPath</h4>
 <p>Because JSON nodes in the database are nodes, in the XML Document Model (XDM) sense, you can access them with XPath. </p>
-<pre class="sjs">`cat "07 XPath.sjs"`</pre>
-<h4>8. XPath 2</h4>
+<pre class="sjs">`cat "08 XPath.sjs"`</pre>
 <p>From XPath, JSON properties look like un-namespaced XML elements. MarkLogic also extends the XDM with <code>object-node()</code> and <code>array-node()</code> types. </p>
 <pre class="sjs">`cat "08 XPath 2.sjs"`</pre>
+
 <h4>9. OOP</h4>
 <p>JavaScript supports functional, prototypical, and object-oriented programming styles. Any of these can be used as appropriate in MarkLogic. </p>
 <pre class="sjs">`cat "09 OOP.sjs"`</pre>

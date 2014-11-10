@@ -9,7 +9,7 @@
 //   var my = require("path/to/my.xqy")
 //   my.doSomething(…) 
 // in JavaScript.
-var admin = require("/MarkLogic/admin.xqy");
+var admin = require("/MarkLogic/admin");
 
 // Use the (XQuery) Admin APIs to create some indexes.
 var config = admin.getConfiguration();
