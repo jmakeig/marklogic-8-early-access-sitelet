@@ -35,7 +35,7 @@
 <p>Because JSON <em>is</em> JavaScript, JavaScript is ideally suited for building and consuming JSON-based services, whether public or behind the firewall. MarkLogic's Server-Side JavaScript implementation gives developers a friendly API to express queries, aggregates, and data manipulation while automatically distributing evaluation across a cluster to run in parallel, close to the data. MarkLogic has embedded <a href="https://code.google.com/p/v8/">Google's V8 engine</a>—the same one that powers <a href="https://www.google.com/intl/en_us/chrome/browser/">Chrome</a>. V8 provides proven performance and stability as a front-end interface for the mature, high-performance C++ at MarkLogic’s core. </p>
 <p>With Server-Side JavaScript you can:</p>
   <ul>
-    <li>Run code near the data for unparalleled power, efficiency</li>
+    <li>Run code near the data for unparalleled power and efficiency</li>
     <li>Build applications faster from a growing pool of skills and tools</li>
     <li>Reduce risk with proven performance and reliability</li>
     <li>Decrease brittle ETL and lossy conversions with JSON data</li>
@@ -52,14 +52,14 @@
 <h3>Where to focus</h3>
 <h4>Early Access 3</h4>
 <ul>
-  <li>Module imports</li>
-  <li>ECMAScript 6 (Harmony) iterators and generators</li>
-  <li>Security amps</li>
-  <li>Type hierarchies and introspection</li>
+  <li><strong>Module imports:</strong> Import library modules written in either Server-Side JavaScript (<code>.sjs</code>) or XQuery.</li>
+  <li><strong>ECMAScript 6 iterators and generators:</strong> Support for next-generation language features, including <code>for…of</code> loops to iterate over <code>ValueIterators</code>.</li>
+  <li>Security amps:</li> The global <code>module.amp</code> function allows library module to selectively increase privileges on individual functions that they export.
+  <li><strong>Type hierarchies and introspection: </strong></li>
   <li>Special forms</li>
   <li>XCC</li>
-  <li><code>NodeBuilder</code> improvements</li>
-  <li>XPath evaluation on XML DOM</li>
+  <li><strong><code>NodeBuilder</code> improvements:</strong> <code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its ability to build any type of Node. It also introduces a chainable interface. </li>
+  <li><strong>XPath evaluation on XML DOM:</strong> </li>
 </ul>
 <h4>Early Access 2</h4>
 <ul>
@@ -83,9 +83,21 @@
 <p>When working with Server-Side JavaScript, it’s important to distinguish between instances of <strong>JSON nodes</strong>, <code>Node</code> and its derived types, and <strong>JavaScript objects</strong>, plain old <code>Object</code>s. JSON nodes are what are persisted in the database. They map one-to-one with the JSON data model and are immutable. When you get a document out the database it’s an instance of a node, literally <code>instanceof Node</code> in JavaScript. You can also create a JSON node from a JavaScript object using <code>xdmp.toJSON(obj)</code> or from a string using <code>xdmp.unquote(str)</code>. You can read properties of nodes, but you cannot update nodes in-place, like you would a plain JavaScript object. This is a performance optimization. See “Declare Updates” below for best practices around updating JSON nodes in JavaScript. </p>
 <p>JavaScript objects, on the other hand, exist only in memory in an E-node. They are mutable and represent the JavaScript data model, including things like functions, references to other objects, <code>undefined</code>, and <code>NaN</code>, that can’t be represented in JSON. Functions like <code>xdmp.documentInsert()</code> automatically convert JavaScript objects to nodes, similar to the result of calling <code>xdmp.toJSON(obj)</code>. To get an object from a node, use the <code>Node</code> instance’s <code>.toObject()</code> function. </p>
 <pre>`cat "nodes vs objects.sjs"`</pre>
+<p>To summarize, the typical pattern for updating a document in the database is: </p>
+<ol>
+  <li>Call <code>declareUpdate()</code> at the top of your module. </li>
+  <li>Get a <code>Document</code> from something like <code>cts:doc()</code> or <code>cts:search()</code>.</li>
+  <li>Convert the <code>Document</code> to a plain old JavaScript object using the document’s <code>.toObject()</code> function.</li>
+  <li>Change the object instance like you would any other object, e.g. <code>obj.prop = "new"</code> or <code>obj.list.push("new")</code>.</li>
+  <li>Write the updated object back to the database using <code>xdmp.documentInsert()</code>. It handles the conversion of the object instance to a <code>Node</code> just as if you’d explicitly called <code>xdmp.toJSON()</code> on the object.</li>
+</ol>
 <h5>Iterators</h5>
-<p>Most of the functions that return multiple values (e.g. <code>fn.collection()</code> or <code>cts.search()</code>) return an <em>iterator</em>, rather than a full instantiation of the data. This allows the evaluation environment to lazily load data from the cache and/or D-node as it’s needed rather than up front. The iterator interface is designed to implement the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ES6 interface</a> for forward compatibility. </p>
-<pre>`cat "iterators.sjs"`</pre>
+<p>Most functions that read data from the database return an instance of a <code>ValueIterator</code>, rather than a full instantiation of the data. This allows the evaluation environment to lazily and ansychronously load data as it’s required, rather than up-front. Use the <code>.toArray()</code> function on a <code>ValueIterator</code> instance eagerly load the entire contents into a new array.</p>
+<p>The <code>ValueIterator</code> interface implements the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ECMAScript 6 <code>Iterators</code> interface</a>. Like any iterator, you can loop through a <code>ValueIterator</code> using a <code>for…of</code> loop. Note that the <code>for…of</code> loop is not at all the same as a <code>for…in</code> loop, which loops over an object’s properties.</p>
+<pre>`cat "iterators-forof.sjs"`</pre>
+<p>That’s a shorter way of explicitly using the <code>Iterator</code> interface.</p>
+<pre>`cat "iterators-old.sjs"`</pre>
+
 <h5>Module Imports</h5>
 <p>Server-Side JavaScript main modules can import library modules using a syntax based on <a href="http://wiki.commonjs.org/wiki/Modules/1.0">CommonJS</a>, similar to <a href="http://nodejs.org/docs/latest/api/modules.html">Node.js</a>. At its core, a library module declares the variables and functions that it exports. A main module or another library module can import those into its scope using the <code>require()</code> function and assigning the exports to module-level global variables, which behave like a namespace. The syntax of MarkLogic’s JavaScript modules will be familiar to Node.js users. However, the implementation is different in several important ways.
 </p>
