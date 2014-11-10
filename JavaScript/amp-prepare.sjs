@@ -23,7 +23,7 @@ tx(function() {
     "/06 Amp.sjs": 'var amp = require("amp"); amp.evalVersion();',
     "/amp.sjs"   : 'module.exports.evalVersion = module.amp(version); function version() { return xdmp.eval("xdmp.version()"); }'
   }
-  for(var module in modules) {
+  for(var module in modules) { // Note the use of for…in here versus for…of
     xdmp.documentInsert(module, xdmp.toJSON(modules[module]), perms);
   }
 }, "Modules");

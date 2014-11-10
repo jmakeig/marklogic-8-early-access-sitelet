@@ -5,14 +5,14 @@ var user = cts.doc("/34a23649-ec61-478f-90ab-5f01a55120ce.json")
 
 // Update the "name" property to upper-case.  Again, you don't need the preceding .toObject() 
 // if you just want to read the value. However, to update it you need to first convert it 
-// to a plain old JavaScript object with .toObject()
+// to a plain old JavaScript object with .toObject().
 user.name = user.name.toUpperCase(); 
 
 // Convert the plain old Object instance back into a Document node.
 var node = xdmp.toJSON(user);
 
 // You can read properties on Node instances, but you must convert to an object to update any aspect.
-// Remember, xdmp.toJSON creates a Document node, so you have to use .root to get the root ObjectNode.
+// Remember, xdmp.toJSON() creates a Document node, so you have to use .root to get the root ObjectNode.
 node.root.name;
 
 // …but you don't have to convert an object to a Node to persist it.

@@ -86,36 +86,42 @@
 <p>To summarize, the typical pattern for updating a document in the database is: </p>
 <ol>
   <li>Call <code>declareUpdate()</code> at the top of your module. </li>
-  <li>Get a <code>Document</code> from something like <code>cts:doc()</code> or <code>cts:search()</code>.</li>
+  <li>Get a <code>Document</code> from something like <code>cts:doc()</code> or looping over <code>cts:search()</code> (see <a href="#iterators">“Iterators”</a> below).</li>
   <li>Convert the <code>Document</code> to a plain old JavaScript object using the document’s <code>.toObject()</code> function.</li>
   <li>Change the object instance like you would any other object, e.g. <code>obj.prop = "new"</code> or <code>obj.list.push("new")</code>.</li>
   <li>Write the updated object back to the database using <code>xdmp.documentInsert()</code>. It handles the conversion of the object instance to a <code>Node</code> just as if you’d explicitly called <code>xdmp.toJSON()</code> on the object.</li>
 </ol>
-<h5>Iterators</h5>
+<h5 id="iterators">Iterators</h5>
 <p>Most functions that read data from the database return an instance of a <code>ValueIterator</code>, rather than a full instantiation of the data. This allows the evaluation environment to lazily and ansychronously load data as it’s required, rather than up-front. Use the <code>.toArray()</code> function on a <code>ValueIterator</code> instance eagerly load the entire contents into a new array.</p>
-<p>The <code>ValueIterator</code> interface implements the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ECMAScript 6 <code>Iterators</code> interface</a>. Like any iterator, you can loop through a <code>ValueIterator</code> using a <code>for…of</code> loop. Note that the <code>for…of</code> loop is not at all the same as a <code>for…in</code> loop, which loops over an object’s properties.</p>
+<p>The <code>ValueIterator</code> interface implements the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ECMAScript 6 <code>Iterators</code> interface</a>. Like any iterator, you can loop through a <code>ValueIterator</code> using a <code>for…of</code> loop. Note that the <code>for…of</code> loop is <em>not</em> at all the same as a <code>for…in</code> loop, which loops over an object’s properties.</p>
 <pre>`cat "iterators-forof.sjs"`</pre>
 <p>That’s a shorter way of explicitly using the <code>Iterator</code> interface.</p>
 <pre>`cat "iterators-old.sjs"`</pre>
 
-<h5>Module Imports</h5>
-<p>Server-Side JavaScript main modules can import library modules using a syntax based on <a href="http://wiki.commonjs.org/wiki/Modules/1.0">CommonJS</a>, similar to <a href="http://nodejs.org/docs/latest/api/modules.html">Node.js</a>. At its core, a library module declares the variables and functions that it exports. A main module or another library module can import those into its scope using the <code>require()</code> function and assigning the exports to module-level global variables, which behave like a namespace. The syntax of MarkLogic’s JavaScript modules will be familiar to Node.js users. However, the implementation is different in several important ways.
-</p>
-  <ol>
-    <li><strong>Import paths and precedence:</strong> The global <code>require()</code> function looks up module paths using the <a href="http://docs.marklogic.com/guide/app-dev/import_modules#id_29407">according a well defined set of rules</a>, coincidently shared by the XQuery engine. When a module starts with a slash (<code>/</code> or <code>C:\</code> on Windows), MarkLogic will look for a file on the specified path relative to the <code>Modules</code> file-system directory of the MarkLogic installation. If the module is not found there, it will look relative to the app server root for both file-system- and modules database-backed configurations. If the import path <em>does not</em> start with a slash, the path is resolved relative to the location of the module calling the <code>require()</code>. Again, this is the same logic as module imports in XQuery. </li>
-    <li><strong>XQuery imports:</strong> Server-Side JavaScript modules can import XQuery library modules. The importing JavaScript can access public functions and variables from the XQuery module as if they were JavaScript. (See Example 3 below.) If an imported module—Server-Side JavaScript or XQuery—does not end with a file extension, <code>require()</code> will first look for the module with the user- specified name appended with the configured extensions for JavaScript module, and then appended with the configured extensions for XQuery module. The file extensions are defined in the <a href="http://docs.marklogic.com/admin-help/mimetype">mimetype configuration</a>. Server-Side JavaScript (<code>application/vnd.marklogic-javascript</code>) defaults to <code>.sjs</code> and XQuery (<code>application/vnd.marklogic-xdmp</code>) defaults to any one of <code>.xqy</code>, <code>.xqe</code>, <code>.xq</code>, or <code>.xquery</code>.</li>
-    <li><strong>Export scope:</strong> It is possible to change the state of an exported variable in MarkLogic. However, that change only persists for the request in which it was made. Thus subsequent requests and other hosts won’t have access to modified exports. Imported modules are cached, but their state does not persist beyond the scope of an individual request. In general, changing exports at runtime is not a best practice because it makes code more difficult to reason and to be reflected globally would have to happen in every importing module. This is different that how exports work in Node.js. In Node.js export state is global and changes are reflected in subsequent requests to the same Node process. </li>
-  </ol>
-<h5>Declare Updates</h5>
+<h5 id="declareUpdates">Declare Updates</h5>
 <p>When a JavaScript module makes changes to the database, for example calling <code>xdmp.documentInser()</code>, those changes are executed immediately. Rather, the changes are recorded over the life of the request and applied atomically at the end. In XQuery, the fact that a module was writing to the database can be determined with static analysis of the code. In JavaScript any module that needs to update the database needs to state its intentions using the global <code>declareUpdate()</code> function. This function must be called before the first update. In general, putting <code>declareUpdate</code> as the first statement is best practice, making it clear the reader that this module will make updates. </p>
 
 
+<h5 id="modules">Modules</h5>
+<p>Server-Side JavaScript main modules can import library modules using a syntax based on <a href="http://wiki.commonjs.org/wiki/Modules/1.0">CommonJS</a>, similar to <a href="http://nodejs.org/docs/latest/api/modules.html">Node.js</a>. At its core, a library module declares the variables and functions that it exports. A main module or another library module can import those into its scope using the <code>require()</code> function and assigning the exports to module-level global variables, which behave like namespaces. </p>
+<p>A main module imports a library module into a variable.</p>
+<pre>`cat "modules-main.sjs"`</pre>
+<p>The library module declares the functions and variables that it exports.</p>
+<pre>`cat "modules-lib.sjs"`</pre>
+<p>The syntax of MarkLogic’s JavaScript modules will be familiar to Node.js users. However, the implementation is different in several important ways.
+</p>
+  <ol>
+    <li><strong>Import paths and precedence:</strong> The global <code>require()</code> function looks up module paths using the <a href="http://docs.marklogic.com/guide/app-dev/import_modules#id_29407">according a well defined set of rules</a>, coincidently shared by the XQuery engine. When a module starts with a slash (<code>/</code> or <code>C:\</code> on Windows), MarkLogic will look for a file on the specified path relative to the <code>Modules</code> file-system directory of the MarkLogic installation. If the module is not found there, it will look relative to the app server root for both file-system- and modules database-backed configurations. If the import path <em>does not</em> start with a slash, the path is resolved relative to the location of the module calling the <code>require()</code>. Again, this is the same logic as module imports in XQuery. </li>
+    <li><strong>XQuery imports:</strong> Server-Side JavaScript modules can import XQuery library modules. The importing JavaScript can access public functions and variables from the XQuery module as if they were JavaScript. (See <a href="#example3">Example 3</a> below.) If an imported module—Server-Side JavaScript or XQuery—does not end with a file extension, <code>require()</code> will first look for the module with the user- specified name appended with the configured extensions for JavaScript module, and then appended with the configured extensions for XQuery module. The file extensions are defined in the <a href="http://docs.marklogic.com/admin-help/mimetype">mimetype configuration</a>. Server-Side JavaScript (<code>application/vnd.marklogic-javascript</code>) defaults to <code>.sjs</code> and XQuery (<code>application/vnd.marklogic-xdmp</code>) defaults to any one of <code>.xqy</code>, <code>.xqe</code>, <code>.xq</code>, or <code>.xquery</code>.</li>
+    <li><strong>Export scope:</strong> It is possible to change the state of an exported variable in MarkLogic. However, that change only persists for the request in which it was made. Thus subsequent requests and other hosts won’t have access to modified exports. Imported modules are cached, but their state does not persist beyond the scope of an individual request. In general, changing exports at runtime is not a best practice because it makes code more difficult to reason and to be reflected globally would have to happen in every importing module. This is different than how exports work in Node.js. In Node.js export state is global and changes are reflected in subsequent requests to the same Node process. </li>
+  </ol>
+  
 <h4>Incompatible API Changes</h4>
 <h5>Changes in Early Access 3</h5>
 <ul>
   <li><code>xdmp.toJson()</code> is now <code>xdmp.toJSON()</code> to be more consistent with JavaScript’s spelling of “JSON”, e.g. <code>JSON.stringify()</code>.</li>
   <li><code>Node.prototype.valueOf()</code> is now <code>Node.prototype.toObject()</code> to better reflect its behavior. This is the function you use to get a mutable version of a node.</li>
-  <li><code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its applicability. </li>
+  <li><code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its applicability to other types of nodes. </li>
 </ul>
 
 <h4>1. Load Data</h4>
@@ -148,15 +154,16 @@
 <ol>
   <li>Create a new role <code>caneval-internal</code>. No user will actually have this role. It’s used only for the specific amp.</li> 
   <li>Add the <code>caneval-internal</code> role to the <code>xdmp:eval</code> execute privilege. This allows anyone with the <code>caneval-internal</code> role to call <code>xdmp.eval</code> in JavaScript (or <code>xdmp:eval</code> in XQuery).</li>
-  <li>Create a new amp with the local name <code>version</code> and document URI <code>/amp.js</code> using the <code>Modules</code> database.</li>
+  <li>Create a new amp with the local name <code>version</code> and document URI <code>/amp.js</code> using the <code>Modules</code> database. The amp must reference the <em>internal</em> name of the function in the library module, not the publicly exported name, <code>version</code>, in this example.</li>
   <li>Create a new <code>noeval-user</code> user without any roles, thus no blanket <code>eval</code> privileges.</li>
   <li>Load the main and library modules to the <code>Modules</code> database. (Note: For security reasons, functions run from filesystem modules cannot be amped, only library modules served out of a modules database.)</li>
   <li>Outside of this script, you’ll need to create a new HTTP app server the gets its modules from the modules database and get the URL, <code>http://host:port/06%20Amp.sjs</code>. Login as <code>noeval-user</code> to verify that the amp works.</li>
 </ol>
+<p>The following scripts the amp configuration and loads the library and main modules to a modules database. You’ll need to create or configure an HTTP app server externally and run this script as an administrator. </p>
 <pre class="sjs">`cat "amp-prepare.sjs"`</pre>
 <p><em>Exercise for the reader: The expanded REST Management API is great for scripting this type of configuration.</em></p>
 
-<h4>6. XMLBuilder</h4>
+<h4 id="NodeBuilder">6. NodeBuilder</h4>
 <p>The <code>XMLBuilder</code> API provides a lightweight interface for constructing XML nodes from JavaScript. Like a JSON node, an XML node can be saved in the database or manipulated in XQuery. </p>
 <pre class="sjs">`cat "06 XMLBuilder.sjs"`</pre>
 <h4>7. XPath</h4>
