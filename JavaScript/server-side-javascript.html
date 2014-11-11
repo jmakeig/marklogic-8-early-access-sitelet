@@ -77,10 +77,11 @@
     </ul>
   </li>
   <li><strong><code>NodeBuilder</code> improvements:</strong> <code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its ability to build any type of Node. It also introduces a chainable interface. </li>
-  <li><strong>Special forms: Early Access 3 introduces the suite of “special forms” for working with XML and JSON. These include, </strong> <code>cts.walk()</code>, <code>cts.highlight()</code>, <code>cts.estimate()</code>, <code>cts.exists()</code>, <code>cts.elementWalk()</code>, <code>xdmp.plan()</code>. </li>
+  <li><strong>Special forms: Early Access 3 introduces the suite of “special forms” for working with XML and JSON. These include, </strong> <code>cts.walk()</code>, <code>cts.highlight()</code>, <code>cts.estimate()</code>, <code>cts.exists()</code>, <code>cts.elementWalk()</code>, <code>cts.plan()</code>. </li>
   <li><strong>DOM:</strong> All <code>Node</code> instances implement the w3c DOM API (core level 3), not including those functions that update in-place, e.g <code>.appendChild()</code>. (All <code>Node</code> instances are immutable.) EA3 extends the standard DOM API with the ability to run XPath expressions on XML or JSON and a host of helper functions, for things like schema validation and other built-in functions that take a <code>Node</code> as the first argument. </li>
   <li><strong>Functional programming:</strong> <code>xdmp.apply()</code> and <code>xdmp.invokeFunction()</code> allow passing in JavaScript function references. </li>
   <li><strong>XCC:</strong> Support for result output and external variable input using JSON types. </li>
+  <li><strong>Built-in input arguments and return types:</strong> Work is well underway to convert the breadth of built-in functions that accept or return XML to be able to use JavaScript objects as well. For example, <code>xdmp.httpGet("http://httpbin.org/get", { headers: {"Accept": "application/json"}});</code> now accepts JSON options and returns a JSON payload when called from JavaScript. Many built-ins have been updated, but coverage isn’t complete yet. Please provide feedback on the forum if you come across a built-in that you think we’ve missed, so we can better prioritize. </li>
 </ul>
 <h4>Early Access 2, August 2014</h4>
 <ul>
@@ -143,6 +144,7 @@
   <li><code>xdmp.toJson()</code> is now <code>xdmp.toJSON()</code> to be more consistent with JavaScript’s spelling of “JSON”, e.g. <code>JSON.stringify()</code>.</li>
   <li><code>Node.prototype.valueOf()</code> is now <code>Node.prototype.toObject()</code> to better reflect its behavior. This is the function you use to get a mutable version of a node.</li>
   <li><code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its applicability to other types of nodes. </li>
+  <li><code>xdmp.requestBody</code> now returns a single value (or an <code>Array</code>), rather than a <code>ValueIterator</code> to simplify usage. </li>
 </ul>
 
 <h4>1. Load Data</h4>
