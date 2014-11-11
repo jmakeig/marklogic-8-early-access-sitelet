@@ -1,10 +1,10 @@
-var marklogic = require("marklogic")
-var conn = require("./env.js").connection
+var marklogic = require("marklogic");
+var conn = require("./env.js").connection;
 
-var db = marklogic.createDatabaseClient(conn)
-var q = marklogic.queryBuilder
+var db = marklogic.createDatabaseClient(conn);
+var q = marklogic.queryBuilder;
 
-db.query(
+db.documents.query(
   q.where(
     q.byExample(
       {
@@ -21,6 +21,6 @@ db.query(
     console.log(document);
   }).
   on("error", function(error) {
-    console.log(error)
-  })
+    console.error(error)
+  });
 

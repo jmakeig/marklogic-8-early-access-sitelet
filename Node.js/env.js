@@ -1,5 +1,5 @@
 var dev =  {
-  host: "jmakeig-centos6-virtualbox.localdomain",
+  host: "localhost",
   port: 8000,
   user: "admin",
   password: "********",

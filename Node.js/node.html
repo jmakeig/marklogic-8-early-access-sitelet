@@ -90,17 +90,23 @@
       <!-- Or npm install git+ssh://git@github.com:marklogic/node-client-api.git#develop until this tag exists -->
       This will create a <code>marklogic</code> directory, clone the code from GitHub, and download all of the dependencies from npm.
     </li>
-    <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>var marklogic = require("marklogic");
-console.dir(marklogic);</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
+    <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>`cat "verify.js"`</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
 <pre>
 { createDatabaseClient: [Function: MarkLogicClientFactory],
-queryBuilder: 
-{ anchor: [Function: anchor],
- and: [Function: and],
- andNot: [Function: andNot],
- attribute: [Function: attribute],
- bind: [Function: bind],
- …</pre>
+  queryBuilder: 
+   { aggregates: [Function: aggregates],
+     anchor: [Function: anchor],
+     and: [Function: and],
+     andNot: [Function: andNot],
+     attribute: [Function: attribute],
+     bind: [Function: bind],
+     bindDefault: [Function: bindDefault],
+     bindEmptyAs: [Function: bindEmptyAs],
+     boost: [Function: boost],
+     box: [Function: box],
+     bucket: [Function: bucket],
+     calculate: [Function: calculate],
+     …</pre>
  </li>
   </ol>
 <h4>Important Concepts</h4>

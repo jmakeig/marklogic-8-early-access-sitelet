@@ -1,12 +1,12 @@
-var marklogic = require("marklogic")
-var conn = require("./env.js").connection
+var marklogic = require("marklogic");
+var conn = require("./env.js").connection;
 
-var db = marklogic.createDatabaseClient(conn)
-var q = marklogic.queryBuilder
+var db = marklogic.createDatabaseClient(conn);
+var q = marklogic.queryBuilder;
 
 // This would likely come from a text box in the UI
 var queryString = "sex:female bio:ennui"
-db.query(
+db.documents.query(
   q.where(
     q.parsedFrom(queryString,
       q.parseBindings( 
@@ -24,4 +24,4 @@ db.query(
     })
     }, function(error) {
       console.dir(error);
-  })
+  });

@@ -211,7 +211,7 @@ var conn = require("./env.js").connection;
 
 var db = marklogic.createDatabaseClient(conn);
 
-db.write(
+db.documents.write(
   data.map(function(item) {
     return {
       uri: "/" + item.guid + ".json",
