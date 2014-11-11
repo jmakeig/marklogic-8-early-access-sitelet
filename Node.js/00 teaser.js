@@ -1,9 +1,9 @@
-var marklogic = require('marklogic')
-var conn = require("./env.js").connection // Host and auth details
+var marklogic = require('marklogic');
+var conn = require("./env.js").connection; // Host and auth details
 
-var db = marklogic.createDatabaseClient(conn)
-var q = marklogic.queryBuilder
-db.query(
+var db = marklogic.createDatabaseClient(conn);
+var q = marklogic.queryBuilder;
+db.documents.query(
   q.where(
     q.collection('countries'),
     q.value('region', 'Africa'),
@@ -17,4 +17,4 @@ db.query(
     documents.forEach(function(document) {
       console.log(JSON.stringify(document))
     })
-  })
+  });
