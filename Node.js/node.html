@@ -57,6 +57,17 @@
 <p>The Node.js Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node.js Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. (<em>Note that this capability is not yet available in EA2.</em>) </p>
 <p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. The best way to get involved is to <a href="https://github.com/marklogic/node-client-api/issues">log issues</a> for bugs or new features. </p>
 <h3>Where to focus</h3>
+<h4>Early Access 3, November 2014</h4>
+  <ul>
+    <li>query facet aggregates and projection <!-- 28557 --></li>
+    <li>eval / invoke <!-- 28558 --></li>
+    <li><strong>Bitemporal:</strong> <!-- 27165 --></li>
+    <li>tuple requests <!-- 27167 --></li>
+    <li>extension CRUD and calls <!-- 27168 --></li>
+    <li>miscellaneous <!-- 28560 --> <!-- database param on connect, optional data types for queries and facets, path validation (preventing injection attack) including paths over JSON, configure pluggable XML parse/serialize (better than string; moral equivalent of Jackson in Java), conditional bulk read (should), patch expressed in JSON over XML, client caching example (may), suggest (may) --></li>
+    <li>semantics <!-- 27166 --></li>
+  </ul>
+<h4>Early Access 2, August 2014</h4>
 <ul>
   <li><strong>Query:</strong> Support for <a href="http://docs-ea.marklogic.com/jsdoc/queryBuilder.html#byExample">query by example</a>, a Google-like string grammar, and <a href="http://docs-ea.marklogic.com/jsdoc/queryBuilder.html">structured query builder</a>. </li>
   <li><strong>Document management:</strong> Read, write, remove, check documents. Support for Node Streams in and out.</li>
@@ -75,12 +86,12 @@
     </li>
     <li>If you don’t already have a <code>node_modules</code> folder, create one. This is where all of the local project dependencies will be downloaded. </li>
     <li>Within the <code>node_modules</code> directory, install the API directly from Github.
-      <pre>npm install git+ssh://git@github.com:marklogic/node-client-api.git#b1_0_0-ea2</pre>
+      <pre>npm install git+ssh://git@github.com:marklogic/node-client-api.git#b1_0_0-ea3</pre>
       <!-- Or npm install git+ssh://git@github.com:marklogic/node-client-api.git#develop until this tag exists -->
       This will create a <code>marklogic</code> directory, clone the code from GitHub, and download all of the dependencies from npm.
     </li>
-    <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>var marklogic = require("marklogic")
-console.dir(marklogic)</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
+    <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>var marklogic = require("marklogic");
+console.dir(marklogic);</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
 <pre>
 { createDatabaseClient: [Function: MarkLogicClientFactory],
 queryBuilder: 

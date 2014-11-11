@@ -15,8 +15,10 @@ var data = [
     "address": "760 Forest Place, Glenshaw, Michigan, 1175",
     "about": "Kitsch fingerstache XOXO, Carles chambray 90's meh cray disrupt Tumblr. Biodiesel craft beer sartorial meh put a bird on it, literally keytar blog vegan paleo. Chambray messenger bag +1 hoodie, try-hard actually banjo bespoke distillery pour-over Godard Thundercats organic. Kitsch wayfarers Pinterest American Apparel. Hella Shoreditch blog, shabby chic iPhone tousled paleo before they sold out keffiyeh Portland Marfa twee dreamcatcher. 8-bit Vice post-ironic plaid. Cornhole Schlitz blog direct trade lomo Pinterest.",
     "registered": "2014-01-31T19:57:33+08:00",
-    "latitude": 15.561833,
-    "longitude": 140.543694,
+    "location": {
+      "type": "Point",
+      "coordinates": [140.543694, 15.561833]
+    },
     "tags": [],
     "friends": [
       {
@@ -50,8 +52,10 @@ var data = [
     "address": "749 Green Street, Tyro, Illinois, 2856",
     "about": "Letterpress Echo Park fashion axe occupy whatever before they sold out, Pinterest pickled cliche. Ethnic stumptown food truck wolf, ethical Helvetica Marfa hashtag. Echo Park photo booth banh mi ennui, organic VHS 8-bit fixie. Skateboard irony dreamcatcher mlkshk iPhone cliche. Flannel ennui YOLO artisan tofu. Hashtag irony Shoreditch letterpress, selvage scenester YOLO. Locavore fap bicycle rights, drinking vinegar Tonx bespoke paleo 3 wolf moon readymade direct trade ugh wolf asymmetrical beard plaid.",
     "registered": "2014-06-13T23:15:33+07:00",
-    "latitude": 15.27027,
-    "longitude": -107.313581,
+    "location": {
+      "type": "Point",
+      "coordinates": [15.27027, -107.313581]
+    },
     "tags": [
       "ex",
       "ex",
@@ -95,8 +99,10 @@ var data = [
     "address": "760 Beverly Road, Elliston, New York, 4057",
     "about": "Kale chips raw denim ethical selfies kitsch drinking vinegar. Before they sold out wayfarers High Life, fingerstache photo booth slow-carb iPhone pork belly keffiyeh actually fashion axe kale chips pug PBR&B. Banjo sriracha ugh post-ironic stumptown Etsy. Locavore gastropub Etsy banjo food truck, skateboard artisan Truffaut you probably haven't heard of them cray roof party slow-carb quinoa vegan. Drinking vinegar lo-fi jean shorts, tofu stumptown butcher cardigan Shoreditch flexitarian cliche biodiesel irony trust fund skateboard salvia. Helvetica Cosby sweater stumptown, pug cray tousled ennui Godard lo-fi Carles. Keffiyeh letterpress Wes Anderson ethical, umami post-ironic sustainable Tumblr Tonx pour-over.",
     "registered": "2014-02-16T09:24:18+08:00",
-    "latitude": 22.386006,
-    "longitude": -119.347983,
+    "location": {
+      "type": "Point",
+      "coordinates": [-119.347983, 22.386006]
+    },
     "tags": [
       "eiusmod",
       "ullamco"
@@ -133,8 +139,10 @@ var data = [
     "address": "901 Etna Street, Weeksville, Florida, 5402",
     "about": "Skateboard pop-up kogi, ethnic Vice disrupt Truffaut twee fashion axe forage occupy biodiesel. Bespoke umami yr, flannel kogi XOXO bitters butcher ugh DIY lomo. Flexitarian distillery flannel, mustache butcher raw denim crucifix sartorial PBR&B. Ennui beard freegan, Blue Bottle cornhole gluten-free yr sriracha 90's tofu stumptown crucifix Williamsburg keytar fingerstache. Odd Future selfies Shoreditch Echo Park deep v, lo-fi put a bird on it cray master cleanse Intelligentsia drinking vinegar. Ethical flannel craft beer meggings forage, paleo High Life viral Blue Bottle food truck fashion axe twee fingerstache Bushwick. Scenester Thundercats lo-fi Odd Future, wolf kale chips fashion axe mixtape slow-carb quinoa.",
     "registered": "2014-04-16T07:14:06+07:00",
-    "latitude": 75.484745,
-    "longitude": 156.240181,
+    "location": {
+      "type": "Point",
+      "coordinates": [156.240181, 75.484745]
+    },
     "tags": [
       "eu",
       "labore",
@@ -173,8 +181,10 @@ var data = [
     "address": "289 Grant Avenue, Courtland, Alaska, 8847",
     "about": "Tote bag pug whatever trust fund, yr fashion axe American Apparel selfies flannel Portland gentrify synth twee. Tousled tofu biodiesel tattooed polaroid. Chia direct trade drinking vinegar, Helvetica ethical bitters banjo polaroid quinoa. Wes Anderson ugh 3 wolf moon +1 single-origin coffee, authentic plaid Tonx you probably haven't heard of them quinoa dreamcatcher fingerstache literally meggings. Vice aesthetic authentic, fashion axe stumptown Carles selfies organic you probably haven't heard of them street art Thundercats. Before they sold out Vice yr post-ironic Marfa cliche. Blue Bottle Portland bespoke slow-carb cliche.",
     "registered": "2014-06-16T16:13:14+07:00",
-    "latitude": -19.360066,
-    "longitude": -97.042726,
+    "location": {
+      "type": "Point",
+      "coordinates": [-97.042726, -19.360066]
+    },
     "tags": [
       "aliquip"
     ],
@@ -194,12 +204,12 @@ var data = [
     ],
     "favoriteFruit": "strawberry"
   }
-]
+];
 
-var marklogic = require("marklogic")
-var conn = require("./env.js").connection
+var marklogic = require("marklogic");
+var conn = require("./env.js").connection;
 
-var db = marklogic.createDatabaseClient(conn)
+var db = marklogic.createDatabaseClient(conn);
 
 db.write(
   data.map(function(item) {
@@ -213,4 +223,4 @@ db.write(
 ).
   result(function(response){
     console.dir(JSON.stringify(response))
-  })
+  });
