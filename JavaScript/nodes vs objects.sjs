@@ -16,11 +16,11 @@ var node = xdmp.toJSON(user);
 node.root.name;
 
 // …but you don't have to convert an object to a Node to persist it.
-// Functions like xdmp.documentInsert() will automatically to the equivalent of xdmp.toJSON(user), above.
+// Functions like xdmp.documentInsert() will automatically do the equivalent of xdmp.toJSON(user), above.
 
-// xdmp.documentInsert("/" + user.guid + ".json", user, xdmp.defaultPermissions(), ["fake data"]);
+xdmp.documentInsert("/" + user.guid + ".json", user, xdmp.defaultPermissions(), ["fake data"]);
 
-// (If you uncomment and run the above update, don't forget to add a declareUpdate() call at the top.)
+// (If you run the above update, don't forget to add a declareUpdate() call at the top.)
 
 
 
