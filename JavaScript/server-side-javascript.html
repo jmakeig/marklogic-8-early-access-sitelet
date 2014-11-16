@@ -145,6 +145,7 @@
   <li><code>Node.prototype.valueOf()</code> is now <code>Node.prototype.toObject()</code> to better reflect its behavior. This is the function you use to get a mutable version of a node.</li>
   <li><code>XMLBuilder</code> has been renamed <code>NodeBuilder</code> to better reflect its applicability to other types of nodes. </li>
   <li><code>xdmp.requestBody</code> now returns a single value (or an <code>Array</code>), rather than a <code>ValueIterator</code> to simplify usage. </li>
+  <li>The JavaScript analogue to <code>xdmp:estimate()</code> is <code>cts:estimate()</code>. Unlike <code>xdmp:estimate()</code>, however, <code>cts:estimate()</code> requires a <code>cts.query</code> as a parameter, not a searchable expression. For example, to get an estimate of the fragment count in the collection <code>my/example</code>, you’d use <code>cts.estimate(cts.collectionQuery(["my/example"]));</code>.</li>
 </ul>
 
 <h4>1. Load Data</h4>
