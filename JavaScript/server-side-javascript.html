@@ -117,9 +117,10 @@
 <p>Most functions that read data from the database return an instance of a <code>ValueIterator</code>, rather than a full instantiation of the data. This allows the evaluation environment to lazily and ansychronously load data as it’s required, rather than up-front. Use the <code>.toArray()</code> function on a <code>ValueIterator</code> instance eagerly load the entire contents into a new array.</p>
 <p>The <code>ValueIterator</code> interface implements the <a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-operations-on-iterator-objects">ECMAScript 6 <code>Iterators</code> interface</a>. Like any iterator, you can loop through a <code>ValueIterator</code> using a <code>for…of</code> loop. Note that the <code>for…of</code> loop is <em>not</em> at all the same as a <code>for…in</code> loop, which loops over an object’s properties.</p>
 <pre>`cat "iterators-forof.sjs"`</pre>
-<p>That’s a shorter way of explicitly using the <code>Iterator</code> interface.</p>
+<p>That’s a shorter way of explicitly using the <code>Iterator</code> interface: </p>
 <pre>`cat "iterators-old.sjs"`</pre>
-
+<p>Closely related to iterators are generators, also part of ECMAScript 6. Are a special kind of function, which may be paused in the middle, once or many times, and resumed later, allowing other code to run during these paused periods. This is an incredibly powerful concept, especially paired with iterators, allow you to lazily work with sequences of indeterminate length, such as the return from <code>cts.search()</code>. </p>
+<pre>`cat "generator.sjs"`</pre>
 <h5 id="declareUpdates">Declare Updates</h5>
 <p>When a JavaScript module makes changes to the database, for example calling <code>xdmp.documentInser()</code>, those changes are executed immediately. Rather, the changes are recorded over the life of the request and applied atomically at the end. In XQuery, the fact that a module was writing to the database can be determined with static analysis of the code. In JavaScript any module that needs to update the database needs to state its intentions using the global <code>declareUpdate()</code> function. This function must be called before the first update. In general, putting <code>declareUpdate</code> as the first statement is best practice, making it clear the reader that this module will make updates. </p>
 
