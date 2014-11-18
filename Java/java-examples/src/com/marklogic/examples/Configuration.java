@@ -5,8 +5,9 @@ import com.marklogic.client.DatabaseClientFactory;
 
 public class Configuration {
     private static DatabaseClient client = DatabaseClientFactory.newClient(
-        "jmakeig-centos6-virtualbox.localdomain",
+        "localhost",
         8000,
+        "Documents",
         "admin",
         "********",
         DatabaseClientFactory.Authentication.DIGEST);
