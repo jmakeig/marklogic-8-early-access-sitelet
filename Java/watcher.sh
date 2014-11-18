@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage:
-#  ls server-side-javascript.html | entr ./watcher.sh
+#  find . -name 'java.html' -o -name "*.java" | entr ./watcher.sh
 # See: <http://entrproject.org>
 
 IN="java.html"

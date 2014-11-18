@@ -1,0 +1,23 @@
+{
+  "range-path-index" : [ {
+    "path-expression" : "com.acme.User/balance",
+    "scalar-type" : "double",
+    "collation" : "",
+    "range-value-positions" : "false",
+    "invalid-values" : "ignore"
+  }, {
+    "path-expression" : "com.acme.User/age",
+    "scalar-type" : "int",
+    "collation" : "",
+    "range-value-positions" : "false",
+    "invalid-values" : "ignore"
+  }, {
+    "path-expression" : "com.acme.User/gender",
+    "scalar-type" : "string",
+    "collation" : "http://marklogic.com/collation/",
+    "range-value-positions" : "false",
+    "invalid-values" : "ignore"
+  } ],
+  "geospatial-path-index" : [ ],
+  "geospatial-element-pair-index" : [ ]
+}

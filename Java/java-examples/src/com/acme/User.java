@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.marklogic.client.pojo.annotation.Id;
+import com.marklogic.client.pojo.annotation.PathIndexProperty;
+import com.marklogic.client.pojo.annotation.PathIndexProperty.ScalarType;
 
 public final class User {
 
@@ -30,7 +32,7 @@ public final class User {
     public void setGUID(String guid) {
         this.guid = guid;
     }
-
+    @PathIndexProperty(scalarType=ScalarType.STRING)
     public String getGender() {
         return gender;
     }
@@ -38,7 +40,7 @@ public final class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
+    @PathIndexProperty(scalarType=ScalarType.DOUBLE)
     public Double getBalance() {
         return balance;
     }
@@ -78,7 +80,7 @@ public final class User {
     public void setAbout(String about) {
         this.about = about;
     }
-
+    @PathIndexProperty(scalarType=ScalarType.INT)
     public Integer getAge() {
         return age;
     }
