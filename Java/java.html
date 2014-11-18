@@ -40,9 +40,32 @@
 <h2>Java Client API</h2>
 <h3>What it is</h3>
 <p>The MarkLogic Java Client API is an open-source library that allows developers to quickly, easily, and reliably access MarkLogic from their Java applications.</p>
+<ul>
+  <li>Faster development and less custom code with out-of-the-box data management, search, and alerting</li>
+  <li>Pure Java query builder and conveniences for POJOs, JSON, XML, and binary I/O</li>
+  <li>Built-in extensibility for moving performance-critical code to the database</li>
+  <li>Always open-source and <a href="https://github.com/marklogic/java-client-api">developed on GitHub</a></li>
+</ul>
 <h3>Why it matters</h3>
 <p>The Java Client API provides out-of-the-box data management, query, aggregation, and alerting for MarkLogic. It encapsulates performance and scalability best practices into a comprehensive API that is familiar and natural to an enterprise Java developer. The API gives hooks for tapping int Java’s rich I/O ecosystem to efficiently work with native JSON and XML in MarkLogic, or POJOs in Java. For applications that require the extra performance benefits of running server-side code, the Java Client API provides an RMI-like extensibility mechanism and APIs to manage server-side libraries from Java. This hook allows developers to package JavaScript (<em>soon</em>) or XQuery code that runs in the database, close to the data, as native</p>
 <h3>Where to focus</h3>
+
+<h4>Early Access 3, November 2014</h4>
+<ul>
+  <li data-bugtrack="27051"><strong>Data binding facade:</strong> and range indexes</li>
+  <li data-bugtrack="27054"><strong>JavaScript extensions:</strong> </li>
+  <!-- <li data-bugtrack="27055"><strong>Native JSON:</strong> </li> -->
+  <li data-bugtrack="28570"><strong>Eval and invoke:</strong> </li>
+  <li data-bugtrack="27155"><strong>Bitemporal document management:</strong> </li>
+  <li data-bugtrack="28567"><strong>Runtime database selection:</strong> </li>
+  <li data-bugtrack="27156"><strong>Default connections to 8000:</strong> </li>
+  <!-- <li data-bugtrack="27748"><strong>Bulk Read: Unable to read just metadata:</strong> </li> -->
+  <!-- <li data-bugtrack="28410"><strong>Generate range index definitions for classes using Pojo Facade:</strong> </li> -->
+  <!-- <li data-bugtrack="28604"><strong>Use "property" not "field" for pojo methods:</strong> </li> -->
+  <!-- <li data-bugtrack="29000"><strong>Deprecate KeyValueDefinition:</strong> </li> -->
+</ul>
+
+<h4>Early Access 2, August 2014</h4>
 <p>Early Access 2 adds several important capabilities to the existing Java Client API:</p>
 <ol>
   <li><strong>Native JSON</strong>: Manage and query native JSON documents in MarkLogic using the popular <a href="https://github.com/FasterXML/jackson">Jackson processor</a>. Choose between in-memory “DOM”-like trees, streaming, and automatic mapping to and from POJOs.</strong></li>
@@ -52,6 +75,7 @@
   <li><strong>Open development</strong>: Development, tests, docs, and issue tracking on <a href="https://github.com/marklogic/java-client-api">GitHub</a> under the permissive <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>.</li>
 </ol>
 <p>For more information, the <a href="http://docs-ea.marklogic.com/javadoc/client/index.html">Early Access API documentation</a> is available online and the commented source code is freely available <a href="https://github.com/marklogic/node-client-api">on GitHub</a>. </p>
+
 <h3>Deeper dive</h3>
 <h4>System requirements and installation</h4>
 <p>The generally available 3.0 release of the Java Client API will be hosted from the <a href="http://search.maven.org">Maven Central repository</a>. This will allow <a href="http://maven.apache.org">Maven</a> and <a href="http://www.gradle.org">Gradle</a> to easily access the built JAR and all of its dependencies. However, Early Access builds will only be available from an external repository hosted as branch of the GitHub project. To use this repository from your Maven project, add the repository to your project’s <code>pom.xml</code>.</p>
@@ -67,7 +91,7 @@
 &lt;dependency>
   &lt;groupId>com.marklogic&lt;/groupId>
   &lt;artifactId>client-api-java&lt;/artifactId>
-  &lt;version>3.0.0-ea2&lt;/version>
+  &lt;version>3.0.0-ea3&lt;/version>
 &lt;/dependency>
 </pre>
 <p>You can also <a href="https://github.com/marklogic/java-client-api/tree/b3_0_0-ea2">download the source code</a> yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings for Java projects.</p>
