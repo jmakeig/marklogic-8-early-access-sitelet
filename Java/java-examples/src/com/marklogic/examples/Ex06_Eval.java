@@ -4,14 +4,15 @@ import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.eval.EvalResult;
 import com.marklogic.client.eval.EvalResultIterator;
 
-public class Ex06_Eval {
+public class Ex05_Eval {
 
 	public static void main(String[] args) {
 		DatabaseClient client = Configuration.exampleClient();
 		final String javascript = "declareUpdate(); " // Tell the server we're writing to the database
 				+ "var total = 0; "
-				+ "for(var d of fn.collection('fake data')) " // Loop through the JSON documents in the collection
-				+ "{total += d.toObject().balance * percent;} " // Update the total based on a percentage of the balance property
+				+ "for(var d of fn.collection('fake data')) {" // Loop through the JSON documents in the collection
+				+ "  total += d.toObject().balance * percent;" // Update the total based on a percentage of the balance property
+				+ "}"
 				+ "xdmp.documentInsert('/total.json', {total: total}); " // Write a document with the updated total
 				+ "total;"; // Return the total
 		EvalResultIterator eval = client.newServerEval().javascript(javascript)
