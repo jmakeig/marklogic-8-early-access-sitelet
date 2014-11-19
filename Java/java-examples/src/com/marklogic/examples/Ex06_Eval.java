@@ -4,7 +4,7 @@ import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.eval.EvalResult;
 import com.marklogic.client.eval.EvalResultIterator;
 
-public class Ex05_Eval {
+public class Ex06_Eval {
 
 	public static void main(String[] args) {
 		DatabaseClient client = Configuration.exampleClient();
