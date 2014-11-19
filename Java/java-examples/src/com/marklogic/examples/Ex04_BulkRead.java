@@ -23,7 +23,7 @@ public class Ex04_BulkRead {
     // Iterate through the results, which include the raw documents,
     // available with a ReadHandle.
     for (DocumentRecord doc : page) {
-      // System.out.println(doc.getContent(new JacksonParserHandle()));
+      System.out.println(doc.getContent(new JacksonParserHandle()));
     }
   }
 }
