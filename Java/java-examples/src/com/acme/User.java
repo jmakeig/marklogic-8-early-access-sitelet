@@ -9,98 +9,103 @@ import com.marklogic.client.pojo.annotation.PathIndexProperty.ScalarType;
 
 public final class User {
 
-    public String guid;
-    private String name;
-    private String about;
-    private String address;
-    private Boolean active;
-    private Double balance;
-    private Integer age;
-    private String gender;
-    private Set<Tag> tags;
+  public String guid;
+  private String name;
+  private String about;
+  private String address;
+  private Boolean active;
+  private Double balance;
+  private Integer age;
+  private String gender;
+  private Set<Tag> tags;
 
-    public User() {
-        super();
-        this.tags = new HashSet<Tag>();
-    }
+  public User() {
+    super();
+    this.tags = new HashSet<Tag>();
+  }
 
-    @Id
-    public String getGUID() {
-        return guid;
-    }
+  @Id
+  public String getGUID() {
+    return guid;
+  }
 
-    public void setGUID(String guid) {
-        this.guid = guid;
-    }
-    @PathIndexProperty(scalarType=ScalarType.STRING)
-    public String getGender() {
-        return gender;
-    }
+  public void setGUID(String guid) {
+    this.guid = guid;
+  }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-    @PathIndexProperty(scalarType=ScalarType.DOUBLE)
-    public Double getBalance() {
-        return balance;
-    }
+  @PathIndexProperty(scalarType = ScalarType.STRING)
+  public String getGender() {
+    return gender;
+  }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
 
-    public String getAddress() {
-        return address;
-    }
+  @PathIndexProperty(scalarType = ScalarType.DOUBLE)
+  public Double getBalance() {
+    return balance;
+  }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+  public void setBalance(Double balance) {
+    this.balance = balance;
+  }
 
-    public Boolean isActive() {
-        return active;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public Boolean isActive() {
+    return active;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
 
-    public String getAbout() {
-        return about;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setAbout(String about) {
-        this.about = about;
-    }
-    @PathIndexProperty(scalarType=ScalarType.INT)
-    public Integer getAge() {
-        return age;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+  public String getAbout() {
+    return about;
+  }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
+  public void setAbout(String about) {
+    this.about = about;
+  }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
+  @PathIndexProperty(scalarType = ScalarType.INT)
+  public Integer getAge() {
+    return age;
+  }
 
-    @Override
-    public String toString() {
-        return "User [guid=" + guid + ", name=" + name + ", about=" + about + ", address=" + address + ", active="
-            + active + ", balance=" + balance + ", age=" + age + ", gender=" + gender + ", tags=" + tags + "]";
-    }
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  public Set<Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(Set<Tag> tags) {
+    this.tags = tags;
+  }
+
+  @Override
+  public String toString() {
+    return "User [guid=" + guid + ", name=" + name + ", about=" + about
+        + ", address=" + address + ", active=" + active + ", balance="
+        + balance + ", age=" + age + ", gender=" + gender + ", tags=" + tags
+        + "]";
+  }
 
 }
