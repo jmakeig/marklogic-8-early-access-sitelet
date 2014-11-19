@@ -47,7 +47,7 @@
   <li>Always open-source and <a href="https://github.com/marklogic/java-client-api">developed on GitHub</a></li>
 </ul>
 <h3>Why it matters</h3>
-<p>The Java Client API provides out-of-the-box data management, query, aggregation, and alerting for MarkLogic. It encapsulates performance and scalability best practices into a comprehensive API that is familiar and natural to an enterprise Java developer. The API gives hooks for tapping int Java’s rich I/O ecosystem to efficiently work with native JSON and XML in MarkLogic, or POJOs in Java. For applications that require the extra performance benefits of running server-side code, the Java Client API provides an RMI-like extensibility mechanism and APIs to manage server-side libraries from Java. This hook allows developers to package JavaScript (<em>soon</em>) or XQuery code that runs in the database, close to the data, as native</p>
+<p>The Java Client API provides out-of-the-box data management, query, aggregation, and alerting for MarkLogic. It encapsulates performance and scalability best practices into a comprehensive API that is familiar and natural to an enterprise Java developer. The API gives hooks for tapping into Java’s rich I/O ecosystem to efficiently work with native JSON and XML in MarkLogic, or POJOs in Java. For applications that require the extra performance benefits of running server-side code, the Java Client API provides an RMI-like extensibility mechanism and APIs to manage server-side libraries from Java. This hook allows developers to package JavaScript (<em>soon</em>) or XQuery code that runs in the database, close to the data, as native</p>
 <h3>Where to focus</h3>
 
 <h4>Early Access 3, November 2014</h4>
@@ -57,7 +57,7 @@
   <!-- <li data-bugtrack="27055"><strong>Native JSON:</strong> </li> -->
   <li data-bugtrack="28570"><strong>Eval and invoke:</strong> Resource extensions and server-side transforms provide a fluent interface for extending the Client API with server-side code. Sometimes you just want to run a script or even an ad hoc string of code. The new <code>ServerEvaluationCall</code> interface allows you to eval or invoke XQuery or JavaScript in the Server. This provides an integrated approach that was only possible previously through XCC.</li>
   <li data-bugtrack="27155"><strong>Bitemporal document management:</strong> Bitemporal queries allow an application to query the database as it was at a given point in time. Integrated document management ensures that updates are captured bitemporaly. Early Access 3 allows Java clients to update and query documents in bitemporal collections. </li>
-  <li data-bugtrack="28567"><strong>Runtime database selection:</strong> The enhanced HTTP app server instance pre-installed on port <code>8000</code> allows clients to specify a target database against which to run queries at runtime. The <code>DatabaseClientFactory</code> provides <code>newClient()</code> overrides that allow you to configure a database per connection. <code>DatabaseClientFactory</code> also now defaults to port <code>8000</code>. Previously if your code needed to write to multiple databases you had to maintain separate app servers or do some <code>eval</code> contortions. Runtime database selection dramatically simplifies this by being able to access any database from a single app server.</li>
+  <li data-bugtrack="28567"><strong>Runtime database selection:</strong> The enhanced HTTP app server instance pre-installed on port <code>8000</code> allows clients to specify a target database against which to run queries at runtime. The <code>DatabaseClientFactory</code> provides <code>newClient()</code> overrides that allow you to configure a database per connection. Previously if your code needed to write to multiple databases you had to maintain separate app servers or do some <code>eval</code> contortions. Runtime database selection dramatically simplifies this by being able to access any database from a single app server.</li>
   <!-- <li data-bugtrack="27156"><strong>Default connections to 8000:</strong> </li> -->
   <!-- <li data-bugtrack="27748"><strong>Bulk Read: Unable to read just metadata:</strong> </li> -->
   <!-- <li data-bugtrack="28410"><strong>Generate range index definitions for classes using Pojo Facade:</strong> </li> -->
@@ -91,35 +91,35 @@
 &lt;dependency>
   &lt;groupId>com.marklogic&lt;/groupId>
   &lt;artifactId>client-api-java&lt;/artifactId>
-  &lt;version>3.0.0-ea3&lt;/version>
+  &lt;version>3.0.0-EA3&lt;/version>
 &lt;/dependency>
 </pre>
 <p>You can also <a href="https://github.com/marklogic/java-client-api/tree/b3_0_0-ea2">download the source code</a> yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings for Java projects.</p>
 <h4>0. Configuration</h4>
 <p>The following examples use a shared <code>DatabaseClient</code> configuration. The Java Client API communicates with MarkLogic over HTTP. <code>DatabaseClient</code> instances are designed to be shared across application threads. In a typical production implementation, you’d likely inject a configured client singleton into data service helper classes using something like <a href="http://projects.spring.io/spring-framework/">Spring</a>. Take a look at the <a href="https://github.com/marklogic/marklogic-samplestack">Samplestack reference architecture</a> for an example.</p>
-<pre class="java">{{./java-examples/src/com/marklogic/examples/Configuration.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/marklogic/examples/Configuration.java | sed -E -e 's/</&lt;/g'`</pre>
 <h4>1. POJO Façade</h4>
 <p>The POJO façade allows an application to work with simple Java objects while the Java Client API manages  marshaling and unmarshaling documents from the database and mapping queries to fields. The POJO façade is <em>not</em> a full-featured <acronym title="Object-Relational Mapping">ORM</acronym> (ODM?) system. For example, it won’t automatically fetch related objects or manage circular dependencies and it provides no client-side caching. It’s designed to be a low-overhead way to persist and query simple domain objects. For more complicated scenarios you’re better off working directly with JSON or XML documents and manually assembling object graphs. </p>
-<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex01_POJO.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/marklogic/examples/Ex01_POJO.java | sed -E -e 's/</&lt;/g'`</pre>
 <h5>User</h5>
-<pre class="java">{{./java-examples/src/com/acme/User.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/acme/User.java | sed -E -e 's/\</\&lt\;/g'`</pre>
 <h5>Tag</h5>
-<pre class="java">{{./java-examples/src/com/acme/Tag.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/acme/Tag.java | sed -E -e 's/\</\&lt\;/g'`</pre>
 <h4>2. POJO Query</h4>
-<p>The <code>PojoRepository</code> provides a means for writing, reading, and querying typed POJOs. It does not re-hydrate an entire object graph or cache results, but is an easy way to work with simple POJOs, complementary to the other JSON or XML document I/O capabilities.</p>
-<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex02_POJOQuery.java}}</pre>
+<p>The <code>PojoRepository</code> provides a means for querying typed POJOs. It does not re-hydrate an entire object graph or cache results, but is an easy way to work with simple POJOs, complementary to the other JSON or XML document I/O capabilities.</p>
+<pre class="java">`cat ./java-examples/src/com/marklogic/examples/Ex02_POJOQuery.java | sed -E -e 's/</&lt;/g'`</pre>
 
 <h4>POJO Index Annotations</h4>
 <p>The <code>User</code> class above is annotated with <code>@PathIndexProperty</code> annotations. For example, the <code>gender</code> getter method specifies a path index property of <code>@PathIndexProperty(scalarType=ScalarType.STRING)</code>. Using the <code>com.marklogic.client.pojo.util.GenerateIndexConfig</code> utility, you can generate index configurations directly from your domain classes. For exmaple, the above annotation will create a string path range index on the gender property. <code>GenerateIndexConfig</code> handles all of the details of mapping your fields to their serialized structures in the database—JSON documents, in particular.</p>
-<p>To parse the annotations and generate an index configuration, run the <code>GenerateIndexConfig</code> utility. The <code>classses</code> parameter is a space-separated list of fully qualified POJO classes and <code>file</code> specifies where to save the JSON output. (You’ll also have to specify a classpath, depending on your environment.)</p> 
+<p>To parse the annotations and generate an index configuration, run the <code>GenerateIndexConfig</code> utility. The <code>-classses</code> parameter is a space-separated list of fully qualified POJO classes and <code>-file</code> specifies where to save the JSON output. (You’ll also have to specify a classpath, depending on your environment.)</p> 
 <pre class="shell">java com.marklogic.client.pojo.util.GenerateIndexConfig -classes "com.acme.User" -file User.json</pre>
 <p>That output will look something like the following. The details aren’t actually important. Your POJO queries are written in terms of your domain classes, not their JSON serialization. The configuration generator handles the intricacies of the mapping. </p>
 <pre class="json">{{./java-examples/User.json}}</pre>
 <p>Finally, to apply the generated index configuration to the database you can invoke the REST management API. <em>Note that in Early Access 3 the index settings <strong>replace</strong> existing settings and do not merge. We’re looking to change to a diff/merge approach in the generally available 8.0-1 release.</em></p>
-<pre class="shell">curl -i --digest --user admin:'********' 
-  -H 'Content-Type: application/json' 
-  -d '@User.json' 
-  -X PUT 'http://localhost:8002/manage/LATEST/databases/Docuemnts/properties'</pre>
+<pre class="shell">curl -i --digest --user admin:'********' \\
+  -H 'Content-Type: application/json' \\
+  -d '@User.json' \\
+  -X PUT 'http://localhost:8002/manage/LATEST/databases/Documents/properties'</pre>
 <p>To summarize the POJO configuration workflow:
   <ol>
     <li>Annotate your POJO getters with <code>@PathIndexProperty</code>, specifying the appropriate data type.</li>
@@ -131,10 +131,10 @@
 
 <h4>3. Bulk Writes</h4>
 <p>Bulk writes allow an application to gather multiple inserts or updates into a single request, amortizing the fixed network overhead across many documents. You can accumulate documents in a <code>WriteSet</code> and periodically write them to the database as a single transaction. </p>
-<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex03_BulkWrite.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/marklogic/examples/Ex03_BulkWrite.java | sed -E -e 's/</&lt;/g'`</pre>
 <h4>4. Bulk Read</h4>
 <p>Bulk read allows an application to efficiently read sets of raw documents and/or metadata. Reads can be filtered by a <code>QueryDefinition</code> to provide additional precision. </p>
-<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex04_BulkRead.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/marklogic/examples/Ex04_BulkRead.java | sed -E -e 's/</&lt;/g'`</pre>
 <h4>5. JavaScript Extensions</h4>
 <p>The Java Client API supports extensibility with code run at the server. Developers can deploy modules written in JavaScript or XQuery and invoke them in the context of the Java Client API. The two primary extension points are resource extensions and transformations. Resource Extensions provide fluent wrappers for server-side code so that Java developers can access the custom code from pure Java. Transformations integrate into the document management and search workflow to provide hooks for modifying data as it goes into or comes out of the server.</p>
 <p><a href="https://github.com/marklogic/marklogic-samplestack">Samplestack</a>, a reference application that will ship along with MarkLogic 8, includes an implementation of a server-side transformation written in JavaScript. </p>
@@ -142,7 +142,7 @@
 <h4>6. Eval (and Invoke)</h4>
 <p>While the Java Client API provides rich functionality out-of-the-box and several built-in ways to extend its functionality with server-side code, it’s often convenient to be able to evaluate a string of JavaScript or XQuery or invoke a remote XQuery or JavaScript module. These are lower-level mechanisms than resource extensions and not integrated into the document management and query workflow like custom transformations. In general, you should look to resource extensions and transformations for long-term maintainability. </p>
 <p>The following example demonstrates how to evaluate Server-Side JavaScript from the Java Client API. The remote code uses an external variable, <code>percent</code>, that’s passed in from Java. It also shows how to write to the database from an eval’ed module. You can even run the eval as part of an existing multistatement transaction using the <code>transaction(Transaction transaction)</code> method. </p>
-<pre class="java">{{./java-examples/src/com/marklogic/examples/Ex06_Eval.java}}</pre>
+<pre class="java">`cat ./java-examples/src/com/marklogic/examples/Ex06_Eval.java | sed -E -e 's/</&lt;/g'`</pre>
 <p>Use the <code>modulePath()</code> method to on the <code>ServerEvaluationCall</code> instance to specify a JavaScript or XQuery main module to be invoked remotely.</p>
 <p>For those already using XCC, <code>eval</code> and <code>invoke</code> should be familiar. One advantage of using the Java Client API’s functionality over XCC, is the integration with the other capabilities that the Client APIs. For example, a Client API invocation can process its return values using the I/O <code>Handler</code> classes, just like the rest of the library. If you’re beginning a new Java application with MarkLogic 8, you should start with the Java Client API, rather than XCC.</p>
  
