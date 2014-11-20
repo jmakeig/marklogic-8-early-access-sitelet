@@ -94,7 +94,7 @@
   &lt;version>3.0.0-EA3&lt;/version>
 &lt;/dependency>
 </pre>
-<p>You can also <a href="https://github.com/marklogic/java-client-api/tree/b3_0_0-ea2">download the source code</a> yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings for Java projects.</p>
+<p>You can also <a href="https://github.com/marklogic/java-client-api/tree/b3_0_0-ea3">download the source code</a> yourself and compile a JAR or reference it directly from your IDE, for example as a “Project” in Eclipse’s Build Path settings for Java projects.</p>
 <h4>0. Configuration</h4>
 <p>The following examples use a shared <code>DatabaseClient</code> configuration. The Java Client API communicates with MarkLogic over HTTP. <code>DatabaseClient</code> instances are designed to be shared across application threads. In a typical production implementation, you’d likely inject a configured client singleton into data service helper classes using something like <a href="http://projects.spring.io/spring-framework/">Spring</a>. Take a look at the <a href="https://github.com/marklogic/marklogic-samplestack">Samplestack reference architecture</a> for an example.</p>
 <pre class="java">`cat ./java-examples/src/com/marklogic/examples/Configuration.java | sed -E -e 's/</\&lt;/g'`</pre>
