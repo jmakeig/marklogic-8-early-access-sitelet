@@ -1,5 +1,5 @@
 var marklogic = require('marklogic');
-var conn = require("./env.js").connection; // Host and auth details
+var conn = require('./env.js').connection; // Host and auth details
 
 var db = marklogic.createDatabaseClient(conn);
 var q = marklogic.queryBuilder;
