@@ -50,22 +50,33 @@
 <p>The MarkLogic Node.js Client API is an open-source JavaScript library that allows developers to quickly, easily, and reliably access MarkLogic from their Node applications. </p>
 <p>Here’s a quick example to demonstrate how a Node application would build a query and process the results.
 <pre class="javascript">`cat "00 teaser.js"`</pre>
-<p>…and that’s it. MarkLogic Early Access 2 allows you to get started with even less up-front configuration. It includes a built-in database (<code>Documents</code>) and introduces a <a href="LINKME">default REST server</a> (port <code>8000</code>), through which the Node.js and Java Client APIs communicate. </p>
+<p>…and that’s it.</p>
 <h3>Why it matters</h3>
 <p>For developers using—or looking to use—<a href="http://nodejs.org">Node.js</a> in their application stack, the Node.js Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
 <p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node.js Client API is an ideal tool for full-stack JavaScript development.</p>
-<p>The Node.js Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node.js Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. (<em>Note that this capability is not yet available in EA2.</em>) </p>
+<p>The Node.js Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node.js Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. </p>
 <p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. The best way to get involved is to <a href="https://github.com/marklogic/node-client-api/issues">log issues</a> for bugs or new features. </p>
 <h3>Where to focus</h3>
 <h4>Early Access 3, November 2014</h4>
   <ul>
-    <li>query facet aggregates and projection <!-- 28557 --></li>
-    <li>eval / invoke <!-- 28558 --></li>
-    <li><strong>Bitemporal:</strong> <!-- 27165 --></li>
-    <li>tuple requests <!-- 27167 --></li>
-    <li>extension CRUD and calls <!-- 27168 --></li>
-    <li>miscellaneous <!-- 28560 --> <!-- database param on connect, optional data types for queries and facets, path validation (preventing injection attack) including paths over JSON, configure pluggable XML parse/serialize (better than string; moral equivalent of Jackson in Java), conditional bulk read (should), patch expressed in JSON over XML, client caching example (may), suggest (may) --></li>
-    <li>semantics <!-- 27166 --></li>
+    <li data-bugtrack="27164"><strong>npm distribution:</strong> Starting with Early Access 3, all releases of the Node.js Client API will be available in the <a href="https://www.npmjs.org/package/marklogic">public npm repository</a>.</li>
+    <li data-bugtrack="28558"><strong>Invoke and eval:</strong> Use the new <code>eval()</code> and <code>invoke()</code> functions on the database client to execute XQuery or JavaScript on the server. The Client API allows applications to specify external variables to pass to the evaled or invoked code and conveniences for marshalling data types in and out of JavaScript in Node.js.</li>
+    <li data-bugtrack="30678"><strong>Write collection shortcut:</strong> The new <code>writeCollection()</code> function on the database connection simplifies the case where you just want to write a bunch of documents to a collection without specifying other metadata. Pass it the collection name and an object with URI property names and document (XML or JSON) values and <code>writeCollection()</code> will delegate to <code>documents.write</code> for you.
+    <pre class="javascript">db.writeCollection(
+  'collection-name',
+  {
+    '/dir/doc1.json': {name: 'value'},
+    '/dir/doc2.xml': '<name>value</name>'
+  }
+).result()…</pre>
+    </li>
+    <li data-bugtrack="27165"><strong>Bitemporal document management:</strong> Bitemporal queries allow an application to query the database as it was at a given point in time. Integrated document management ensures that updates are captured bitemporaly. Early Access 3 allows Node.js clients to update and query documents in bitemporal collections.</li>
+    <li data-bugtrack="27167"><strong>Values and tuples:</strong> The new <code>values</code> namespace and <code>valuesBuilder</code> allow you to build sophisticated, filter, aggregate, and pagination logic to retrieve values from range indexes. </li>
+    <li data-bugtrack="28557"><strong>Projecting paths:</strong> The <code>QueryBuilder.extract()</code> helper function projects sparse documents as part of a <code>slice()</code> call. This allows you to retrieve parts of documents that match specific paths in concert with the limit/skip pagination behavior for result sets already built into <code>slice()</code>.</li>
+    <li data-bugtrack="27168"><strong>Extension management:</strong> CRUD APIs to manage server-side extension modules, including resource services, result reducers, and custom values aggregates.</li>
+     </li>
+    
+    <li data-bugtrack="27166"><strong>Semantics:</strong> List, read, write, merge, and delete graphs of triples. Run SPARQL queries against named graphs using the <code>graphs.sparql()</code> function.</li>
   </ul>
 <h4>Early Access 2, August 2014</h4>
 <ul>
@@ -81,14 +92,9 @@
 <h4>System requirements and installation</h4>
   <ol>
     <li>Make sure you have a recent version of <a href="http://nodejs.org/download/">Node.js</a> (at least v0.10.22), <a href="https://www.npmjs.org">npm</a> (at least 1.4), and <a href="http://git-scm.com/downloads">git</a> (at least 1.8) installed. To verify on Linux or OS X, use <code>node --version</code>, <code>npm --version</code> and <code>git --version</code>. If your system can’t find any or all of those tools, make sure your <code>&#36;PATH</code> variable points to each of those binaries.</li>
-    <li>To start with a new Node.js project, create a new directory for your project, for example <code>myproject</code>. If you’re adding the Node.js Client API to an existing project, proceed using that project’s directory.
-      <p class="note">Normally for a new project you’d create <code>package.json</code> in your <code>myproject</code> directory, declare all of your dependencies there and have npm download the entire graph (e.g. with <code>npm install --save</code>). However, Early Access builds of the Node.js Client API aren’t in the public npm repository (<em>yet</em>), so you’ll have to manually install a local copy from <a href="https://github.com/marklogic/node-client-api">GitHub</a>.</p>
-    </li>
-    <li>If you don’t already have a <code>node_modules</code> folder, create one. This is where all of the local project dependencies will be downloaded. </li>
-    <li>Within the <code>node_modules</code> directory, install the API directly from Github.
-      <pre>npm install git+ssh://git@github.com:marklogic/node-client-api.git#b1_0_0-ea3</pre>
-      <!-- Or npm install git+ssh://git@github.com:marklogic/node-client-api.git#develop until this tag exists -->
-      This will create a <code>marklogic</code> directory, clone the code from GitHub, and download all of the dependencies from npm.
+    <li>To start with a new Node.js project, create a new directory for your project, for example <code>myproject</code>. From within that directory call <code>npm init</code>. npm will step you through the initialization process, creating a <code>package.json</code> file for your project.</li>
+    <li>
+      From within your project directory, run <code>npm install marklogic</code>. This will download the MarkLogic Node.js Client API and all of its runtime dependencies from npm and store them in the local <code>node_modules</code> directory. (You’ll want to exclude this from version control, e.g. <code>echo node_modules >> .gitignore</code>.)
     </li>
     <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>`cat "verify.js"`</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
 <pre>
@@ -146,28 +152,11 @@
 <h4>6. Patch</h4>
 <p>“Patching” is a technique to update part of a document without having to rewrite the whole thing, for example to update a single field. This example demonstrates how to process documents in Node and then apply the changes to the Server as a patch using the <code>patchBuilder</code> interface. </p>
 <pre class="javascript">`cat "06 patch.js"`</pre>
-<h4>7. Remove</h4>
+<h4>7. Values</h4>
+<p>The <code>values</code> namespace allows you to read and aggregate values from range indexes. The <code>valuesBuilder</code> helper provides conveniences for working with values. Use <code>fromIndexes()</code> to specify one or more range indexes from which to pull values. Use <code>where()</code> to limit the values to only documents matching a query. <code>slice()</code> specifies limit and skip values for pagination and <code>aggregates()</code> allows you to specify server-side aggregation of the selected values. </p>
+<pre class="javascript">`cat "08 values.js"`</pre>
+<h4>8. Remove</h4>
 <p><code>remove()</code> and <code>removeAll()</code> delete documents in the database. The following example deletes everything in the collection <code>fake data</code>. </p>
 <pre class="javascript">`cat "07 remove.js"`</pre>
-<!-- CodeMirror
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/mode/javascript/javascript.js"></script>
-<script type="text/javascript">
-(function() {
-  var pres = document.querySelectorAll(\"pre.javascript\")
-  for(var i = 0; i < pres.length; i++) {
-    var pre = pres[i]
-    CodeMirror(function(el) {
-      pre.parentNode.replaceChild(el, pre);
-    }, {
-        value: pre.textContent,
-        mode: \"javascript\",
-        lineNumbers: false,
-        readOnly: true
-    })
-  }
-})()
-</script>
--->
 </body>
 </html>

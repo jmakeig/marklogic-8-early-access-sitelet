@@ -9,7 +9,7 @@ OUT="_node.html"
 
 ./generate.sh "$IN" > "$OUT"
 
-echo "Generated $IN at " `date`
+echo "Generated $OUT from $IN at " `date`
 
 # -g opens in the background
 open -g "$OUT"
