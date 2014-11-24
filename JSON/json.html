@@ -61,13 +61,13 @@
 <h3>Where to focus</h3>
 <h4>Early Access 3, November 2014</h4>
 <ul>
-  <li><strong>Geospatial queries:</strong> It is now possible to serialize geospatial points in JSON documents and query them with geospatial queries, specifically <code>cts:json-property-geospatial-query()</code> (XQuery)/<code>cts.jsonPropertyGeospatialQuery()</code>  (analogous to <code>cts:element-geospatial-query()</code> for XML), <code>cts:json-property-child-geospatial-query()</code>/<code>cts:jsonPropertyChildGeospatialQuery()</code> (analogous to <code>cts:element-child-geospatial-query()</code>), and <code>cts:json-property-pair-geospatial-query()</code>/<code>cts.jsonPropertyPairGeospatialQuery()</code> (analogous to <code>cts:elment-pair-geospatial-query()</code>). For example, you could query the following GeoJSON structure using a 
+  <li><strong>Geospatial queries:</strong> It is now possible to serialize geospatial points in JSON documents and query them with geospatial queries. For example, you can use <code>cts.pathGeospatialQuery</code> to match the following GeoJSON structure.
     <pre>"location": {
-     "type": "Point",
-     "coordinates": [-97.042726, -19.360066]
-   }</pre>
+   "type": "Point",
+   "coordinates": [-97.042726, -19.360066]
+ }</pre>
   </li>
-  <li><strong>Reverse queries:</strong> All query types can now be serialized as JSON and embedded in JSON documents. 
+  <li><strong>Reverse queries:</strong> All query types can now be serialized as JSON and embedded in JSON documents for use with <code>cts.reverseQuery()</code>.
   
     <pre class="sjs">declareUpdate();
 var json = xdmp.toJSON(
@@ -100,19 +100,13 @@ xdmp.documentInsert("/reverseQuery.json", json, xdmp.defaultPermissions(), ["jso
   
   </li>
   <li><strong>SQL:</strong> It is now possible to define SQL views and run SQL queries against JSON documents. SQL views are projections out of range indexes. Element, field, and path range indexes are supported for JSON documents. (<em>Element</em> maps to a JSON <em>property</em> in the configuration.)</li>
-  <li><strong>Embedded triples:</strong> It's now possible to index and query semantic triples embedded in JSON documents. 
-    <pre>{
-  "triple": {
-    "subject": {
-      "value": "http://example.org/person/JohnSmith"
-    },
-    "predicate": {
-      "value": "http://example.org/predicates/LivesIn"
-    },
-    "object": {
-      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
-      "value": 50
-    }
+  <li><strong>Embedded triples:</strong> It’s now possible to index and query semantic triples embedded in JSON documents. 
+    <pre> 
+  "my" : "data",
+  "triple" : {
+    "subject": "http://example.org/ns/dir/js",
+    "predicate": "http://xmlns.com/foaf/0.1/firstname",
+    "object": { "value": "John", "datatype": "xs:string" }
   }
 }</pre>
   </li>
@@ -184,13 +178,13 @@ var obj = person.toObject(); // Convert the Node to a plain old JavaScript Objec
 obj.name = "Peter";          // Update as you would any other Object instance
 xdmp.documentInsert("/person1.json", obj);  // xdmp.documentInsert() automatically converts Objects to Nodes</pre>
 <h5>Indexing</h5>
-<p>JSON indexing shares much of the same foundation with the existing XML indexes. A JSON property is roughly equivalent to an XML element from the indexer’s perspective.  JSON strings share the text indexing characteristics (tokenization, stemming, decompounding, etc.) as XML <code>text()</code> nodes. Path, range and field indexes all work on JSON documents. </p>
+<p>JSON indexing shares much of the same foundation with the existing XML indexes. A JSON property is roughly equivalent to an XML element from the indexer’s perspective.  JSON strings share the same text indexing characteristics (tokenization, stemming, decompounding, etc.) as XML <code>text()</code> nodes. Path, range and field indexes all work on JSON documents. </p>
 <ul>
   <li>Numbers, Booleans and null nodes are indexed in their own type-specific indexes, not as text. For example, a <code>cts.jsonPropertyValueQuery("show_number", 1286.00)</code> will match a document containing <code>{ "show_number": 1286 }</code>, unlike a <code>cts.elementValueQuery()</code>.</li>
   <li>For a property that is an array, each member in the array is considered a value of the property.  For example, with {"a": [1, 2]}, both json-property-value-query("a",1) and json-property-value-query("a",2) will match.</li>
   <li>JSON documents do <em>not</em> support fragmentation.</li>
   <li>Because JSON doesn’t allow you to expressed mixed content, indexing for JSON does not support phrase-throughs or phrase-arounds.</li>
-  <li>Also, becuase there's not standard way to express the (human) language of some text in JSON, there is not support for switching languages within a document. All JSON documents are indexed using the language specified upon ingestion or by the database’s default setting.</li>
+  <li>Also, becuase there's not standard way to express the natural language of some text in JSON, there is not support for switching languages within a document. All JSON documents are indexed using the language specified by the database’s default setting.</li>
 </ul>
 
 <!--<h5>Arrays and Unnamed Nodes</h5>
