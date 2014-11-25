@@ -53,14 +53,14 @@
 <p>…and that’s it.</p>
 <h3>Why it matters</h3>
 <p>For developers using—or looking to use—<a href="http://nodejs.org">Node.js</a> in their application stack, the Node.js Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
-<p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batched loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node.js Client API is an ideal tool for full-stack JavaScript development.</p>
+<p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batch loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node.js Client API is an ideal tool for full-stack JavaScript development.</p>
 <p>The Node.js Client API is written in JavaScript specifically for Node. It encapsulates best practices on both the Node and MarkLogic ends, for example, enforcing entirely asynchronous I/O and providing conveniences for building complex queries. Its interface is designed to be familiar and comfortable to Node developers. For performance-critical or resource-intensive operations, the Node.js Client API provides an extension mechanism that executes JavaScript on Server, where it runs close to the data. </p>
 <p>The Node client is  developed in the open <a href="https://github.com/marklogic/node-client-api">on GitHub</a> and is licensed under the open-source <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0 license</a>. The best way to get involved is to <a href="https://github.com/marklogic/node-client-api/issues">log issues</a> for bugs or new features. </p>
 <h3>Where to focus</h3>
 <h4>Early Access 3, November 2014</h4>
   <ul>
     <li data-bugtrack="27164"><strong>npm distribution:</strong> Starting with Early Access 3, all releases of the Node.js Client API will be available in the <a href="https://www.npmjs.org/package/marklogic">public npm repository</a>.</li>
-    <li data-bugtrack="28558"><strong>Invoke and eval:</strong> Use the new <code>eval()</code> and <code>invoke()</code> functions on the database client to execute XQuery or JavaScript on the server. The Client API allows applications to specify external variables to pass to the evaled or invoked code and conveniences for marshalling data types in and out of JavaScript in Node.js.</li>
+    <li data-bugtrack="28558"><strong>Invoke and eval:</strong> Use the new <code>eval()</code> and <code>invoke()</code> functions on the database client to execute JavaScript (or XQuery) on the server. The Client API allows applications to specify external variables to pass to the evaled or invoked code and conveniences for marshalling data types in and out of JavaScript in Node.js.</li>
     <li data-bugtrack="30678"><strong>Write collection shortcut:</strong> The new <code>writeCollection()</code> function on the database connection simplifies the case where you just want to write a bunch of documents to a collection without specifying other metadata. Pass it the collection name and an object with URI property names and document (XML or JSON) values and <code>writeCollection()</code> will delegate to <code>documents.write</code> for you.
     <pre class="javascript">db.writeCollection(
   'collection-name',
@@ -120,7 +120,7 @@
 <p>Most requests in the Node.js Client API return a selector object. A selector object gives you a several ways to work with the response from the server:</p>
 <ul>
   <li>You can pass success and failure callbacks to the <code>result()</code> method to process the response in isolation.</li>
-  <li>You can call the <code>result()</code> method to return a Promises object and chain subsequent actions with <code>then()</code> calls. Use this when you need to chain a series of requests.</li>
+  <li>You can call the <code>result()</code> method to return a Promise object and chain subsequent actions with <code>then()</code> calls. Use this when you need to chain a series of requests.</li>
   <li>You can call the <code>stream()</code> method to return a Readable stream in object mode and use the <code>on()</code> method on the stream to register listeners for the <code>data</code>, <code>end</code>, and <code>error</code> events. Use this when you need to process a bulk response as soon as documents become available.</li>
   <li>You can call the <code>stream()</code> method to return a Readable stream in object mode and call the <code>pipe()</code> method on the stream with a Writable stream. Use this when you need to provide the response to a Writable stream.</li>
 </ul>
