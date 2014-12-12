@@ -50,7 +50,6 @@
 <p>The MarkLogic Node.js Client API is an open-source JavaScript library that allows developers to quickly, easily, and reliably access MarkLogic from their Node applications. </p>
 <p>Here’s a quick example to demonstrate how a Node application would build a query and process the results.
 <pre class="javascript">`cat "00 teaser.js"`</pre>
-<p>…and that’s it.</p>
 <h3>Why it matters</h3>
 <p>For developers using—or looking to use—<a href="http://nodejs.org">Node.js</a> in their application stack, the Node.js Client API is the fastest, easiest, and most reliable way to communicate with a MarkLogic database.</p>
 <p>The API provides an asynchronous JavaScript interface for key MarkLogic capabilities, such as search, document management, batch loading, transactions, aggregates, and alerting. Combined with MarkLogic's ability to index and <a href="../json">manage JSON documents natively</a>, the Node.js Client API is an ideal tool for full-stack JavaScript development.</p>
@@ -66,7 +65,7 @@
   'collection-name',
   {
     '/dir/doc1.json': {name: 'value'},
-    '/dir/doc2.xml': '<name>value</name>'
+    '/dir/doc2.xml': '&lt;name>value&lt;/name>'
   }
 ).result()…</pre>
     </li>
@@ -92,9 +91,10 @@
 <h4>System requirements and installation</h4>
   <ol>
     <li>Make sure you have a recent version of <a href="http://nodejs.org/download/">Node.js</a> (at least v0.10.22), <a href="https://www.npmjs.org">npm</a> (at least 1.4), and <a href="http://git-scm.com/downloads">git</a> (at least 1.8) installed. To verify on Linux or OS X, use <code>node --version</code>, <code>npm --version</code> and <code>git --version</code>. If your system can’t find any or all of those tools, make sure your <code>&#36;PATH</code> variable points to each of those binaries.</li>
-    <li>To start with a new Node.js project, create a new directory for your project, for example <code>myproject</code>. From within that directory call <code>npm init</code>. npm will step you through the initialization process, creating a <code>package.json</code> file for your project.</li>
+    <li>To start with a new Node.js project, create a new directory for your project, for example <code>myproject</code>. From within that directory call <code>npm init</code>. npm will step you through the initialization process, creating a <code>package.json</code> file for your project. 
+    </li>
     <li>
-      From within your project directory, run <code>npm install marklogic</code>. This will download the MarkLogic Node.js Client API and all of its runtime dependencies from npm and store them in the local <code>node_modules</code> directory. (You’ll want to exclude this from version control, e.g. <code>echo node_modules >> .gitignore</code>.)
+      From within your project directory, run <code>npm install marklogic --save</code>. This will download the MarkLogic Node.js Client API and all of its runtime dependencies from npm and store them in the local <code>node_modules</code> directory and add an entry to the dependencies list in the <code>package.json</code> file that <code>npm init</code> ctreated. (You’ll want to exclude this from version control, e.g. <code>echo node_modules >> .gitignore</code>.)
     </li>
     <li>Confirm that everything worked. In your top-level project directory—the one containing the <code>node_modules</code> directory—create a file called <code>verify.js</code> with the contents <pre>`cat "verify.js"`</pre> and run <pre>node verify.js</pre> If everything worked it will output something like 
 <pre>
