@@ -79,13 +79,14 @@
 <h3>Deeper dive</h3>
 <h4>System requirements and installation</h4>
 <p>The generally available 3.0 release of the Java Client API will be hosted from the <a href="http://search.maven.org">Maven Central repository</a>. This will allow <a href="http://maven.apache.org">Maven</a> and <a href="http://www.gradle.org">Gradle</a> to easily access the built JAR and all of its dependencies. However, Early Access builds will only be available from an external repository hosted as branch of the GitHub project. To use this repository from your Maven project, add the repository to your project’s <code>pom.xml</code>.</p>
-<pre>
-&lt;repository>
-  &lt;id>MarkLogic-releases&lt;/id>
-  &lt;name>MarkLogic Releases&lt;/name>
-  &lt;url>https://raw.github.com/marklogic/java-client-api/mvn-repo/&lt;/url>
-&lt;/repository>
-</pre>
+<pre>&lt;repository>
+    &lt;id>MarkLogic-releases&lt;/id>
+    &lt;url>https://raw.github.com/marklogic/java-client-api/mvn-repo/&lt;/url>
+    &lt;snapshots>
+        &lt;enabled>true&lt;/enabled>
+        &lt;updatePolicy>always&lt;/updatePolicy>
+    &lt;/snapshots>
+&lt;/repository></pre>
 <p>Add the Early Access artifact to the project’s dependencies. </p>
 <pre>
 &lt;dependency>
