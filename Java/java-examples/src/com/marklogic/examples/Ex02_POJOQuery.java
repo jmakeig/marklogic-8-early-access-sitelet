@@ -5,7 +5,7 @@ import com.marklogic.client.DatabaseClient;
 import com.marklogic.client.pojo.PojoPage;
 import com.marklogic.client.pojo.PojoQueryBuilder;
 import com.marklogic.client.pojo.PojoRepository;
-import com.marklogic.client.query.QueryDefinition;
+import com.marklogic.client.query.PojoQueryDefinition;
 
 public class Ex02_POJOQuery {
 
@@ -19,7 +19,7 @@ public class Ex02_POJOQuery {
     PojoRepository<User, String> userRepo = client.newPojoRepository(
         User.class, String.class);
     PojoQueryBuilder<User> qb = userRepo.getQueryBuilder();
-    QueryDefinition query = qb.or(qb.word("about", "pickled cliche"),
+    PojoQueryDefinition query = qb.or(qb.word("about", "pickled cliche"),
         qb.value("gender", "female"));
 
     PojoPage<User> page = userRepo.search(query, 1);
